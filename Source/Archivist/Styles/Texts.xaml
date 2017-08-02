@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Archivist.Styles"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    
+    <!-- Menu Tooltips -->
+    <system:String x:Key="TooltipProjects">Projects</system:String>
+    <system:String x:Key="TooltipSettings">Settings</system:String>
+    <system:String x:Key="TooltipReport">Report</system:String>
+    <system:String x:Key="TooltipInfo">Info</system:String>
+
+</ResourceDictionary>
