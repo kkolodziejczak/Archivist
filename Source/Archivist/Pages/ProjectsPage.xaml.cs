@@ -16,14 +16,13 @@ using System.Windows.Shapes;
 namespace Archivist
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for ProjectsPage.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class ProjectsPage : BasePage<ProjectsViewModel>
     {
-        public MainWindow()
+        public ProjectsPage()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
         }
     }
 }

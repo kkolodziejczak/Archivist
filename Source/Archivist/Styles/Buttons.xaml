@@ -5,7 +5,67 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Colors.xaml" />
         <ResourceDictionary Source="Fonts.xaml" />
-    </ResourceDictionary.MergedDictionaries>   
+    </ResourceDictionary.MergedDictionaries>
+
+    <!-- Default button -->
+    <Style TargetType="Button" BasedOn="{StaticResource BaseStyle}">
+        <Setter Property="Background" Value="{StaticResource DarkPrimaryColorBrush}" />
+        <Setter Property="Foreground" Value="{StaticResource TextIconsColorBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+        <Setter Property="Height" Value="25"/>
+        <Setter Property="Padding" Value="4"/>
+        
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                    <Border x:Name="Border"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            >
+                        <Grid>
+                            <Viewbox>
+                                <TextBlock Text="{TemplateBinding Content}" 
+                                       Focusable="False" 
+                                       FontFamily="{TemplateBinding FontFamily}"
+                                       FontSize="{TemplateBinding FontSize}"
+                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                       Margin="{TemplateBinding Padding}" 
+                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Viewbox>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <EventTrigger RoutedEvent="MouseEnter">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource ActiveDarkPrimaryColor}" 
+                                                    Duration="0:0:0.3" 
+                                                    Storyboard.TargetName="Border" 
+                                                    Storyboard.TargetProperty="Background.Color"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="MouseLeave">
+                            <BeginStoryboard>
+                                <Storyboard>
+                                    <ColorAnimation To="{StaticResource DarkPrimaryColor}" 
+                                                    Duration="0:0:0.3" 
+                                                    Storyboard.TargetName="Border" 
+                                                    Storyboard.TargetProperty="Background.Color"/>
+                                </Storyboard>
+                            </BeginStoryboard>
+                        </EventTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" TargetName="Border" Value="{StaticResource DarkerPrimaryColor}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
     
     <!-- Icon Button -->
     <Style x:Key="IconButton" TargetType="{x:Type Button}" BasedOn="{StaticResource BaseStyle}">
@@ -18,7 +78,7 @@
         <Setter Property="Padding" Value="10"/>
         <Setter Property="Margin" Value="0"/>
 
-        <!--<Setter Property="Width" Value="{Binding ActualHeight,RelativeSource={RelativeSource Self}}"/>-->
+        <Setter Property="Height" Value="{Binding ActualWidth,RelativeSource={RelativeSource Self}}"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -36,7 +96,6 @@
                                        FontSize="{TemplateBinding FontSize}"
                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
                                        Margin="{TemplateBinding Padding}" 
-                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Viewbox>
                         </Grid>

@@ -4,17 +4,19 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Archivist"
-        mc:Ignorable="d"
-        Title="Archivist" Height="350" Width="525">
+        mc:Ignorable="d" 
+        ResizeMode="NoResize" SizeToContent="WidthAndHeight"
+        MinHeight="300"
+        Title="Archivist">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="50"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
         <!-- Main Menu -->
-        <Border Background="{StaticResource DarkPrimaryColorBrush}">
-            <Grid Grid.Column="0">
+        <Border Background="{StaticResource DarkPrimaryColorBrush}" Grid.Column="0">
+            <Grid >
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
@@ -29,40 +31,41 @@
                             FontSize="{StaticResource FontSizeXLarge}"
                             ToolTip="{StaticResource TooltipProjects}"
                             />
-            
+
                     <!-- Settings Button -->
                     <Button Style="{StaticResource IconButton}"
                             Content="{StaticResource FontAwesomeSettingsIcon}" 
                             FontSize="{StaticResource FontSizeXLarge}"
                             ToolTip="{StaticResource TooltipSettings}"
                             />
-                    
+
                 </StackPanel>
 
                 <!-- Lower Buttons-->
                 <StackPanel Grid.Row="2"
                             VerticalAlignment="Bottom">
-                    
+
                     <!-- Report Button -->
                     <Button Style="{StaticResource IconButton}"
                             Content="{StaticResource FontAwesomeWarrningIcon}" 
                             FontSize="{StaticResource FontSizeLarge}"
                             ToolTip="{StaticResource TooltipReport}"
                             />
-            
+
                     <!-- Info Button -->
                     <Button Style="{StaticResource IconButton}"
                             Content="{StaticResource FontAwesomeInfoIcon}"
                             FontSize="{StaticResource FontSizeLarge}"
                             ToolTip="{StaticResource TooltipInfo}"
                             />
-                    
+
                 </StackPanel>
             </Grid>
         </Border>
 
-        <StackPanel Grid.Column="1">
-            <TextBlock Text="Tutaj Zawartość Strony!"/>
-        </StackPanel>
+        <!-- Content presenter -->
+        <ContentPresenter Grid.Column="1"
+                          Content="{Binding Page}"/>
+        
     </Grid>
 </Window>

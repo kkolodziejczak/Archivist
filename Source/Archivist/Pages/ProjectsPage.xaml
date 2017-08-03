@@ -1,0 +1,102 @@
+﻿<local:BasePage x:TypeArguments="local:ProjectsViewModel" x:Class="Archivist.ProjectsPage"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                xmlns:local="clr-namespace:Archivist"
+                mc:Ignorable="d" 
+                >
+    
+    <Grid Background="White">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0"
+                Margin="10"
+                Width="150"
+                BorderThickness="1"
+                BorderBrush="DarkGray">
+            <StackPanel>
+                <TextBlock Text="Project 1" 
+                           Margin="5 3 5 0"/>
+                <TextBlock Text="Project 2" 
+                           Margin="5 3 5 0"/>
+                <TextBlock Text="Project 3" 
+                           Margin="5 3 5 0"/>
+                <TextBlock Text="..." 
+                           Margin="5 3 5 0"/>
+            </StackPanel>
+        </Border>
+        
+        <!-- Form to add new projects -->
+        <StackPanel Grid.Column="1"
+                    Width="200"
+                    Margin="15 15 15 15">
+            <!-- Form title -->
+            <TextBlock Text="Add new project"
+                       HorizontalAlignment="Center"
+                       FontSize="{StaticResource FontSizeLarge}"
+                       FontWeight="DemiBold"
+                       FontFamily="{StaticResource LatoBold}"/>
+
+            <!-- Title project-->
+            <TextBlock Text="Title:"
+                       Margin="0 5 0 0"
+                       Foreground="{StaticResource SecondaryTextBrush}"
+                       FontFamily="{StaticResource LatoRegular}"/>
+            <TextBox TabIndex="0"/>
+        
+            <!-- Title project-->
+            <TextBlock Text="Source path:"
+                       Margin="0 5 0 0"
+                       Foreground="{StaticResource SecondaryTextBrush}"
+                       FontFamily="{StaticResource LatoRegular}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" 
+                         TabIndex="2"
+                         />
+                <Button Grid.Column="1"
+                        Width="19"
+                        Padding="5"
+                        TabIndex="3"
+                        Style="{StaticResource IconButton}"
+                        Content="{StaticResource FontAwesomeFolderIcon}"
+                        />
+            </Grid>
+
+            <!-- Title project-->
+            <TextBlock Text="Archive path:"
+                       Margin="0 5 0 0"
+                       Foreground="{StaticResource SecondaryTextBrush}"
+                       FontFamily="{StaticResource LatoRegular}"/>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" TabIndex="4"/>
+                <Button Grid.Column="1" 
+                        TabIndex="5"
+                        Width="19"
+                        Style="{StaticResource IconButton}"
+                        Padding="5"
+                        Content="{StaticResource FontAwesomeFolderIcon}"
+                        />
+            </Grid>
+
+            <Button Content="Add"
+                    TabIndex="6"
+                    Margin="0 10 19 0"
+                    IsDefault="True"
+                    Width="75"
+                    HorizontalAlignment="Right"
+                    />
+        </StackPanel>
+    </Grid>
+</local:BasePage>
