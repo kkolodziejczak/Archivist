@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:Archivist"
         mc:Ignorable="d" 
         ResizeMode="NoResize" SizeToContent="WidthAndHeight"
-        MinHeight="300"
+        Height="300"
+        MaxHeight="300"
         Title="Archivist">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -30,6 +31,7 @@
                             Content="{StaticResource FontAwesomeFileIcon}"
                             FontSize="{StaticResource FontSizeXLarge}"
                             ToolTip="{StaticResource TooltipProjects}"
+                            Command="{Binding ProjectsCommand}"
                             />
 
                     <!-- Settings Button -->
@@ -37,6 +39,7 @@
                             Content="{StaticResource FontAwesomeSettingsIcon}" 
                             FontSize="{StaticResource FontSizeXLarge}"
                             ToolTip="{StaticResource TooltipSettings}"
+                            Command="{Binding SettingsCommand}"
                             />
 
                 </StackPanel>
@@ -50,6 +53,7 @@
                             Content="{StaticResource FontAwesomeWarrningIcon}" 
                             FontSize="{StaticResource FontSizeLarge}"
                             ToolTip="{StaticResource TooltipReport}"
+                            Command="{Binding ReportCommand}"
                             />
 
                     <!-- Info Button -->
@@ -57,6 +61,7 @@
                             Content="{StaticResource FontAwesomeInfoIcon}"
                             FontSize="{StaticResource FontSizeLarge}"
                             ToolTip="{StaticResource TooltipInfo}"
+                            Command="{Binding InfoCommand}"
                             />
 
                 </StackPanel>
@@ -65,7 +70,7 @@
 
         <!-- Content presenter -->
         <ContentPresenter Grid.Column="1"
-                          Content="{Binding Page}"/>
+                          Content="{Binding Page, Converter={local:ApplicationPageValueConverter}}"/>
         
     </Grid>
 </Window>
