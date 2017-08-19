@@ -8,7 +8,9 @@ using System.Windows.Input;
 
 namespace Archivist
 {
-    
+    /// <summary>
+    /// ViewModel for the Main Window.
+    /// </summary>
     public class MainWindowViewModel : BaseViewModel
     {
 

@@ -34,4 +34,10 @@
     <Color x:Key="DividerColor">#212121</Color>
     <SolidColorBrush x:Key="DividerColorBrush" Color="{StaticResource DividerColor}"/>
 
+    <Color x:Key="WarningColor">#d50000</Color>
+    <SolidColorBrush x:Key="WarningColorBrush" Color="{StaticResource WarningColor}"/>
+
+    <Color x:Key="DisabledButtonColor">#9E9E9E</Color>
+    <SolidColorBrush x:Key="DisabledButtonColorBrush" Color="{StaticResource DisabledButtonColor}"/>
+
 </ResourceDictionary>

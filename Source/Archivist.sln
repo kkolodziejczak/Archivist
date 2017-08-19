@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist.Tests", "Archivist.Tests\Archivist.Tests.csproj", "{2D319FC1-8B4A-4322-8CC0-A03DB1D9D9F5}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Archivist", "Archivist\Archivist.csproj", "{077F0975-1DA3-44CC-BFC4-C497C7CFFD88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArchivistTests", "ArchivistTests\ArchivistTests.csproj", "{B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2D319FC1-8B4A-4322-8CC0-A03DB1D9D9F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D319FC1-8B4A-4322-8CC0-A03DB1D9D9F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D319FC1-8B4A-4322-8CC0-A03DB1D9D9F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D319FC1-8B4A-4322-8CC0-A03DB1D9D9F5}.Release|Any CPU.Build.0 = Release|Any CPU
 		{077F0975-1DA3-44CC-BFC4-C497C7CFFD88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{077F0975-1DA3-44CC-BFC4-C497C7CFFD88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{077F0975-1DA3-44CC-BFC4-C497C7CFFD88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{077F0975-1DA3-44CC-BFC4-C497C7CFFD88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9B519DA-9E6C-42B3-A9C2-2F7E383B4256}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

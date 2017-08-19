@@ -59,7 +59,7 @@
                             </BeginStoryboard>
                         </EventTrigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" TargetName="Border" Value="{StaticResource DarkerPrimaryColor}"/>
+                            <Setter Property="Background" TargetName="Border" Value="{StaticResource DarkPrimaryColorBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

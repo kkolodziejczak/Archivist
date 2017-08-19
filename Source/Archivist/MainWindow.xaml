@@ -70,6 +70,8 @@
 
         <!-- Content presenter -->
         <ContentPresenter Grid.Column="1"
+                          MinHeight="300"
+                          MinWidth="400"
                           Content="{Binding Page, Converter={local:ApplicationPageValueConverter}}"/>
         
     </Grid>

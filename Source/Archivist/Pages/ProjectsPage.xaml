@@ -9,17 +9,17 @@
     
     <Grid Background="White">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <!-- Projects list -->
         <Border Grid.Column="0"
-                Margin="10"
+                Margin="15"
                 Width="150"
+                Height="210"
                 BorderThickness="1"
                 BorderBrush="DarkGray">
-
             <ListView ItemsSource="{Binding Projects}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -28,36 +28,14 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            
         </Border>
-
-        <!-- Projects --><!--
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-
-            <ItemsControl ItemsSource="{Binding Projects}">
-
-                --><!-- Set ItemsControl panel to StackPanel--><!--
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-
-                --><!-- Item Template --><!--
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}"
-                                       Margin="5 2 5 0"/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-
-            </ItemsControl>
-        </ScrollViewer>-->
 
         <!-- Form to add new projects -->
         <StackPanel Grid.Column="1"
                     Width="200"
-                    Margin="15 15 15 15">
+                    Margin="15"
+                    >
+
             <!-- Form title -->
             <TextBlock Text="Add new project"
                        HorizontalAlignment="Center"
@@ -66,36 +44,52 @@
                        FontFamily="{StaticResource LatoBold}"/>
 
             <!-- Title project-->
-            <TextBlock Text="Title*:"
+            <TextBlock Text="Title:"
+                       Grid.Row="0"
                        Margin="0 5 0 0"
                        Foreground="{StaticResource SecondaryTextBrush}"
                        FontFamily="{StaticResource LatoRegular}"/>
-            
+
             <!-- Title TextBox -->
-            <TextBox TabIndex="0"
-                     Text="{Binding Title, Mode=TwoWay}"/>
+            <TextBox x:Name="TitleTextBox" 
+                     TabIndex="0"
+                     Grid.Row="1"
+                     Style="{StaticResource ValidationStyle}"
+                     Text="{Binding Title, ValidatesOnDataErrors=True, 
+                                           NotifyOnValidationError=True, 
+                                           UpdateSourceTrigger=PropertyChanged}"
+                     />
 
-
-            
             <!-- Source path title -->
-            <TextBlock Text="Source path*:"
-                       Margin="0 5 0 0"
+            <TextBlock Text="Source path:"
+                       Grid.Row="2"
+                       Margin="0 15 0 0"
                        Foreground="{StaticResource SecondaryTextBrush}"
                        FontFamily="{StaticResource LatoRegular}"/>
-            
+
             <!-- Source TextBox and OpenFileDialogButton-->
-            <Grid>
+            <Grid Grid.Row="3">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Source TextBox -->
-                <TextBox Grid.Column="0" 
+                <TextBox x:Name="SourcePathTextBox" 
+                         Grid.Column="0" 
                          TabIndex="2"
                          IsReadOnly="True"
-                         Text="{Binding SourcePath}"
-                         />
+                         Style="{StaticResource ValidationStyle}"
+                         Text="{Binding SourcePath, ValidatesOnDataErrors=True, 
+                                                    NotifyOnValidationError=True, 
+                                                    UpdateSourceTrigger=PropertyChanged}"
+                        >
+                    <TextBox.InputBindings>
+                        <MouseBinding Command="{Binding OpenSourceFileDialogCommand}" MouseAction="LeftClick"/>
+                        <KeyBinding Command="{Binding OpenSourceFileDialogCommand}" Key="Enter"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+                    
                 <!-- OpenFileDialogButton -->
                 <Button Grid.Column="1"
                         Width="19"
@@ -107,16 +101,16 @@
                         />
             </Grid>
 
-            
-            
             <!-- Archive path titlle-->
             <TextBlock Text="Archive path:"
-                       Margin="0 5 0 0"
+                       Grid.Row="4"
+                       Margin="0 15 0 0"
                        Foreground="{StaticResource SecondaryTextBrush}"
-                       FontFamily="{StaticResource LatoRegular}"/>
-            
+                       FontFamily="{StaticResource LatoRegular}"
+                       />
+
             <!-- Achive TextBox and SaveFileDialogButton-->
-            <Grid>
+            <Grid Grid.Row="5">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
@@ -126,9 +120,15 @@
                 <TextBox Grid.Column="0" 
                          TabIndex="4"
                          IsReadOnly="True"
+                         Style="{StaticResource ValidationStyle}"
                          Text="{Binding ArchivePath}"
-                         />
-                
+                         >
+                    <TextBox.InputBindings>
+                        <MouseBinding Command="{Binding SaveArchiveFileDialogCommand}" MouseAction="LeftClick"/>
+                        <KeyBinding Command="{Binding SaveArchiveFileDialogCommand}" Key="Enter"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+
                 <!-- SaveFileDialog -->
                 <Button Grid.Column="1" 
                         TabIndex="5"
@@ -139,13 +139,7 @@
                         Command="{Binding SaveArchiveFileDialogCommand}"
                         />
             </Grid>
-            
-            
-            <!-- Field Required Label -->
-            <TextBlock Text="* Fields required"
-                       FontSize="{StaticResource FontSizeSmall}"
-                       />
-            
+
             <!-- Add Button -->
             <Button Content="Add"
                     TabIndex="6"
@@ -154,7 +148,96 @@
                     Width="75"
                     HorizontalAlignment="Right"
                     Command="{Binding AddProjectCommand}"
-                    />
+                    >
+                <!-- Add button style -->
+                <Button.Style>
+                    <Style TargetType="{x:Type Button}">
+                        <Setter Property="Background" Value="{StaticResource DarkPrimaryColorBrush}" />
+                        <Setter Property="Foreground" Value="{StaticResource TextIconsColorBrush}" />
+                        <Setter Property="BorderThickness" Value="0" />
+                        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+                        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+                        <Setter Property="Height" Value="25"/>
+                        <Setter Property="Padding" Value="4"/>
+
+                        <!-- Set default state to disabled -->
+                        <Setter Property="IsEnabled" Value="False"/>
+
+                        <!-- Set Template to base Button template-->
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ButtonBase}">
+                                    <Border x:Name="Border"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            Background="{TemplateBinding Background}"
+                                            >
+                                        <Grid>
+                                            <Viewbox>
+                                                <TextBlock Text="{TemplateBinding Content}" 
+                                                           Focusable="False" 
+                                                           FontFamily="{TemplateBinding FontFamily}"
+                                                           FontSize="{TemplateBinding FontSize}"
+                                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                           Margin="{TemplateBinding Padding}" 
+                                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+
+                                        <!-- Trigger for when mouse enters form button space -->
+                                        <EventTrigger RoutedEvent="MouseEnter">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation To="{StaticResource ActiveDarkPrimaryColor}" 
+                                                                    Duration="0:0:0.3" 
+                                                                    Storyboard.TargetName="Border" 
+                                                                    Storyboard.TargetProperty="Background.Color"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+
+                                        <!-- Trigger for when mouse leave form button space -->
+                                        <EventTrigger RoutedEvent="MouseLeave">
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <ColorAnimation To="{StaticResource DarkPrimaryColor}" 
+                                                                    Duration="0:0:0.3" 
+                                                                    Storyboard.TargetName="Border" 
+                                                                    Storyboard.TargetProperty="Background.Color"/>
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </EventTrigger>
+
+                                        <!-- Trigger for disabled button -->
+                                        <Trigger Property="IsEnabled" Value="False">
+                                            <Setter Property="Background" 
+                                                    TargetName="Border" 
+                                                    Value="{StaticResource DisabledButtonColorBrush}"/>
+                                        </Trigger>
+
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+
+                        <!-- If there is no errors change to enabled-->
+                        <Style.Triggers>
+                            <MultiDataTrigger>
+                                <MultiDataTrigger.Conditions>
+                                    <Condition Binding="{Binding ElementName=TitleTextBox, Path=(Validation.HasError)}" Value="false"/>
+                                    <Condition Binding="{Binding ElementName=SourcePathTextBox, Path=(Validation.HasError)}" Value="false"/>
+                                </MultiDataTrigger.Conditions>
+                                <Setter Property="IsEnabled" Value="True"/>
+                            </MultiDataTrigger>
+                        </Style.Triggers>
+
+                    </Style>
+                </Button.Style>
+            </Button>
+
         </StackPanel>
+          
     </Grid>
 </local:BasePage>
