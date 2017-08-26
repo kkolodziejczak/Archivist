@@ -60,7 +60,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Models\Pages.cs" />
+    <Compile Include="Dialog\MessageBox.cs" />
+    <Compile Include="Controls\ProjectItemControl.xaml.cs">
+      <DependentUpon>ProjectItemControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Enums\Pages.cs" />
+    <Compile Include="Dialog\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Pages\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>
@@ -75,12 +84,22 @@
     </Compile>
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
+    <Compile Include="ValueConverters\PageToActiveButtonValueConverter.cs" />
     <Compile Include="ViewModels\Application\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Application\Pages\Projects\ProjectsViewModel.cs" />
-    <Compile Include="ViewModels\Application\Pages\Projects\ProjectViewModel.cs" />
     <Compile Include="ViewModels\Application\Pages\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
+    <Compile Include="ViewModels\Controls\DialogViewModel.cs" />
+    <Compile Include="ViewModels\Controls\ProjectItemControlViewModel.cs" />
+    <Page Include="Controls\ProjectItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialog\DialogWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -120,6 +139,10 @@
     <Page Include="Styles\Fonts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ScrollBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\Texts.xaml">
       <Generator>MSBuild:Compile</Generator>

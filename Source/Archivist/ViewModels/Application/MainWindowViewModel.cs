@@ -76,6 +76,7 @@ namespace Archivist
         public async Task SwitchPage(Pages page)
         {
             Page = page;
+           
             await Task.Delay(1);
         } 
 

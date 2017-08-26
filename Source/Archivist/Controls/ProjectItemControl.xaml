@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="Archivist.ProjectItemControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Archivist"
+             mc:Ignorable="d" 
+             Background="White"
+             >
+    <Grid>
+        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Events to show and hide Project Buttons-->
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="MouseEnter">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation To="1"
+                                         Duration="0:0:0.4"
+                                         Storyboard.TargetName="EditButton"
+                                         Storyboard.TargetProperty="Opacity"/>
+                        <DoubleAnimation To="1"
+                                         Duration="0:0:0.4"
+                                         Storyboard.TargetName="DeleteButton"
+                                         Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="MouseLeave">
+                <BeginStoryboard>
+                    <Storyboard>
+                        <DoubleAnimation To="0"
+                                         Duration="0:0:0.4"
+                                         Storyboard.TargetName="EditButton"
+                                         Storyboard.TargetProperty="Opacity"/>
+                        <DoubleAnimation To="0"
+                                         Duration="0:0:0.4"
+                                         Storyboard.TargetName="DeleteButton"
+                                         Storyboard.TargetProperty="Opacity"/>
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger>
+        </Grid.Triggers>
+        <!-- Mouse Binding for doubleclick later -->
+        <Grid.InputBindings>
+            <MouseBinding Command="{Binding ActiveButtonCommand}" MouseAction="LeftDoubleClick" />
+        </Grid.InputBindings>
+
+        <!-- Project title -->
+        <TextBlock Text="{Binding Title}"
+                   Grid.Column="0"
+                   VerticalAlignment="Center"
+                   Foreground="{StaticResource SecondaryTextBrush}"
+                   Padding="5 0 5 0"
+                   />
+
+        <!-- Project Buttons-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1">
+
+            <!-- Edit Button -->
+            <Button x:Name="EditButton"
+                    Opacity="0"
+                    Width="25"
+                    Cursor="Hand"
+                    Focusable="False"
+                    Command="{Binding EditButtonCommand}"
+                    Style="{StaticResource TransparentIconButton}"
+                    Content="{StaticResource FontAwesomePenIcon}"
+                    />
+            
+            <!-- Delete Button-->
+            <Button x:Name="DeleteButton"
+                    Opacity="0"
+                    Width="25"
+                    Cursor="Hand"
+                    Focusable="False"
+                    Command="{Binding DeleteButtonCommand}"
+                    Style="{StaticResource TransparentIconButton}"
+                    Content="{StaticResource FontAwesomeTrashIcon}"
+                    />
+
+        </StackPanel>
+        
+    </Grid>
+</UserControl>

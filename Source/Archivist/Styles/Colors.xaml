@@ -10,6 +10,9 @@
     <Color x:Key="DarkPrimaryColor">#1976d2</Color>
     <SolidColorBrush x:Key="DarkPrimaryColorBrush" Color="{StaticResource DarkPrimaryColor}"/>
 
+    <Color x:Key="DarkPrimaryTransparentColor">#001976d2</Color>
+    <SolidColorBrush x:Key="DarkPrimaryTransparentColorBrush" Color="{StaticResource DarkPrimaryTransparentColor}"/>
+    
     <Color x:Key="ActiveDarkPrimaryColor">#2196f3</Color>
     <SolidColorBrush x:Key="ActiveDarkPrimaryColorBrush" Color="{StaticResource ActiveDarkPrimaryColor}"/>
     
@@ -39,5 +42,6 @@
 
     <Color x:Key="DisabledButtonColor">#9E9E9E</Color>
     <SolidColorBrush x:Key="DisabledButtonColorBrush" Color="{StaticResource DisabledButtonColor}"/>
+
 
 </ResourceDictionary>

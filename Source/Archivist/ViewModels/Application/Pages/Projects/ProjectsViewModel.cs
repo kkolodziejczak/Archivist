@@ -54,7 +54,7 @@ namespace Archivist
         public string ArchivePath { get; set; }
 
 
-        public ObservableCollection<ProjectViewModel> Projects { get; set; }
+        public ObservableCollection<ProjectItemControlViewModel> Projects { get; set; }
 
         #endregion
 
@@ -87,15 +87,59 @@ namespace Archivist
             //TODO: Load Projects from "Database"
 
             // Allocate projects
-            Projects = new ObservableCollection<ProjectViewModel>();
+            Projects = new ObservableCollection<ProjectItemControlViewModel>();
 
             for (int i = 0; i < 12; i++)
-                Projects.Add(new ProjectViewModel());
+            {
+                Title = $"Test Title{i}";
+                SourcePath = "SRC PATH";
+                ArchivePath = "ArchivePath PATH";
+
+                AddProject();
+            }
+
+            Title = "";
+            SourcePath = "";
+            ArchivePath = "";
 
             // Create Commands
             AddProjectCommand = new RelayCommand(async () => await AddProject());
             OpenSourceFileDialogCommand = new RelayCommand(async () => await OpenSourceFileDialog());
             SaveArchiveFileDialogCommand = new RelayCommand(async () => await OpenArchiveFileDialog());
+        }
+
+
+
+        #endregion
+
+        #region Private Methods
+
+        private void EditButtonClick(object sender, EventArgs e)
+        {
+            if(sender is ProjectItemControlViewModel project)
+            {
+                Title = project.Project.Title;
+                SourcePath = project.Project.SourcePath;
+                ArchivePath = project.Project.ArchivePath;
+            }
+
+        }
+
+        /// <summary>
+        /// Delete project from list from with request comes
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeleteButtonClick(object sender, EventArgs e)
+        {
+            if (sender is ProjectItemControlViewModel project)
+            {
+                var result = Archivist.MessageBox.Show("Do you want to delete this project?", "Confirmation");
+
+                if (result == MessageBoxResult.Yes)
+                    Projects.Remove(project);
+            }
+
         }
 
         #endregion
@@ -109,6 +153,21 @@ namespace Archivist
         public async Task AddProject()
         {
             //TODO : add project to collection
+            var project = new ProjectItemControlViewModel
+            {
+                Project = new ProjectModel
+                {
+                    Title = Title,
+                    SourcePath = SourcePath,
+                    ArchivePath = ArchivePath
+                }
+            };
+
+            project.OnEditButtonClick += EditButtonClick;
+            project.OnDeleteButtonClick += DeleteButtonClick;
+            project.OnActiveProjectClick += DeleteButtonClick;
+
+            Projects.Add(project);
 
             // Await because of async
             await Task.Delay(1);
@@ -188,6 +247,13 @@ namespace Archivist
                             {
                                 return "Project title is required.";
                             }
+                            // Check if title exist
+                            int count = Projects.Count(p => p.Title == Title);
+                            if (count > 0)
+                            {
+                                return "Project with that title already exists.";
+                            }
+
                         }
 
                         break;

@@ -16,18 +16,29 @@
         <!-- Projects list -->
         <Border Grid.Column="0"
                 Margin="15"
-                Width="150"
-                Height="210"
+                Width="200"
                 BorderThickness="1"
                 BorderBrush="DarkGray">
-            <ListView ItemsSource="{Binding Projects}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}"
-                                       Margin="5 2 5 0"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <ScrollViewer VerticalScrollBarVisibility="Auto"
+                          MaxHeight="268">
+                <ItemsControl ItemsSource="{Binding Projects}">
+                    
+                    <!-- Set items panel to StackPanel in vertical orientatnion-->
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <!-- Set items template as ProjectItemControl -->
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:ProjectItemControl DataContext="{Binding}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    
+                </ItemsControl>
+            </ScrollViewer>
         </Border>
 
         <!-- Form to add new projects -->
@@ -98,6 +109,7 @@
                         Style="{StaticResource IconButton}"
                         Content="{StaticResource FontAwesomeFolderIcon}"
                         Command="{Binding OpenSourceFileDialogCommand}"
+                        Cursor="Hand"
                         />
             </Grid>
 
@@ -137,6 +149,7 @@
                         Padding="5"
                         Content="{StaticResource FontAwesomeFolderIcon}"
                         Command="{Binding SaveArchiveFileDialogCommand}"
+                        Cursor="Hand"
                         />
             </Grid>
 

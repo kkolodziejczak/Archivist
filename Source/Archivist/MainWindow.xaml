@@ -7,8 +7,7 @@
         mc:Ignorable="d" 
         ResizeMode="NoResize" SizeToContent="WidthAndHeight"
         Height="300"
-        MaxHeight="300"
-        Title="Archivist">
+        Title="Archivist - None">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50"/>
@@ -27,20 +26,31 @@
                 <StackPanel Grid.Row="0"
                             VerticalAlignment="Top">
                     <!-- Projects Button -->
-                    <Button Style="{StaticResource IconButton}"
-                            Content="{StaticResource FontAwesomeFileIcon}"
-                            FontSize="{StaticResource FontSizeXLarge}"
-                            ToolTip="{StaticResource TooltipProjects}"
-                            Command="{Binding ProjectsCommand}"
-                            />
+                    <Border Background="{Binding Page, 
+                            Converter={local:PageToActiveButtonValueConverter}, 
+                            ConverterParameter={x:Static local:Pages.Projects}}">
 
+                        <Button Style="{StaticResource IconButtonToTransparent}"
+                                Content="{StaticResource FontAwesomeFileIcon}"
+                                FontSize="{StaticResource FontSizeXLarge}"
+                                ToolTip="{StaticResource TooltipProjects}"
+                                Command="{Binding ProjectsCommand}"
+                                />
+                    </Border>
+                    
                     <!-- Settings Button -->
-                    <Button Style="{StaticResource IconButton}"
-                            Content="{StaticResource FontAwesomeSettingsIcon}" 
-                            FontSize="{StaticResource FontSizeXLarge}"
-                            ToolTip="{StaticResource TooltipSettings}"
-                            Command="{Binding SettingsCommand}"
-                            />
+                    <Border Background="{Binding Page, 
+                            Converter={local:PageToActiveButtonValueConverter}, 
+                            ConverterParameter={x:Static local:Pages.Settings}}">
+
+                        <Button Style="{StaticResource IconButtonToTransparent}"
+                                Content="{StaticResource FontAwesomeSettingsIcon}" 
+                                FontSize="{StaticResource FontSizeXLarge}"
+                                ToolTip="{StaticResource TooltipSettings}"
+                                Command="{Binding SettingsCommand}"
+                                />
+                        
+                    </Border>
 
                 </StackPanel>
 
@@ -49,20 +59,32 @@
                             VerticalAlignment="Bottom">
 
                     <!-- Report Button -->
-                    <Button Style="{StaticResource IconButton}"
+                    <Border Background="{Binding Page, 
+                            Converter={local:PageToActiveButtonValueConverter}, 
+                            ConverterParameter={x:Static local:Pages.Report}}">
+
+                        <Button Style="{StaticResource IconButtonToTransparent}"
                             Content="{StaticResource FontAwesomeWarrningIcon}" 
                             FontSize="{StaticResource FontSizeLarge}"
                             ToolTip="{StaticResource TooltipReport}"
                             Command="{Binding ReportCommand}"
                             />
+                        
+                    </Border>
 
                     <!-- Info Button -->
-                    <Button Style="{StaticResource IconButton}"
+                    <Border Background="{Binding Page, 
+                            Converter={local:PageToActiveButtonValueConverter}, 
+                            ConverterParameter={x:Static local:Pages.Info}}">
+
+                        <Button Style="{StaticResource IconButtonToTransparent}"
                             Content="{StaticResource FontAwesomeInfoIcon}"
                             FontSize="{StaticResource FontSizeLarge}"
                             ToolTip="{StaticResource TooltipInfo}"
                             Command="{Binding InfoCommand}"
                             />
+                        
+                    </Border>
 
                 </StackPanel>
             </Grid>

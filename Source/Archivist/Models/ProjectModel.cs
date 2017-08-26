@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace Archivist
 {
-    public class SettingsViewModel : BaseViewModel
+    public class ProjectModel
     {
-        public SettingsViewModel()
-        {
-        }
+
+        public string Title;
+
+        public string SourcePath;
+
+        public string ArchivePath;
+
 
     }
 }
