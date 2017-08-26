@@ -9,6 +9,9 @@ Archivist is an application that supplements version control system. User can se
         </td>
     </tr>
 </table></center>
+<p align="center">
+  <img src="Resource/Images/Archivist.png">
+</p>
 
 Development of this application is recorded at my blog [kkolodziejczak.net](http://kkolodziejczak.net).
 Blog is written in Polish so feel free to use google translate.
