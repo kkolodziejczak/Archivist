@@ -1,14 +1,6 @@
 # Archivist
 Archivist is an application that supplements version control system. User can select Visual Studio project that he wants to work on. After pressing the shortcut (ctrl + s) Archivist will create backup copy of all project's source files and will save them in selected folder.
 
-<center><table>
-    <caption align="bottom"></caption>
-    <tr>
-        <td>
-           <img src="Resource/Images/Archivist.png" alt="Archivist.png"/>
-        </td>
-    </tr>
-</table></center>
 <p align="center">
   <img src="Resource/Images/Archivist.png">
 </p>
