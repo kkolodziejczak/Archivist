@@ -1,4 +1,4 @@
-﻿<local:BasePage x:TypeArguments="local:ProjectsViewModel" x:Class="Archivist.InfoPage"
+﻿<local:BasePage x:TypeArguments="local:InfoViewModel" x:Class="Archivist.InfoPage"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,7 +7,70 @@
                 mc:Ignorable="d" 
                 >
     
-    <Grid Background="Green">
-        <TextBlock Text="Test"/>
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        
+        <!-- App title -->
+        <TextBlock Grid.Row="0"
+                   Margin="0 15 0 0"
+                   FontSize="{StaticResource FontSizeLarge}"
+                   HorizontalAlignment="Center"
+                   Text="Archivist"/>
+        
+        <!-- App Description -->
+        <TextBlock Grid.Row="1"
+                   Margin="0 25 0 0"
+                   Width="400"
+                   TextAlignment="Justify"
+                   Text="{StaticResource InfoPageDescription}"
+                   TextWrapping="WrapWithOverflow"
+                   />
+
+        <!-- Author's information -->
+        <Grid Margin="0 25 0 0"
+              HorizontalAlignment="Center"
+              Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Authors Name -->
+            <TextBlock VerticalAlignment="Center"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       Text="Author:" 
+                       Margin="0 0 15 0"/>
+            <TextBlock HorizontalAlignment="Left"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       Text="Krzysztof Kołodziejczak"/>
+
+            <!-- Author's Site -->
+            <TextBlock VerticalAlignment="Center"
+                       Margin="0 10 0 0"
+                       Grid.Row="1"
+                       Grid.Column="0"
+                       Text="Site:"/>
+            <Button VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    Margin="0 10 0 0"
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Command="{Binding OpenSiteCommand}"
+                    Style="{StaticResource TextButton}"
+                    Content="kkolodziejczak.net"/>
+            
+        </Grid>
+
     </Grid>
 </local:BasePage>

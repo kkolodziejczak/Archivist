@@ -25,9 +25,12 @@
     <Color x:Key="TextIconsColor">#ffffff</Color>
     <SolidColorBrush x:Key="TextIconsColorBrush" Color="{StaticResource TextIconsColor}"/>
 
-    <Color x:Key="AccentColor">#03a9f4</Color>
-    <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}"/>
+    <Color x:Key="AccentBlueColor">#03a9f4</Color>
+    <SolidColorBrush x:Key="AccentBlueColorBrush" Color="{StaticResource AccentBlueColor}"/>
 
+    <Color x:Key="AccentOrangeColor">#FF6F00</Color>
+    <SolidColorBrush x:Key="AccentOrangeColorBrush" Color="{StaticResource AccentOrangeColor}"/>
+    
     <Color x:Key="PrimaryText">#212121</Color>
     <SolidColorBrush x:Key="PrimaryTextBrush" Color="{StaticResource PrimaryText}"/>
 

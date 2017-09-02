@@ -18,7 +18,7 @@ namespace Archivist
     /// <summary>
     /// Interaction logic for InfoPage.xaml
     /// </summary>
-    public partial class InfoPage : BasePage<ProjectsViewModel>
+    public partial class InfoPage : BasePage<InfoViewModel>
     {
         public InfoPage()
         {

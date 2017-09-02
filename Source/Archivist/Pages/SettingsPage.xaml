@@ -7,6 +7,79 @@
                 mc:Ignorable="d" 
                 >
     
-    <StackPanel Background="Red">
-    </StackPanel>
+    <Grid Margin="25">
+        <Border BorderThickness="1"
+                Grid.Row="1"
+                BorderBrush="DarkGray"
+                Padding="5">
+            <ScrollViewer>
+                <StackPanel>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="Default archive path"/>
+
+                        <!-- Default achive TextBox and SaveFileDialogButton-->
+                        <Grid Grid.Column="1"
+                              VerticalAlignment="Center">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- Archive TextBox -->
+                            <TextBox Grid.Column="0" 
+                                     TabIndex="4"
+                                     IsReadOnly="True"
+                                     Style="{StaticResource ValidationStyle}"
+                                     >
+                                <TextBox.InputBindings>
+                                    <MouseBinding Command="{Binding SaveArchiveFileDialogCommand}" MouseAction="LeftDoubleClick"/>
+                                </TextBox.InputBindings>
+                            </TextBox>
+
+                            <!-- SaveFileDialog -->
+                            <Button Grid.Column="1" 
+                                    TabIndex="5"
+                                    Width="19"
+                                    Style="{StaticResource IconButton}"
+                                    Padding="5"
+                                    Content="{StaticResource FontAwesomeFolderIcon}"
+                                    Command="{Binding SaveArchiveFileDialogCommand}"
+                                    Cursor="Hand"
+                                    />
+                        </Grid>
+                    </Grid>
+
+                    <!-- Shortcut -->
+                    <Grid Margin="0 15 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="150"/>
+                            <ColumnDefinition Width="150"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Grid.Column="0"
+                                   VerticalAlignment="Center"
+                                   Text="Shortcut"/>
+                        
+                        <Button Grid.Column="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Cursor="Hand"
+                                Width="75"
+                                Command="{Binding ShortCutButtonCommand}"
+                                Content="{Binding ShortCutButtonText}"/>
+                    </Grid>
+
+
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
 </local:BasePage>

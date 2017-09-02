@@ -33,8 +33,8 @@ namespace Archivist
             {
                 Title = title,
                 Question = message,
-                ButtonTextOk = "Yes",
-                ButtonTextNo = "No"
+                ButtonTextOk = "YES",
+                ButtonTextNo = "NO"
             };
 
             // Create and show Dialog

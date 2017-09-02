@@ -31,6 +31,7 @@
                             ConverterParameter={x:Static local:Pages.Projects}}">
 
                         <Button Style="{StaticResource IconButtonToTransparent}"
+                                Focusable="False"
                                 Content="{StaticResource FontAwesomeFileIcon}"
                                 FontSize="{StaticResource FontSizeXLarge}"
                                 ToolTip="{StaticResource TooltipProjects}"
@@ -44,6 +45,7 @@
                             ConverterParameter={x:Static local:Pages.Settings}}">
 
                         <Button Style="{StaticResource IconButtonToTransparent}"
+                                Focusable="False"
                                 Content="{StaticResource FontAwesomeSettingsIcon}" 
                                 FontSize="{StaticResource FontSizeXLarge}"
                                 ToolTip="{StaticResource TooltipSettings}"
@@ -64,11 +66,12 @@
                             ConverterParameter={x:Static local:Pages.Report}}">
 
                         <Button Style="{StaticResource IconButtonToTransparent}"
-                            Content="{StaticResource FontAwesomeWarrningIcon}" 
-                            FontSize="{StaticResource FontSizeLarge}"
-                            ToolTip="{StaticResource TooltipReport}"
-                            Command="{Binding ReportCommand}"
-                            />
+                                Focusable="False"
+                                Content="{StaticResource FontAwesomeWarrningIcon}" 
+                                FontSize="{StaticResource FontSizeLarge}"
+                                ToolTip="{StaticResource TooltipReport}"
+                                Command="{Binding ReportCommand}"
+                                />
                         
                     </Border>
 
@@ -78,11 +81,12 @@
                             ConverterParameter={x:Static local:Pages.Info}}">
 
                         <Button Style="{StaticResource IconButtonToTransparent}"
-                            Content="{StaticResource FontAwesomeInfoIcon}"
-                            FontSize="{StaticResource FontSizeLarge}"
-                            ToolTip="{StaticResource TooltipInfo}"
-                            Command="{Binding InfoCommand}"
-                            />
+                                Focusable="False"
+                                Content="{StaticResource FontAwesomeInfoIcon}"
+                                FontSize="{StaticResource FontSizeLarge}"
+                                ToolTip="{StaticResource TooltipInfo}"
+                                Command="{Binding InfoCommand}"
+                                />
                         
                     </Border>
 
@@ -93,7 +97,7 @@
         <!-- Content presenter -->
         <ContentPresenter Grid.Column="1"
                           MinHeight="300"
-                          MinWidth="400"
+                          MinWidth="460"
                           Content="{Binding Page, Converter={local:ApplicationPageValueConverter}}"/>
         
     </Grid>

@@ -86,6 +86,7 @@
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\PageToActiveButtonValueConverter.cs" />
     <Compile Include="ViewModels\Application\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\Application\Pages\Info\InfoViewModel.cs" />
     <Compile Include="ViewModels\Application\Pages\Projects\ProjectsViewModel.cs" />
     <Compile Include="ViewModels\Application\Pages\Settings\SettingsViewModel.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />

@@ -11,6 +11,9 @@ using System.Windows.Input;
 
 namespace Archivist
 {
+    /// <summary>
+    /// ViewModel for ProjectsPage
+    /// </summary>
     public class ProjectsViewModel : BaseViewModel, IDataErrorInfo
     {
         #region Private Fields

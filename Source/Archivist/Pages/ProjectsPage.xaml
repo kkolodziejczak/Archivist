@@ -96,7 +96,7 @@
                                                     UpdateSourceTrigger=PropertyChanged}"
                         >
                     <TextBox.InputBindings>
-                        <MouseBinding Command="{Binding OpenSourceFileDialogCommand}" MouseAction="LeftClick"/>
+                        <MouseBinding Command="{Binding OpenSourceFileDialogCommand}" MouseAction="LeftDoubleClick"/>
                         <KeyBinding Command="{Binding OpenSourceFileDialogCommand}" Key="Enter"/>
                     </TextBox.InputBindings>
                 </TextBox>
@@ -136,7 +136,7 @@
                          Text="{Binding ArchivePath}"
                          >
                     <TextBox.InputBindings>
-                        <MouseBinding Command="{Binding SaveArchiveFileDialogCommand}" MouseAction="LeftClick"/>
+                        <MouseBinding Command="{Binding SaveArchiveFileDialogCommand}" MouseAction="LeftDoubleClick"/>
                         <KeyBinding Command="{Binding SaveArchiveFileDialogCommand}" Key="Enter"/>
                     </TextBox.InputBindings>
                 </TextBox>
