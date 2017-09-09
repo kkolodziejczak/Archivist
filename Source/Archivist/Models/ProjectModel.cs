@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Archivist
 {
-    public class ProjectModel
+    public class Project
     {
 
         public string Title;

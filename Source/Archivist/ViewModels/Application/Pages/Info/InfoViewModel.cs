@@ -19,7 +19,7 @@ namespace Archivist
         /// <summary>
         /// Blog URL
         /// </summary>
-        private readonly string siteURL = "http://kkolodziejczak.net/";
+        private readonly string _siteURL = "http://kkolodziejczak.net/";
 
         #endregion
 
@@ -53,7 +53,7 @@ namespace Archivist
         /// </summary>
         private void OpenSite()
         {
-            Process.Start(siteURL);
+            Process.Start(_siteURL);
         }
 
         #endregion

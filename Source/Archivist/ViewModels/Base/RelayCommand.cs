@@ -9,12 +9,12 @@ namespace Archivist
 {
     public class RelayCommand : ICommand
     {
-        #region Private Members
+        #region Private Fields
         
         /// <summary>
         /// Action to run
         /// </summary>
-        private Action mAction;
+        private Action _Action;
 
         #endregion
         
@@ -35,7 +35,7 @@ namespace Archivist
         /// <param name="action"></param>
         public RelayCommand(Action action)
         {
-            mAction = action;
+            _Action = action;
         }
 
         #endregion
@@ -58,7 +58,7 @@ namespace Archivist
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            mAction();
+            _Action();
         } 
 
         #endregion

@@ -8,16 +8,16 @@ using System.Windows.Input;
 namespace Archivist
 {
     /// <summary>
-    /// ViewModel representing <see cref="ProjectModel"/>.
+    /// ViewModel representing <see cref="Archivist.Project"/>.
     /// </summary>
     public class ProjectItemControlViewModel : BaseViewModel
     {
-        #region Private Members
+        #region Private Fields
 
         /// <summary>
         /// Information about project
         /// </summary>
-        private ProjectModel m_Project;
+        private Project _Project;
 
         #endregion
 
@@ -31,15 +31,15 @@ namespace Archivist
         /// <summary>
         /// Information about project
         /// </summary>
-        public ProjectModel Project
+        public Project Project
         {
-            get => m_Project;
+            get => _Project;
             set
             {
                 if (Project == value)
                     return;
 
-                m_Project = value;
+                _Project = value;
 
                 Title = value.Title;
             }

@@ -7,19 +7,13 @@ using System.Threading.Tasks;
 
 namespace Archivist
 {
-    public class PageToActiveButtonValueConverter : BaseValueConverter<PageToActiveButtonValueConverter>
+    public class ToStringValueConverter : BaseValueConverter<ToStringValueConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || parameter == null)
-                return null;
-
-            if((Pages)parameter == (Pages)value)
-            {
-                return ResourceHelper.GetStaticFieldValue("ActiveDarkPrimaryColorBrush");
-            }
-
-            return ResourceHelper.GetStaticFieldValue("DarkPrimaryColorBrush"); ;
+            if (value == null)
+                return null; 
+            return value.ToString();
         }
 
         public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

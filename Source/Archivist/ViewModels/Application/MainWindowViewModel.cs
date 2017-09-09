@@ -62,6 +62,7 @@ namespace Archivist
             SettingsCommand = new RelayCommand(async () => await SwitchPage(Pages.Settings));
             ReportCommand = new RelayCommand(async () => await SwitchPage(Pages.Report));
             InfoCommand = new RelayCommand(async () => await SwitchPage(Pages.Info));
+
         }
 
         #endregion

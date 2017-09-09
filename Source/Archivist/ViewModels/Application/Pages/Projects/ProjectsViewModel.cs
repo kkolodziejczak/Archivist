@@ -21,7 +21,7 @@ namespace Archivist
         /// <summary>
         /// Path to the project .sln file
         /// </summary>
-        private string m_SourcePath; 
+        private string _SourcePath;
 
         #endregion
 
@@ -37,14 +37,14 @@ namespace Archivist
         /// </summary>
         public string SourcePath
         {
-            get => m_SourcePath;
+            get => _SourcePath;
             set
             {
                 // If new value is the same skip
-                if (m_SourcePath == value)
+                if (_SourcePath == value)
                     return;
 
-                m_SourcePath = value;
+                _SourcePath = value;
 
                 //TODO: Add default ArchivePath
 
@@ -109,11 +109,11 @@ namespace Archivist
             AddProjectCommand = new RelayCommand(async () => await AddProject());
             OpenSourceFileDialogCommand = new RelayCommand(async () => await OpenSourceFileDialog());
             SaveArchiveFileDialogCommand = new RelayCommand(async () => await OpenArchiveFileDialog());
+
         }
 
-
-
         #endregion
+
 
         #region Private Methods
 
@@ -155,10 +155,11 @@ namespace Archivist
         /// <returns></returns>
         public async Task AddProject()
         {
+
             //TODO : add project to collection
             var project = new ProjectItemControlViewModel
             {
-                Project = new ProjectModel
+                Project = new Project
                 {
                     Title = Title,
                     SourcePath = SourcePath,

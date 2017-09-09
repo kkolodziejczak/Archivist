@@ -10,14 +10,10 @@ namespace Archivist
 {
     public static class ResourceHelper
     {
-        public static object GetStaticFieldValue(string valueKey)
-        {
-            return Application.Current.FindResource(valueKey);
-        }
 
-        public static object GetColor(string color)
+        public static object GetStaticFieldValue(string KeyValue)
         {
-            return Application.Current.FindResource(color);
+            return Application.Current.FindResource(KeyValue);
         }
     }
 }

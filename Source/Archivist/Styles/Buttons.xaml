@@ -15,7 +15,9 @@
         <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
         <Setter Property="Height" Value="25"/>
-        <Setter Property="Padding" Value="4"/>
+        <Setter Property="Cursor" Value="Hand"/>
+        
+        <Setter Property="Width" Value="{Binding ElementName=Content, Path=ActualWidth}"/>
 
         <Setter Property="Template">
             <Setter.Value>
@@ -27,13 +29,16 @@
                             >
                         <Grid>
                             <Viewbox>
-                                <TextBlock Text="{TemplateBinding Content}" 
-                                       Focusable="False" 
-                                       FontFamily="{TemplateBinding FontFamily}"
-                                       FontSize="{TemplateBinding FontSize}"
-                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                       Margin="{TemplateBinding Padding}" 
-                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <TextBlock x:Name="Content"
+                                           Text="{TemplateBinding Content, Converter={local:ToStringValueConverter}}" 
+                                           Focusable="False"
+                                           MinWidth="1"
+                                           FontFamily="{TemplateBinding FontFamily}"
+                                           FontSize="{TemplateBinding FontSize}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           Margin="15 4"
+                                           Padding="0 2"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Viewbox>
                         </Grid>
                     </Border>

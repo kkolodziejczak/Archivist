@@ -67,14 +67,13 @@
                         <TextBlock Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Shortcut"/>
-                        
-                        <Button Grid.Column="2"
+
+                        <Button Grid.Column="1"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                Cursor="Hand"
-                                Width="75"
                                 Command="{Binding ShortCutButtonCommand}"
-                                Content="{Binding ShortCutButtonText}"/>
+                                Content="{Binding BackupShortcut}"/>
+
                     </Grid>
 
 

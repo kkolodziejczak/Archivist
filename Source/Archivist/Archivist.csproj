@@ -69,6 +69,9 @@
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Models\Shortcut\KeyboardShortcut.cs" />
+    <Compile Include="Models\Shortcut\KeyboardShortcutManager.cs" />
+    <Compile Include="Models\Shortcut\LowLevelKeyboardListener.cs" />
     <Compile Include="Models\ProjectModel.cs" />
     <Compile Include="Pages\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
@@ -85,6 +88,7 @@
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
     <Compile Include="ValueConverters\PageToActiveButtonValueConverter.cs" />
+    <Compile Include="ValueConverters\ToStringValueConverter.cs" />
     <Compile Include="ViewModels\Application\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Application\Pages\Info\InfoViewModel.cs" />
     <Compile Include="ViewModels\Application\Pages\Projects\ProjectsViewModel.cs" />

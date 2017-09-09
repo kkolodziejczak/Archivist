@@ -14,6 +14,8 @@ namespace Archivist
         /// </summary>
         public string ShortCutButtonText { get; set; } = "ctrl + s";
 
+        public KeyboardShortcut BackupShortcut { get; set; }
+
 
         public ICommand ShortCutButtonCommand { get; private set; } 
 
@@ -21,11 +23,28 @@ namespace Archivist
         {
             // create commands
             ShortCutButtonCommand = new RelayCommand(ShortcutButtonClick);
+
+            BackupShortcut = new KeyboardShortcut()
+            {
+                Key = Key.S,
+                Ctrl = true,
+            };
+
+            BackupShortcut.OnShortcutActivated += CreateBackup;
+
+            KeyboardShortcutManager.Instance.RegisterKeyboardShortcut(BackupShortcut);
+
+
         }
 
         public void ShortcutButtonClick()
         {
+            KeyboardShortcutManager.Instance.RecordKeyboardShortcut(BackupShortcut);
+        }
 
+        public void CreateBackup(object sender, EventArgs e)
+        {
+            MessageBox.Show("Backup created!", "Backup");
         }
 
     }
