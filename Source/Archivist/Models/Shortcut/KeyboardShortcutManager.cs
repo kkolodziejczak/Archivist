@@ -33,9 +33,14 @@ namespace Archivist
         private bool _IsRecording;
 
         /// <summary>
-        /// Shortcut type that will be replaced after recording
+        /// Shortcut that is pressed
         /// </summary>
-        private KeyboardShortcut _ShortcutToRecord;
+        private KeyboardShortcut _PressedShortcut;
+
+        /// <summary>
+        /// Shortcut that was recorded
+        /// </summary>
+        private KeyboardShortcut _RecordedShortcut;
 
         /// <summary>
         /// ShortcutSelected by user
@@ -44,27 +49,7 @@ namespace Archivist
 
         #endregion
 
-        #region Public Properties
-
-        /// <summary>
-        /// Indicates if Alt key is holded (Left and Right are the same)
-        /// </summary>
-        public bool IsAltPressed { get; private set; }
-
-        /// <summary>
-        /// Indicates if Ctrl key is holded (Left and Right are the same)
-        /// </summary>
-        public bool IsCtrlPressed { get; private set; }
-
-        /// <summary>
-        /// Indicates if Shift key is holded (Left and Right are the same)
-        /// </summary>
-        public bool IsShiftPressed { get; private set; }
-
-        /// <summary>
-        /// Key that is holded
-        /// </summary>
-        public Key KeyPressed { get; private set; }
+        #region Singleton
 
         /// <summary>
         /// ShortcutManager Singleton instance
@@ -93,7 +78,9 @@ namespace Archivist
         /// </summary>
         private KeyboardShortcutManager()
         {
-            
+            // Init Properties
+            _PressedShortcut = new KeyboardShortcut();
+
             // Prepare Keyboard listener
             _KeyboardListener = new LowLevelKeyboardListener();
             _KeyboardListener.OnKeyUp += OnKeyUp;
@@ -132,30 +119,14 @@ namespace Archivist
         {
             SwitchKey(e.KeyPressed, true);
 
-            if (_IsRecording == true)
-                return;
-
-            foreach (var shortcut in _RegisteredShortcuts)
+            foreach (var registeredShortcut in _RegisteredShortcuts)
             {
-                if (IsShortcutPressed(shortcut))
+                if (registeredShortcut == _PressedShortcut)
                 {
-                    shortcut.Execute();
+                    registeredShortcut.Execute();
                 }
             }
 
-        }
-
-        /// <summary>
-        /// Checks if shortcut is pressed 
-        /// </summary>
-        /// <param name="shortcut"></param>
-        /// <returns></returns>
-        private bool IsShortcutPressed(KeyboardShortcut shortcut)
-        {
-            return (IsAltPressed == shortcut.Alt &&
-                    IsCtrlPressed == shortcut.Ctrl &&
-                    IsShiftPressed == shortcut.Shift &&
-                    KeyPressed == shortcut.Key);
         }
 
         /// <summary>
@@ -172,49 +143,42 @@ namespace Archivist
         /// Changes value of keys
         /// </summary>
         /// <param name="key"></param>
-        /// <param name="value"></param>
+        /// <param name="value">Switch key On(true) or Off(false)</param>
         private void SwitchKey(Key key, bool value)
         {
             switch (key)
             {
                 case Key.LeftCtrl:
                 case Key.RightCtrl:
-                    IsCtrlPressed = value;
+                    _PressedShortcut.Ctrl = value;
                     break;
+
                 case Key.LeftAlt:
                 case Key.RightAlt:
-                    IsAltPressed = value;
+                    _PressedShortcut.Alt = value;
                     break;
+
                 case Key.LeftShift:
                 case Key.RightShift:
-                    IsShiftPressed = value;
+                    _PressedShortcut.Shift = value;
                     break;
+
                 default:
-                    if(value == false)
+                    if(value == true)
                     {
-                        if (_IsRecording == true)
-                        {
-                            //TODO: Save Selected Shortcut in user Settings
-                            UnRegisterKeyboardShortcut(_ShortcutToRecord);
-
-                            var NewShortcut = new KeyboardShortcut(_ShortcutToRecord)
-                            {
-                                Key = key,
-                                Alt = IsAltPressed,
-                                Ctrl = IsCtrlPressed,
-                                Shift = IsShiftPressed,
-                            };
-
-                            _RegisteredShortcuts.Add(NewShortcut);
-
-                            _IsRecording = false;
-                        }
-
-                        KeyPressed = Key.None;
+                        _PressedShortcut.Key = key;
                     }
                     else
                     {
-                        KeyPressed = key;
+
+                        if(_IsRecording == true)
+                        {
+                            _RecordedShortcut = new KeyboardShortcut(_PressedShortcut);
+                            _IsRecording = false;
+                        }
+
+                        _PressedShortcut.Key = Key.None;
+
                     }
                     break;
             }
@@ -225,15 +189,24 @@ namespace Archivist
         #region Public Methods
 
         /// <summary>
-        /// Sets flag that indicates shortcut recording, the next combination of keys pressed by the user will be set as a shortcut
+        /// Returns recorded Shortcut
         /// </summary>
-        /// <param name="shortcut">Shortcut with setted <see cref="OnShortcutActivated"/>.</param>
-        public void RecordKeyboardShortcut(KeyboardShortcut shortcut)
+        /// <returns></returns>
+        public async Task<KeyboardShortcut> RecordKeyboardShortcut()
         {
-            _ShortcutToRecord = shortcut;
             _IsRecording = true;
-        }
 
+            // While recording wait for user to press key combination
+            while (_IsRecording)
+            {
+                // Wait for user
+                await Task.Delay(100);
+            }
+
+            // Return new Shortcut;
+            return _RecordedShortcut;
+        }
+        
         /// <summary>
         /// Register shortcut to listen to.
         /// </summary>
@@ -250,7 +223,7 @@ namespace Archivist
         /// Removes shortcut from shortcut list
         /// </summary>
         /// <param name="shortcut"></param>
-        public void UnRegisterKeyboardShortcut(KeyboardShortcut shortcut)
+        public void UnregisterKeyboardShortcut(KeyboardShortcut shortcut)
         {
             if (_RegisteredShortcuts == null)
                 return;

@@ -89,6 +89,8 @@ namespace Archivist
         {
             //TODO: Load Projects from "Database"
 
+            BackupManager.CreateBackup();
+            
             // Allocate projects
             Projects = new ObservableCollection<ProjectItemControlViewModel>();
 
@@ -106,14 +108,13 @@ namespace Archivist
             ArchivePath = "";
 
             // Create Commands
-            AddProjectCommand = new RelayCommand(async () => await AddProject());
-            OpenSourceFileDialogCommand = new RelayCommand(async () => await OpenSourceFileDialog());
-            SaveArchiveFileDialogCommand = new RelayCommand(async () => await OpenArchiveFileDialog());
+            AddProjectCommand = new RelayCommand(AddProject);
+            OpenSourceFileDialogCommand = new RelayCommand(OpenSourceFileDialog);
+            SaveArchiveFileDialogCommand = new RelayCommand(OpenArchiveFileDialog);
 
         }
 
         #endregion
-
 
         #region Private Methods
 
@@ -153,7 +154,7 @@ namespace Archivist
         /// Adds new project to user database
         /// </summary>
         /// <returns></returns>
-        public async Task AddProject()
+        public void AddProject()
         {
 
             //TODO : add project to collection
@@ -172,16 +173,13 @@ namespace Archivist
             project.OnActiveProjectClick += DeleteButtonClick;
 
             Projects.Add(project);
-
-            // Await because of async
-            await Task.Delay(1);
         }
 
         /// <summary>
         /// Opens file dialog allowing user to pick ther solution file
         /// </summary>
         /// <returns></returns>
-        public async Task OpenSourceFileDialog()
+        public void OpenSourceFileDialog()
         {
             // Get Path
             OpenFileDialog dialog = new OpenFileDialog()
@@ -195,16 +193,13 @@ namespace Archivist
             // If Success save file path
             if (dialog.ShowDialog() == true)
                 SourcePath = dialog.FileName;
-
-            // Await because of async
-            await Task.Delay(1);
         }
 
         /// <summary>
         /// Opens file dialog that allows user to select directory where he wants to save his archives
         /// </summary>
         /// <returns></returns>
-        public async Task OpenArchiveFileDialog()
+        public void OpenArchiveFileDialog()
         {
             // Create new save dialog
             SaveFileDialog dialog = new SaveFileDialog()
@@ -216,9 +211,6 @@ namespace Archivist
             // Open file dialog, if success save file path
             if (dialog.ShowDialog() == true)
                 ArchivePath = dialog.FileName;
-
-            // Await because of async
-            await Task.Delay(1);
         }
 
         #endregion

@@ -60,6 +60,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
+    <Compile Include="AttachedProperties\ScrollToEndProperty.cs" />
     <Compile Include="Dialog\MessageBox.cs" />
     <Compile Include="Controls\ProjectItemControl.xaml.cs">
       <DependentUpon>ProjectItemControl.xaml</DependentUpon>
@@ -68,7 +70,9 @@
     <Compile Include="Dialog\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\FileHelper.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
+    <Compile Include="Models\Backup.cs" />
     <Compile Include="Models\Shortcut\KeyboardShortcut.cs" />
     <Compile Include="Models\Shortcut\KeyboardShortcutManager.cs" />
     <Compile Include="Models\Shortcut\LowLevelKeyboardListener.cs" />

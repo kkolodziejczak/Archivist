@@ -9,6 +9,13 @@
     <system:String x:Key="TooltipReport">Report</system:String>
     <system:String x:Key="TooltipInfo">Info</system:String>
     
+    <!-- Projects Page -->
+    <system:String x:Key="Title">Add new project</system:String>
+    <system:String x:Key="SolutionTitleLabel">Title:</system:String>
+    <system:String x:Key="SolutionPathLabel">Solution file path:</system:String>
+    <system:String x:Key="SolutionArchivePathLabel">Archive path:</system:String>
+    <system:String x:Key="Title4">Add new project</system:String>
+    
     <!-- Info Page -->
     <system:String x:Key="InfoPageProjectName">Archivist</system:String>
     <system:String x:Key="InfoPageDescription">Archivist is an application that supplements version control system. User can select Visual Studio project that he wants to work on. After pressing the shortcut (ctrl + s) Archivist will create backup copy of all project's source files and will save them in selected folder.</system:String>

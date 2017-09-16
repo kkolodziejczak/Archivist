@@ -48,14 +48,14 @@
                     >
 
             <!-- Form title -->
-            <TextBlock Text="Add new project"
+            <TextBlock Text="{StaticResource Title}"
                        HorizontalAlignment="Center"
                        FontSize="{StaticResource FontSizeLarge}"
                        FontWeight="DemiBold"
                        FontFamily="{StaticResource LatoBold}"/>
 
             <!-- Title project-->
-            <TextBlock Text="Title:"
+            <TextBlock Text="{StaticResource SolutionTitleLabel}"
                        Grid.Row="0"
                        Margin="0 5 0 0"
                        Foreground="{StaticResource SecondaryTextBrush}"
@@ -72,7 +72,7 @@
                      />
 
             <!-- Source path title -->
-            <TextBlock Text="Source path:"
+            <TextBlock Text="{StaticResource SolutionPathLabel}"
                        Grid.Row="2"
                        Margin="0 15 0 0"
                        Foreground="{StaticResource SecondaryTextBrush}"
@@ -87,7 +87,8 @@
 
                 <!-- Source TextBox -->
                 <TextBox x:Name="SourcePathTextBox" 
-                         Grid.Column="0" 
+                         Grid.Column="0"
+                         local:ScrollToEndProperty.Value="True"
                          TabIndex="2"
                          IsReadOnly="True"
                          Style="{StaticResource ValidationStyle}"
@@ -114,7 +115,7 @@
             </Grid>
 
             <!-- Archive path titlle-->
-            <TextBlock Text="Archive path:"
+            <TextBlock Text="{StaticResource SolutionArchivePathLabel}"
                        Grid.Row="4"
                        Margin="0 15 0 0"
                        Foreground="{StaticResource SecondaryTextBrush}"
@@ -130,6 +131,7 @@
 
                 <!-- Archive TextBox -->
                 <TextBox Grid.Column="0" 
+                         local:ScrollToEndProperty.Value="True"
                          TabIndex="4"
                          IsReadOnly="True"
                          Style="{StaticResource ValidationStyle}"

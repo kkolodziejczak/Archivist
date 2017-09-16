@@ -16,6 +16,7 @@
         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
         <Setter Property="Height" Value="25"/>
         <Setter Property="Cursor" Value="Hand"/>
+        <Setter Property="Focusable" Value="False"/>
         
         <Setter Property="Width" Value="{Binding ElementName=Content, Path=ActualWidth}"/>
 
@@ -31,7 +32,6 @@
                             <Viewbox>
                                 <TextBlock x:Name="Content"
                                            Text="{TemplateBinding Content, Converter={local:ToStringValueConverter}}" 
-                                           Focusable="False"
                                            MinWidth="1"
                                            FontFamily="{TemplateBinding FontFamily}"
                                            FontSize="{TemplateBinding FontSize}"

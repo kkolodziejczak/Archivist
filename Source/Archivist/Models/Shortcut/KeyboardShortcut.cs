@@ -60,13 +60,13 @@ namespace Archivist
         /// <summary>
         /// Copy Constructor
         /// </summary>
-        public KeyboardShortcut(KeyboardShortcut shortcut)
+        public KeyboardShortcut(KeyboardShortcut source)
         {
-            this.Key = shortcut.Key;
-            this.Alt = shortcut.Alt;
-            this.Ctrl = shortcut.Ctrl;
-            this.Shift = shortcut.Shift;
-            this.OnShortcutActivated = shortcut.OnShortcutActivated;
+            this.Key = source.Key;
+            this.Alt = source.Alt;
+            this.Ctrl = source.Ctrl;
+            this.Shift = source.Shift;
+            this.OnShortcutActivated = source.OnShortcutActivated;
         }
 
         #endregion
@@ -82,6 +82,38 @@ namespace Archivist
             {
                 OnShortcutActivated(this, new EventArgs());
             }
+        }
+
+        #endregion
+
+        #region Operator overloading
+
+        /// <summary>
+        /// Returns if KeyboardShortcuts contains the same shortcut key combination
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator ==(KeyboardShortcut left, KeyboardShortcut right)
+        {
+            if (left is null || right is null)
+                return false;
+
+            return (left.Alt == right.Alt &&
+                    left.Ctrl == right.Ctrl &&
+                    left.Shift == right.Shift &&
+                    left.Key == right.Key);
+        }
+
+        /// <summary>
+        /// Returns if KeyboardShortcuts contains different shortcut key combination
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        public static bool operator !=(KeyboardShortcut left, KeyboardShortcut right)
+        {
+            return !(left == right);
         }
 
         #endregion
