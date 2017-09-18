@@ -156,7 +156,7 @@
             </Grid>
 
             <!-- Add Button -->
-            <Button Content="Add"
+            <Button Content="{StaticResource AddButtonLabel}"
                     TabIndex="6"
                     IsDefault="True"
                     HorizontalAlignment="Right"

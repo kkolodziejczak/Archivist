@@ -15,13 +15,15 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <!-- Message -->
-        <TextBlock Text="{Binding Question}"
-                   Grid.Row="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Margin="0 10 0 0"
-                   Padding="15 15 15 15"
-                   />
+        <ScrollViewer>
+            <TextBlock Text="{Binding Message}"
+                       Grid.Row="0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Margin="0 10 0 0"
+                       Padding="15 15 15 15"
+                       />
+        </ScrollViewer>
 
         <!-- Buttons -->
         <StackPanel Orientation="Horizontal"
@@ -42,6 +44,7 @@
             <!-- Cancel button -->
             <Button Content="{Binding ButtonTextNo}"
                     Margin="10 0 0 0"
+                    Visibility="{Binding messageBoxType, Converter={local:MessageBoxTypeToVisibilityValueConverter}}"
                     IsCancel="True"
                     Padding="25 10 25 10"
                     FontSize="{StaticResource FontSizeRegular}"

@@ -138,7 +138,7 @@ namespace Archivist
         {
             if (sender is ProjectItemControlViewModel project)
             {
-                var result = Archivist.MessageBox.Show("Do you want to delete this project?", "Confirmation");
+                var result = MessageBox.Show("Do you want to delete this project?", "Confirmation", MessageBoxType.YesNo);
 
                 if (result == MessageBoxResult.Yes)
                     Projects.Remove(project);

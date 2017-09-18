@@ -16,6 +16,15 @@ namespace Archivist
     }
 
     /// <summary>
+    /// MessageBox types that can be created
+    /// </summary>
+    public enum MessageBoxType
+    {
+        Ok,
+        YesNo,
+    }
+
+    /// <summary>
     /// MessageBox allows to show DialogWindow.
     /// </summary>
     public static class MessageBox
@@ -28,24 +37,49 @@ namespace Archivist
         /// <returns></returns>
         public static MessageBoxResult Show(string message, string title)
         {
-            //Create Proper ViewModel
-            var vm = new DialogViewModel()
+            return Show(message, title, MessageBoxType.Ok);
+        }
+
+        /// <summary>
+        /// Show dialog window with message and title
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="title"></param>
+        /// <returns></returns>
+        public static MessageBoxResult Show(string message, string title, MessageBoxType type)
+        {
+            DialogViewModel vm = null;
+            bool? DialogResult = false;
+            switch (type)
             {
-                Title = title,
-                Question = message,
-                ButtonTextOk = "YES",
-                ButtonTextNo = "NO"
-            };
+                case MessageBoxType.Ok:
+                    vm = new DialogViewModel()
+                    {
+                        Title = title,
+                        Message = message,
+                        messageBoxType = type,
+                        ButtonTextOk = "Ok",
+                    };
+                    break;
+                case MessageBoxType.YesNo:
+                    vm = new DialogViewModel()
+                    {
+                        Title = title,
+                        Message = message,
+                        messageBoxType = type,
+                        ButtonTextOk = "Yes",
+                        ButtonTextNo = "No",
+                    };
+                    break;
+            }
 
-            // Create and show Dialog
-            var DialogResult = new DialogWindow(vm).ShowDialog();
+            DialogResult = new DialogWindow(vm).ShowDialog();
 
-            // Return proper value
             if (DialogResult == true)
                 return MessageBoxResult.Yes;
             else
                 return MessageBoxResult.No;
         }
-        
+
     }
 }

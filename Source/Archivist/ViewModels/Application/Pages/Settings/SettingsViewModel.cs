@@ -64,6 +64,9 @@ namespace Archivist
             // Clear old Shortcut from manager
             KeyboardShortcutManager.Instance.UnregisterKeyboardShortcut(BackupShortcut);
 
+            // Clear to display message to user know that he needs to press new key combination
+            BackupShortcut = new KeyboardShortcut();
+
             //Record new shortcut and attach CreateBackup method
             BackupShortcut = await KeyboardShortcutManager.Instance.RecordKeyboardShortcut();
             BackupShortcut.OnShortcutActivated += CreateBackup;

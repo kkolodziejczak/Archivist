@@ -30,8 +30,9 @@
                             >
                         <Grid>
                             <Viewbox>
+                                <!--, Converter={local:ToStringValueConverter}-->
                                 <TextBlock x:Name="Content"
-                                           Text="{TemplateBinding Content, Converter={local:ToStringValueConverter}}" 
+                                           Text="{TemplateBinding Content}" 
                                            MinWidth="1"
                                            FontFamily="{TemplateBinding FontFamily}"
                                            FontSize="{TemplateBinding FontSize}"

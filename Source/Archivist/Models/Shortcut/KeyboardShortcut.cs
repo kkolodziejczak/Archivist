@@ -54,7 +54,10 @@ namespace Archivist
         /// </summary>
         public KeyboardShortcut()
         {
-
+            Key = Key.None;
+            Alt = false;
+            Ctrl = false;
+            Shift = false;
         }
 
         /// <summary>
@@ -83,7 +86,7 @@ namespace Archivist
                 OnShortcutActivated(this, new EventArgs());
             }
         }
-
+        
         #endregion
 
         #region Operator overloading

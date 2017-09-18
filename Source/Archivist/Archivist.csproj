@@ -42,6 +42,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -70,9 +71,11 @@
     <Compile Include="Dialog\DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Helpers\FileHelper.cs" />
+    <Compile Include="Enums\Size.cs" />
+    <Compile Include="Helpers\DriveHelper.cs" />
+    <Compile Include="Helpers\IOHelper.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
-    <Compile Include="Models\Backup.cs" />
+    <Compile Include="Models\BackupManager.cs" />
     <Compile Include="Models\Shortcut\KeyboardShortcut.cs" />
     <Compile Include="Models\Shortcut\KeyboardShortcutManager.cs" />
     <Compile Include="Models\Shortcut\LowLevelKeyboardListener.cs" />
@@ -91,6 +94,7 @@
     </Compile>
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
+    <Compile Include="ValueConverters\MessageBoxTypeToVisibilityValueConverter.cs" />
     <Compile Include="ValueConverters\PageToActiveButtonValueConverter.cs" />
     <Compile Include="ValueConverters\ToStringValueConverter.cs" />
     <Compile Include="ViewModels\Application\MainWindowViewModel.cs" />
@@ -198,7 +202,6 @@
   <ItemGroup>
     <None Include="FodyWeavers.xml" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.2.0.0\build\dotnet\Fody.targets" Condition="Exists('..\packages\Fody.2.0.0\build\dotnet\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

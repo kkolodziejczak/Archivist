@@ -14,11 +14,19 @@
     <system:String x:Key="SolutionTitleLabel">Title:</system:String>
     <system:String x:Key="SolutionPathLabel">Solution file path:</system:String>
     <system:String x:Key="SolutionArchivePathLabel">Archive path:</system:String>
-    <system:String x:Key="Title4">Add new project</system:String>
+    <system:String x:Key="AddButtonLabel">Add</system:String>
     
     <!-- Info Page -->
     <system:String x:Key="InfoPageProjectName">Archivist</system:String>
-    <system:String x:Key="InfoPageDescription">Archivist is an application that supplements version control system. User can select Visual Studio project that he wants to work on. After pressing the shortcut (ctrl + s) Archivist will create backup copy of all project's source files and will save them in selected folder.</system:String>
+    <system:String x:Key="InfoPageProjectVersion">Version: 0.01</system:String>
+    <system:String x:Key="InfoPageDescription">Archivist is an application that supplements version control system. User can select Visual Studio project that he wants to work on. After pressing the shortcut (Ctrl + S) Archivist will create backup copy of all project's source files and will save them in selected folder.</system:String>
+
+    <!-- Report Page -->
+    <system:String x:Key="ReportPageEmail">E-mail address (in case of any questions):</system:String>
+    <system:String x:Key="ReportPageWhatDo">What did you do:</system:String>
+    <system:String x:Key="ReportPageWhatHappend">What happened:</system:String>
+    <system:String x:Key="ReportPageSendReport">Send Report</system:String>
+
 
 
 </ResourceDictionary>

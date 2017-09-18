@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace Archivist
 {
-    public static class FileHelper
+    public static class IOHelper
     {
+        /// <summary>
+        /// Returns contents of file
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public static string GetFileContents(string filePath)
         {
             try

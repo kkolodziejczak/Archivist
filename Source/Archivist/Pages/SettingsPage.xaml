@@ -73,7 +73,10 @@
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 Command="{Binding RecordBackupCommand}"
-                                Content="{Binding BackupShortcut}"/>
+                                Width="120"
+                                Content="{Binding BackupShortcut, Converter={local:ToStringValueConverter}}"
+                                />
+                    
 
                     </Grid>
 

@@ -200,7 +200,7 @@ namespace Archivist
             while (_IsRecording)
             {
                 // Wait for user
-                await Task.Delay(100);
+                await Task.Delay(50);
             }
 
             // Return new Shortcut;

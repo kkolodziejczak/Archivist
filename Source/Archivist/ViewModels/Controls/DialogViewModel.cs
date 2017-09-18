@@ -21,9 +21,9 @@ namespace Archivist
         public string Title { get; set; }
 
         /// <summary>
-        /// Question text to be displayed
+        /// Message text to be displayed
         /// </summary>
-        public string Question { get; set; }
+        public string Message { get; set; }
 
         /// <summary>
         /// Text that is displayed on Accepting button
@@ -34,6 +34,11 @@ namespace Archivist
         /// Text that is displayed on Cancel button type
         /// </summary>
         public string ButtonTextNo { get; set; }
+
+        /// <summary>
+        /// Type of MessageBox
+        /// </summary>
+        public MessageBoxType messageBoxType {get; set;}
 
         #endregion
 
