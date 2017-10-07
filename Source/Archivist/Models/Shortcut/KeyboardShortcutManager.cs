@@ -121,12 +121,29 @@ namespace Archivist
 
             foreach (var registeredShortcut in _RegisteredShortcuts)
             {
-                if (registeredShortcut == _PressedShortcut)
+                if (IsTheShortcutTheSame(registeredShortcut, _PressedShortcut))
                 {
                     registeredShortcut.Execute();
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Returns if KeyboardShortcuts contains the same shortcut key combination
+        /// </summary>
+        /// <param name="left"></param>
+        /// <param name="right"></param>
+        /// <returns></returns>
+        private bool IsTheShortcutTheSame(KeyboardShortcut left, KeyboardShortcut right)
+        {
+            if (left is null || right is null)
+                return false;
+
+            return (left.Alt == right.Alt &&
+                    left.Ctrl == right.Ctrl &&
+                    left.Shift == right.Shift &&
+                    left.Key == right.Key);
         }
 
         /// <summary>

@@ -48,27 +48,67 @@ namespace Archivist
             return size;
         }
 
+        public static string[] GetAllDirectories(string directoryPath)
+        {
+            return Directory.GetDirectories(directoryPath, "*", SearchOption.TopDirectoryOnly);
+        }
+
+        public static string[] GetAllFiles(string directoryPath)
+        {
+            return Directory.GetFiles(directoryPath, "*", SearchOption.TopDirectoryOnly);
+        }
+
         /// <summary>
-        /// Clears copies from Archives.
+        /// Clears copies
         /// </summary>
         /// <returns></returns>
         public static ClearResult ClearDriveSpace()
         {
-            // Maybe check for "space that may be celared" 1st 
-            // If it is less than 10 MB return fail ??
+            var result = ClearResult.Fail;
+            
+            // -Get into projcet copies 
+            foreach (var project in Storage.Settings.Projects)
+            {
+                var Projects = GetAllDirectories(project.ArchivePath);
+               
+                foreach(var projectPath in Projects)
+                {
+                    var Days = GetAllDirectories(projectPath);
 
-            /////////////////////////
-            // Clearing algorithm: //
-            /////////////////////////
-            // -Get into projcet copies. 
-            // -Get all days
-            // -If there is only 1 copie leave it
-            // -Else clear all but lastest copie
-            // -If there are only one copie or 
-            // -and sapce can not be cleared return fail.
-            MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
+                    foreach(var day in Days)
+                    {
+                        var ProjectArchiveDirectories = GetAllDirectories(day);
 
-            return ClearResult.Fail;
+                        foreach(var archiveDirectory in ProjectArchiveDirectories)
+                        {
+                            var ProjectCopies = GetAllFiles(archiveDirectory);
+
+                            // If there is only 1 copie leave it
+                            if (ProjectCopies.Length > 1)
+                            {
+                                // Else clear all but lastest copie assuming that they are sorted
+                                for (int i = 0; i < ProjectCopies.Length - 1; i++)
+                                {
+                                    if (File.Exists(ProjectCopies[i]))
+                                    {
+                                        File.Delete(ProjectCopies[i]);
+                                        result = ClearResult.Success;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                
+            }
+
+            if (result == ClearResult.Fail)
+            {
+                MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
+            }
+
+            return result;
         }
 
     }

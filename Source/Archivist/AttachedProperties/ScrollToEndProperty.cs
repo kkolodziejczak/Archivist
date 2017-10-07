@@ -14,6 +14,7 @@ namespace Archivist
     {
         public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
+            //TODO: Fix issue with scrolling source path, validation style error.
             if (!(sender is TextBox textbox))
                 return;
             textbox.TextChanged -= ScrollToEnd;

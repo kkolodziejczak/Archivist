@@ -11,39 +11,41 @@ using System.IO.Compression;
 
 namespace Archivist
 {
-    public struct ProjectInfo
-    {
-        public string ProjectName { get; set; }
-        public string ProjectConfigPath { get; set; }
-        public string BasePath { get; set; }
-    }
 
-    public class BackupManager
+    public class Backup
     {
+        #region Public Methods
 
-        public static void CreateBackup()
+        /// <summary>
+        /// Creates Backup of current project
+        /// </summary>
+        public static void Create(object sender, EventArgs e)
         {
-            // TODO: get information About selected project
-           
+            if (Storage.Settings.SelectedProject == null)
+            {
+                return;
+            }
 
-            // Get Solution path
-            var projects = GetProjectInformation(@"C:\Users\Themo\Git\Archivist\Source\Archivist.sln");
+            var projects = GetProjectInformation(Storage.Settings.SelectedProject.SourcePath, Storage.Settings.SelectedProject);
 
-            foreach(var project in projects)
+            foreach (var project in projects)
             {
                 BackupFiles(project);
             }
-
         }
+
+        #endregion
+        
+        #region Private Methods
 
         /// <summary>
         /// Returns information about projects found in .sln file
         /// </summary>
         /// <param name="solutionFilePath"></param>
         /// <returns></returns>
-        private static List<ProjectInfo> GetProjectInformation(string solutionFilePath)
+        private static List<Project> GetProjectInformation(string solutionFilePath, Project ProjectInfo)
         {
-            var ProjectList = new List<ProjectInfo>();
+            var ProjectList = new List<Project>();
 
             var SolutionFileContents = IOHelper.GetFileContents(solutionFilePath);
 
@@ -54,11 +56,14 @@ namespace Archivist
 
             foreach (Match match in output)
             {
-                ProjectList.Add(new ProjectInfo()
+                ProjectList.Add(new Project()
                 {
                     ProjectName = match.Groups[1].Value,
                     ProjectConfigPath = Path.GetFileName(match.Groups[2].Value),
                     BasePath = $"{BaseSolutionPath}\\{match.Groups[1].Value}",
+                    Title = ProjectInfo.Title,
+                    ArchivePath = ProjectInfo.ArchivePath,
+                    SourcePath = ProjectInfo.SourcePath,
                 });
             }
 
@@ -68,23 +73,15 @@ namespace Archivist
         /// <summary>
         /// Create backup of all files found in <paramref name="project"/>
         /// </summary>
-        /// <param name="project"><see cref="ProjectInfo"/> that represents project data that you want to make backup of</param>
-        private static void BackupFiles(ProjectInfo project)
+        /// <param name="project"><see cref="Project"/> that represents project data that you want to make backup of</param>
+        private static void BackupFiles(Project project)
         {
-
             List<string> SourceFiles = GetSourceFiles(project);
-           
-            //TODO: Get Diskname from:
-            // Archive path.
-            // Get ProjectName
-            // Get Project Path
 
-            // Data structure ?
-            var ArchivePath = "C:\\TestArchivePath";
-            var TemproraryDirectoryPath = "C:\\Temp";
+            var ArchivePath = project.ArchivePath;
+            var TemporaryDirectoryPath = Storage.TemporaryDirectoryPath;
 
-
-            var AvailableTemporaryDiskSpace = DriveHelper.GetTotalFreeSpace(Path.GetPathRoot(TemproraryDirectoryPath));
+            var AvailableTemporaryDiskSpace = DriveHelper.GetTotalFreeSpace(Path.GetPathRoot(TemporaryDirectoryPath));
 
             if (AvailableTemporaryDiskSpace < 10 * Size.Megabyte)
             {
@@ -92,38 +89,55 @@ namespace Archivist
                 {
                     return;
                 }
+                else
+                {
+                    var AvailableSpaceAfterCleaning = DriveHelper.GetTotalFreeSpace(Path.GetPathRoot(TemporaryDirectoryPath));
+                    if (AvailableSpaceAfterCleaning < 10 * Size.Megabyte)
+                    {
+                        return;
+                    }
+                }
             }
 
 
             foreach (var sourceFile in SourceFiles)
             {
-                CopyFileIntoDirectory(sourceFile, project.BasePath, TemproraryDirectoryPath);
+                CopyFileIntoDirectory(sourceFile, project.BasePath, TemporaryDirectoryPath);
             }
 
 
             var AvailableArchiveDiskSpace = DriveHelper.GetTotalFreeSpace(Path.GetPathRoot(ArchivePath));
 
-            if (AvailableArchiveDiskSpace < DriveHelper.GetDirectorySize(TemproraryDirectoryPath))
+            if (AvailableArchiveDiskSpace < DriveHelper.GetDirectorySize(TemporaryDirectoryPath))
             {
                 if (DriveHelper.ClearDriveSpace() == ClearResult.Fail)
                 {
+                    CleanUp(TemporaryDirectoryPath);
                     return;
+                }
+                else
+                {
+                    var AvailableSpaceAfterCleaning = DriveHelper.GetTotalFreeSpace(Path.GetPathRoot(ArchivePath));
+
+                    if (AvailableSpaceAfterCleaning < 10 * Size.Megabyte)
+                    {
+                        CleanUp(TemporaryDirectoryPath);
+                        return;
+                    }
                 }
             }
 
-            CreateZipFile(TemproraryDirectoryPath, ArchivePath, project);
+            CreateZipFile(TemporaryDirectoryPath, ArchivePath, project);
 
-            // ~~Cleanup~~
-            Directory.Delete(TemproraryDirectoryPath, true);
-
+            CleanUp(TemporaryDirectoryPath);
         }
 
         /// <summary>
         /// Returns List of source files found in <paramref name="project"/>
         /// </summary>
-        /// <param name="project"><see cref="ProjectInfo"/> with project data to get files from</param>
+        /// <param name="project"><see cref="Project"/> with project data to get files from</param>
         /// <returns></returns>
-        private static List<string> GetSourceFiles(ProjectInfo project)
+        private static List<string> GetSourceFiles(Project project)
         {
             XNamespace msbuild = "http://schemas.microsoft.com/developer/msbuild/2003";
             XDocument proj = XDocument.Load($"{project.BasePath}\\{project.ProjectConfigPath}");
@@ -149,7 +163,7 @@ namespace Archivist
                 {
                     SourceFileNames.Add(attribute.Value);
                 }
-                // If value contains '.' that mean it is an file
+                // If value contains '.' that mean it is a file
                 if (data.Value.Contains('.'))
                 {
                     SourceFileNames.Add(data.Value);
@@ -171,7 +185,7 @@ namespace Archivist
             {
                 Directory.CreateDirectory(outputDirectory);
             }
-            
+
             string SourceFilePath = $"{fileDirectory}\\{fileName}";
             string TemporaryDirectoryPath = $"{outputDirectory}\\{Path.GetDirectoryName(fileName)}";
 
@@ -192,11 +206,10 @@ namespace Archivist
         /// </summary>
         /// <param name="temporaryDirectoryPath">Path to folder with files to create zip file from</param>
         /// <param name="archivePath">Path to where save created zip file</param>
-        /// <param name="project"><see cref="ProjectInfo"/> with information about project</param>
-        private static void CreateZipFile(string temporaryDirectoryPath, string archivePath, ProjectInfo project)
+        /// <param name="project"><see cref="Project"/> with information about project</param>
+        private static void CreateZipFile(string temporaryDirectoryPath, string archivePath, Project project)
         {
-
-            var TodaysDateAsString = $"{ DateTime.Now.ToShortDateString()}".Replace('-', '_');
+            var TodaysDateAsString = $"{DateTime.Now.ToShortDateString()}".Replace('-', '_');
             var TimeAsString = $"{DateTime.Now.ToLongTimeString()}".Replace(':', '_');
 
             string NewFilePath = $"{archivePath}\\Archivist\\{TodaysDateAsString}\\{project.ProjectName}";
@@ -209,5 +222,18 @@ namespace Archivist
             ZipFile.CreateFromDirectory(temporaryDirectoryPath, $"{NewFilePath}\\Archivist_{TimeAsString}.zip");
         }
 
+        /// <summary>
+        /// Clear all temporary files
+        /// </summary>
+        /// <param name="directoryPath"></param>
+        private static void CleanUp(string directoryPath)
+        {
+            if (Directory.Exists(directoryPath))
+            {
+                Directory.Delete(directoryPath, true);
+            }
+        } 
+
+        #endregion
     }
 }

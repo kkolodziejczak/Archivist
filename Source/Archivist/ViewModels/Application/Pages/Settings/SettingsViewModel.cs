@@ -15,7 +15,7 @@ namespace Archivist
         /// <summary>
         /// Shortcut that fires create backup
         /// </summary>
-        public KeyboardShortcut BackupShortcut { get; set; }
+        public KeyboardShortcut BackupShortcut { get; private set; }
 
         #endregion
 
@@ -38,18 +38,9 @@ namespace Archivist
             // create commands
             RecordBackupCommand = new RelayCommand(RecordBackupShortcut);
 
-            // Generate Default Shortcut 
-            // TODO: Load shortcut from user's settings
-            BackupShortcut = new KeyboardShortcut()
-            {
-                Key = Key.S,
-                Ctrl = true,
-            };
-            BackupShortcut.OnShortcutActivated += CreateBackup;
+            // Get BackupShortcut from user's settings
+            BackupShortcut = Storage.Settings.BackupShortcut;
 
-
-            // Start listening for Shortcut
-            KeyboardShortcutManager.Instance.RegisterKeyboardShortcut(BackupShortcut);
         }
 
         #endregion
@@ -68,23 +59,14 @@ namespace Archivist
             BackupShortcut = new KeyboardShortcut();
 
             //Record new shortcut and attach CreateBackup method
-            BackupShortcut = await KeyboardShortcutManager.Instance.RecordKeyboardShortcut();
-            BackupShortcut.OnShortcutActivated += CreateBackup;
+            Storage.Settings.BackupShortcut = await KeyboardShortcutManager.Instance.RecordKeyboardShortcut();
+
+            // Set new Shortcut as BackupShortcut
+            BackupShortcut = Storage.Settings.BackupShortcut;
 
             // Register new Shortcut
-            // TODO: save new Shortcut into user settings
             KeyboardShortcutManager.Instance.RegisterKeyboardShortcut(BackupShortcut);
 
-        }
-
-        /// <summary>
-        /// Temporary method that indicates creating backup
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CreateBackup(object sender, EventArgs e)
-        {
-            MessageBox.Show("Backup created!", "Backup");
         }
 
         #endregion

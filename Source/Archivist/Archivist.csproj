@@ -75,11 +75,13 @@
     <Compile Include="Helpers\DriveHelper.cs" />
     <Compile Include="Helpers\IOHelper.cs" />
     <Compile Include="Helpers\ResourceHelper.cs" />
-    <Compile Include="Models\BackupManager.cs" />
+    <Compile Include="Models\Backup.cs" />
+    <Compile Include="Models\Project.cs" />
+    <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Shortcut\KeyboardShortcut.cs" />
     <Compile Include="Models\Shortcut\KeyboardShortcutManager.cs" />
     <Compile Include="Models\Shortcut\LowLevelKeyboardListener.cs" />
-    <Compile Include="Models\ProjectModel.cs" />
+    <Compile Include="Models\Storage.cs" />
     <Compile Include="Pages\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>

@@ -89,38 +89,6 @@ namespace Archivist
         
         #endregion
 
-        #region Operator overloading
-
-        /// <summary>
-        /// Returns if KeyboardShortcuts contains the same shortcut key combination
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        public static bool operator ==(KeyboardShortcut left, KeyboardShortcut right)
-        {
-            if (left is null || right is null)
-                return false;
-
-            return (left.Alt == right.Alt &&
-                    left.Ctrl == right.Ctrl &&
-                    left.Shift == right.Shift &&
-                    left.Key == right.Key);
-        }
-
-        /// <summary>
-        /// Returns if KeyboardShortcuts contains different shortcut key combination
-        /// </summary>
-        /// <param name="left"></param>
-        /// <param name="right"></param>
-        /// <returns></returns>
-        public static bool operator !=(KeyboardShortcut left, KeyboardShortcut right)
-        {
-            return !(left == right);
-        }
-
-        #endregion
-
         #region Override
 
         public override string ToString()

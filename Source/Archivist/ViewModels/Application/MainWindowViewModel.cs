@@ -13,13 +13,44 @@ namespace Archivist
     /// </summary>
     public class MainWindowViewModel : BaseViewModel
     {
+        #region Private Fields
+
+        /// <summary>
+        /// Title of the window
+        /// </summary>
+        private string _WindowTitle;
+
+        #endregion
 
         #region Public Properties
-        
+
         /// <summary>
         /// Current page
         /// </summary>
         public Pages Page { get; set; }
+
+        /// <summary>
+        /// Title of the window
+        /// </summary>
+        public string WindowTitle
+        {
+            get
+            {
+                if (_WindowTitle == String.Empty || _WindowTitle == null)
+                    return "Archivist - None";
+
+                return _WindowTitle;
+            }
+            set
+            {
+                if(value.Contains("Archivist -"))
+                    _WindowTitle = value;
+
+                _WindowTitle = $"Archivist - {value}";
+
+                OnPropertyChanged("WindowTitle");
+            }
+        }
 
         #endregion
 
@@ -54,6 +85,9 @@ namespace Archivist
         /// </summary>
         public MainWindowViewModel()
         {
+            // Load settings 
+            Storage.Load();
+
             // Set Starting page
             Page = Pages.Projects;
 
@@ -63,6 +97,9 @@ namespace Archivist
             ReportCommand = new RelayCommand(async () => await SwitchPage(Pages.Report));
             InfoCommand = new RelayCommand(async () => await SwitchPage(Pages.Info));
 
+            // Start listening for Shortcut
+            Storage.Settings.BackupShortcut.OnShortcutActivated += Backup.Create;
+            KeyboardShortcutManager.Instance.RegisterKeyboardShortcut(Storage.Settings.BackupShortcut);
         }
 
         #endregion
@@ -79,8 +116,9 @@ namespace Archivist
             Page = page;
            
             await Task.Delay(1);
-        } 
+        }
 
         #endregion
+
     }
 }

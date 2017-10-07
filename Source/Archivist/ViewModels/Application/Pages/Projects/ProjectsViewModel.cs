@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,7 +38,13 @@ namespace Archivist
         /// </summary>
         public string SourcePath
         {
-            get => _SourcePath;
+            get
+            {
+                if (_SourcePath == null || _SourcePath == String.Empty)
+                    return "";
+
+                return _SourcePath;
+            }
             set
             {
                 // If new value is the same skip
@@ -45,9 +52,6 @@ namespace Archivist
                     return;
 
                 _SourcePath = value;
-
-                //TODO: Add default ArchivePath
-
             }
         }
 
@@ -56,9 +60,11 @@ namespace Archivist
         /// </summary>
         public string ArchivePath { get; set; }
 
-
+        /// <summary>
+        /// Projects added by user
+        /// </summary>
         public ObservableCollection<ProjectItemControlViewModel> Projects { get; set; }
-
+        
         #endregion
 
         #region Commands
@@ -87,25 +93,26 @@ namespace Archivist
         /// </summary>
         public ProjectsViewModel()
         {
-            //TODO: Load Projects from "Database"
 
-            BackupManager.CreateBackup();
-            
+            if (Storage.Settings.Projects == null)
+                return;
+
             // Allocate projects
             Projects = new ObservableCollection<ProjectItemControlViewModel>();
 
-            for (int i = 0; i < 12; i++)
+            foreach (var project in Storage.Settings.Projects)
             {
-                Title = $"Test Title{i}";
-                SourcePath = "SRC PATH";
-                ArchivePath = "ArchivePath PATH";
+                var newProject = new ProjectItemControlViewModel
+                {
+                    Project = project,
+                };
 
-                AddProject();
+                newProject.OnEditButtonClick += EditButtonClick;
+                newProject.OnDeleteButtonClick += DeleteButtonClick;
+                newProject.OnActiveProjectClick += SelectProjectClick;
+
+                Projects.Add(newProject);
             }
-
-            Title = "";
-            SourcePath = "";
-            ArchivePath = "";
 
             // Create Commands
             AddProjectCommand = new RelayCommand(AddProject);
@@ -120,13 +127,13 @@ namespace Archivist
 
         private void EditButtonClick(object sender, EventArgs e)
         {
+            //TODO Edit save option!
             if(sender is ProjectItemControlViewModel project)
             {
                 Title = project.Project.Title;
                 SourcePath = project.Project.SourcePath;
                 ArchivePath = project.Project.ArchivePath;
             }
-
         }
 
         /// <summary>
@@ -141,9 +148,27 @@ namespace Archivist
                 var result = MessageBox.Show("Do you want to delete this project?", "Confirmation", MessageBoxType.YesNo);
 
                 if (result == MessageBoxResult.Yes)
+                {
                     Projects.Remove(project);
+                    Storage.Settings.Projects.Remove(project.Project);
+                    Storage.Save();
+                }
             }
 
+        }
+
+        /// <summary>
+        /// Selects project that user will work on
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectProjectClick(object sender, EventArgs e)
+        {
+            if (sender is ProjectItemControlViewModel project)
+            {
+                //TODO: display project title in MainWindow's title
+                Storage.Settings.SelectedProject = project.Project;                
+            }
         }
 
         #endregion
@@ -156,23 +181,47 @@ namespace Archivist
         /// <returns></returns>
         public void AddProject()
         {
+            var newProjectItem = new Project()
+            {
+                Title = Title,
+                SourcePath = SourcePath,
+            };
 
-            //TODO : add project to collection
+            if (ArchivePath == null || ArchivePath == String.Empty)
+            {
+                newProjectItem.ArchivePath = Storage.Settings.DefaultPath;
+            }
+            else
+            {
+                newProjectItem.ArchivePath = ArchivePath;
+
+            }
+
+            Storage.Settings.Projects.Add(newProjectItem);
+            Storage.Save();
+
             var project = new ProjectItemControlViewModel
             {
-                Project = new Project
-                {
-                    Title = Title,
-                    SourcePath = SourcePath,
-                    ArchivePath = ArchivePath
-                }
+                Project = newProjectItem,
             };
 
             project.OnEditButtonClick += EditButtonClick;
             project.OnDeleteButtonClick += DeleteButtonClick;
-            project.OnActiveProjectClick += DeleteButtonClick;
+            project.OnActiveProjectClick += SelectProjectClick;
 
             Projects.Add(project);
+
+            ClearInputFields();
+        }
+
+        /// <summary>
+        /// Clears input fields
+        /// </summary>
+        private void ClearInputFields()
+        {
+            Title = String.Empty;
+            SourcePath = String.Empty;
+            ArchivePath = String.Empty;
         }
 
         /// <summary>
@@ -205,12 +254,12 @@ namespace Archivist
             SaveFileDialog dialog = new SaveFileDialog()
             {
                 // Set Filter to archive files
-                Filter = "Archive file (*.rar)|*.rar|All files (*.*)|*.*"
+                Filter = "Archive file (*.zip)|*.zip|All files (*.*)|*.*"
             };
 
             // Open file dialog, if success save file path
             if (dialog.ShowDialog() == true)
-                ArchivePath = dialog.FileName;
+                ArchivePath = Path.GetDirectoryName(dialog.FileName);
         }
 
         #endregion
