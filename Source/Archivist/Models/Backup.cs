@@ -14,7 +14,16 @@ namespace Archivist
 
     public class Backup
     {
-        #region Public Methods
+
+        /// <summary>
+        /// Queue with all CopyTasks
+        /// </summary>
+        private static Queue<List<Project>> Tasks { get; set; } = new Queue<List<Project>>();
+
+        /// <summary>
+        /// <see cref="DateTime"/> when last copy was made
+        /// </summary>
+        private static DateTime LastTask { get; set; } = DateTime.Now.AddSeconds(10);
 
         /// <summary>
         /// Creates Backup of current project
@@ -26,17 +35,38 @@ namespace Archivist
                 return;
             }
 
-            var projects = GetProjectInformation(Storage.Settings.SelectedProject.SourcePath, Storage.Settings.SelectedProject);
-
-            foreach (var project in projects)
+            // Where >= 0 mean that last copy was made at least 10 sec ago
+            if (DateTime.Now.AddSeconds(-10).CompareTo(LastTask) >= 0)
             {
-                BackupFiles(project);
+                LastTask = DateTime.Now;
+
+                var projects = GetProjectInformation(Storage.Settings.SelectedProject.SourcePath, Storage.Settings.SelectedProject);
+
+                Tasks.Enqueue(projects);
             }
+
         }
 
-        #endregion
-        
-        #region Private Methods
+        /// <summary>
+        /// infinite loop that process all tasks
+        /// </summary>
+        public static async Task ProcessTask()
+        {
+            while (true)
+            {
+                if (Tasks.Count > 0)
+                {
+                    var TaskToProcess = Tasks.Dequeue();
+
+                    foreach (var project in TaskToProcess)
+                    {
+                        BackupFiles(project);
+                    }
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(1), MainWindowViewModel.wtoken.Token);
+            }
+        }
 
         /// <summary>
         /// Returns information about projects found in .sln file
@@ -64,6 +94,8 @@ namespace Archivist
                     Title = ProjectInfo.Title,
                     ArchivePath = ProjectInfo.ArchivePath,
                     SourcePath = ProjectInfo.SourcePath,
+                    DateLastCopy = $"{DateTime.Now.ToShortDateString()}".Replace('-', '_'),
+                    TimeLastCopy = $"{DateTime.Now.ToLongTimeString()}".Replace(':', '_'),
                 });
             }
 
@@ -209,17 +241,14 @@ namespace Archivist
         /// <param name="project"><see cref="Project"/> with information about project</param>
         private static void CreateZipFile(string temporaryDirectoryPath, string archivePath, Project project)
         {
-            var TodaysDateAsString = $"{DateTime.Now.ToShortDateString()}".Replace('-', '_');
-            var TimeAsString = $"{DateTime.Now.ToLongTimeString()}".Replace(':', '_');
-
-            string NewFilePath = $"{archivePath}\\Archivist\\{TodaysDateAsString}\\{project.ProjectName}";
+            string NewFilePath = $"{archivePath}\\Archivist\\{project.DateLastCopy}\\{project.ProjectName}";
 
             if (!Directory.Exists(NewFilePath))
             {
                 Directory.CreateDirectory(NewFilePath);
             }
 
-            ZipFile.CreateFromDirectory(temporaryDirectoryPath, $"{NewFilePath}\\Archivist_{TimeAsString}.zip");
+            ZipFile.CreateFromDirectory(temporaryDirectoryPath, $"{NewFilePath}\\Archivist_{project.TimeLastCopy}.zip");
         }
 
         /// <summary>
@@ -234,6 +263,5 @@ namespace Archivist
             }
         } 
 
-        #endregion
     }
 }

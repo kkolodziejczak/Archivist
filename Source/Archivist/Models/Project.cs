@@ -39,6 +39,16 @@ namespace Archivist
         /// </summary>
         public string ArchivePath { get; set; }
 
+        /// <summary>
+        /// Time when last copie was created
+        /// </summary>
+        public string TimeLastCopy { get; set; }
+
+        /// <summary>
+        /// Date when last copie was created
+        /// </summary>
+        public string DateLastCopy { get; set; }
+
 
     }
 }

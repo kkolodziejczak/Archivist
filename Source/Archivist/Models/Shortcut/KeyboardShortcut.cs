@@ -7,15 +7,13 @@ using System.Windows.Input;
 
 namespace Archivist
 {
- 
+
     /// <summary>
     /// Class that represents keyboard shortcut
     /// </summary>
     public class KeyboardShortcut
     {
 
-        #region Public Properties
-        
         /// <summary>
         /// Shotcut Key
         /// </summary>
@@ -36,28 +34,17 @@ namespace Archivist
         /// </summary>
         public bool Shift { get; set; }
 
-        #endregion
-        
-        #region Event
-
         /// <summary>
         /// Event that is fired when shortcut criteria are meet
         /// </summary>
         public event EventHandler OnShortcutActivated;
-
-        #endregion
-
-        #region Constructor
 
         /// <summary>
         /// Default Constructor
         /// </summary>
         public KeyboardShortcut()
         {
-            Key = Key.None;
-            Alt = false;
-            Ctrl = false;
-            Shift = false;
+            Clear();
         }
 
         /// <summary>
@@ -72,10 +59,6 @@ namespace Archivist
             this.OnShortcutActivated = source.OnShortcutActivated;
         }
 
-        #endregion
-        
-        #region Public Methods
-
         /// <summary>
         /// Fires shortcut methods that are connected to <see cref="OnShortcutActivated"/>.
         /// </summary>
@@ -86,10 +69,17 @@ namespace Archivist
                 OnShortcutActivated(this, new EventArgs());
             }
         }
-        
-        #endregion
 
-        #region Override
+        /// <summary>
+        /// Sets shortcut values to default
+        /// </summary>
+        public void Clear()
+        {
+            this.Key = Key.None;
+            this.Alt = false;
+            this.Ctrl = false;
+            this.Shift = false;
+        }
 
         public override string ToString()
         {
@@ -105,7 +95,6 @@ namespace Archivist
             return $"{sb.ToString()}{Key.ToString()}";
         }
 
-        #endregion
-
+        
     }
 }

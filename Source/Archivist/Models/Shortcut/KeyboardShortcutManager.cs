@@ -15,7 +15,6 @@ namespace Archivist
     /// </summary>
     public class KeyboardShortcutManager
     {
-        #region Private Fields
 
         /// <summary>
         /// Listener that allows to perform sertent action on Key Presses.
@@ -47,10 +46,6 @@ namespace Archivist
         /// </summary>
         public List<KeyboardShortcut> _RegisteredShortcuts { get; private set; }
 
-        #endregion
-
-        #region Singleton
-
         /// <summary>
         /// ShortcutManager Singleton instance
         /// </summary>
@@ -69,9 +64,6 @@ namespace Archivist
             }
         }
 
-        #endregion
-
-        #region Constructor
 
         /// <summary>
         /// Default constructor
@@ -91,10 +83,6 @@ namespace Archivist
 
         }
 
-        #endregion
-
-        #region Destructor
-
         /// <summary>
         /// Default destructor
         /// </summary>
@@ -105,10 +93,6 @@ namespace Archivist
             _KeyboardListener.OnKeyDown -= OnKeyDown;
             _KeyboardListener.UnHookKeyboard();
         }
-
-        #endregion
-
-        #region Private Methods
 
         /// <summary>
         /// OnKeyDown Event Method
@@ -121,21 +105,21 @@ namespace Archivist
 
             foreach (var registeredShortcut in _RegisteredShortcuts)
             {
-                if (IsTheShortcutTheSame(registeredShortcut, _PressedShortcut))
+                if (AreShortcutsTheSame(registeredShortcut, _PressedShortcut))
                 {
                     registeredShortcut.Execute();
                 }
             }
 
         }
-
+        
         /// <summary>
         /// Returns if KeyboardShortcuts contains the same shortcut key combination
         /// </summary>
         /// <param name="left"></param>
         /// <param name="right"></param>
         /// <returns></returns>
-        private bool IsTheShortcutTheSame(KeyboardShortcut left, KeyboardShortcut right)
+        private bool AreShortcutsTheSame(KeyboardShortcut left, KeyboardShortcut right)
         {
             if (left is null || right is null)
                 return false;
@@ -201,10 +185,6 @@ namespace Archivist
             }
         }
 
-        #endregion
-
-        #region Public Methods
-
         /// <summary>
         /// Returns recorded Shortcut
         /// </summary>
@@ -251,6 +231,5 @@ namespace Archivist
             }
         }
 
-        #endregion
     }
 }

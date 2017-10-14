@@ -10,25 +10,15 @@ namespace Archivist
     public class SettingsViewModel : BaseViewModel
     {
 
-        #region Public Properties
-
         /// <summary>
         /// Shortcut that fires create backup
         /// </summary>
         public KeyboardShortcut BackupShortcut { get; private set; }
 
-        #endregion
-
-        #region Commands
-
         /// <summary>
         /// Command for recording backup <see cref="KeyboardShortcut"/>
         /// </summary>
         public ICommand RecordBackupCommand { get; private set; }
-
-        #endregion
-        
-        #region Constructor
 
         /// <summary>
         /// Default Constructor
@@ -42,10 +32,6 @@ namespace Archivist
             BackupShortcut = Storage.Settings.BackupShortcut;
 
         }
-
-        #endregion
-
-        #region Private Methods
 
         /// <summary>
         /// Method that records backup shortcut
@@ -68,8 +54,6 @@ namespace Archivist
             KeyboardShortcutManager.Instance.RegisterKeyboardShortcut(BackupShortcut);
 
         }
-
-        #endregion
 
     }
 }

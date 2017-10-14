@@ -12,8 +12,6 @@ namespace Archivist
 
     public class UserSettings
     {
-        #region Private Fields
-
         /// <summary>
         /// Shortcut that fires create backup
         /// </summary>
@@ -29,9 +27,10 @@ namespace Archivist
         /// </summary>
         private List<Project> _Projects { get; set; }
 
-        #endregion
-
-        #region Public Properties
+        /// <summary>
+        /// Selected project
+        /// </summary>
+        public Project _SelectedProject { get; set; }
 
         /// <summary>
         /// Shortcut that fires create backup
@@ -104,9 +103,24 @@ namespace Archivist
         /// <summary>
         /// Selected project
         /// </summary>
-        public Project SelectedProject;
+        public Project SelectedProject
+        {
+            get
+            {
+                return _SelectedProject;
+            }
+            set
+            {
+                if (_SelectedProject == value)
+                    return;
 
-        #endregion
+                _SelectedProject = value;
+                
+                // Update window title
+                Storage.UpdateWindowTitle();
+            }
+        }
+
 
     }
 }

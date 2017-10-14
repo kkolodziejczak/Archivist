@@ -25,7 +25,11 @@ namespace Archivist
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowViewModel();
+
+            var vm = new MainWindowViewModel();
+            Storage.OnWindowTitleUpdate += vm.UpdateWindowTitle;
+
+            DataContext = vm;
         }
 
     }

@@ -166,8 +166,7 @@ namespace Archivist
         {
             if (sender is ProjectItemControlViewModel project)
             {
-                //TODO: display project title in MainWindow's title
-                Storage.Settings.SelectedProject = project.Project;                
+                Storage.Settings.SelectedProject = project.Project;
             }
         }
 
@@ -250,16 +249,12 @@ namespace Archivist
         /// <returns></returns>
         public void OpenArchiveFileDialog()
         {
-            // Create new save dialog
-            SaveFileDialog dialog = new SaveFileDialog()
-            {
-                // Set Filter to archive files
-                Filter = "Archive file (*.zip)|*.zip|All files (*.*)|*.*"
-            };
+            // Create new File dialog
+            System.Windows.Forms.FolderBrowserDialog dialog = new System.Windows.Forms.FolderBrowserDialog();
 
             // Open file dialog, if success save file path
-            if (dialog.ShowDialog() == true)
-                ArchivePath = Path.GetDirectoryName(dialog.FileName);
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                ArchivePath = dialog.SelectedPath;
         }
 
         #endregion

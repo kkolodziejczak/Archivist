@@ -34,11 +34,11 @@ The application is not finished yet. As soon as it is finished, a download link 
 
 ## TODO:
 - ~~Working shortcut~~
-- Ability to create backup
+- ~~Ability to create backup~~
 - Main page
-   - Ability to add project
+   - ~~Ability to add project~~
    - Ability to edit project info
-   - Ability to delete project
+   - ~~Ability to delete project~~
    - Ability to deploy project
 - Settings page
    - ~~Ability to set custom shortcut~~

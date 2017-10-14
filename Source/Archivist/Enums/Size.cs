@@ -31,4 +31,5 @@ namespace Archivist
         /// </summary>
         public const long Gigabyte = 1073741824;
     }
+
 }

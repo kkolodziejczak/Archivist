@@ -8,10 +8,19 @@ using System.Xml.Serialization;
 
 namespace Archivist
 {
+
+    public class WindowNameArg : EventArgs
+    {
+        public string NewWindowName { get; set; }
+
+        public WindowNameArg(string windowName):base()
+        {
+            this.NewWindowName = windowName;
+        }
+    }
+
     public static class Storage
     {
-
-        #region Private Fields
 
         private static string SettingsFolderPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Archivist";
 
@@ -19,9 +28,18 @@ namespace Archivist
 
         private static UserSettings _Settings;
 
-        #endregion
 
-        #region Public Properties
+        /// <summary>
+        /// Delegate that allows to create event with new WindowTitle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void WindowsTitleUpdateEventHandler(object sender, WindowNameArg e);
+
+        /// <summary>
+        /// event that will be fired when selected project changes
+        /// </summary>
+        public static event WindowsTitleUpdateEventHandler OnWindowTitleUpdate;
 
         /// <summary>
         /// Path to directory what will be created for temprorary use
@@ -56,9 +74,17 @@ namespace Archivist
             }
         }
 
-        #endregion
-
-        #region Public Methods
+        /// <summary>
+        /// Fires <see cref="OnWindowTitleUpdate"/> event
+        /// </summary>
+        /// <param name="title"></param>
+        public static void UpdateWindowTitle()
+        {
+            if(OnWindowTitleUpdate != null)
+            {
+                OnWindowTitleUpdate(new object(), new WindowNameArg(Settings.SelectedProject.Title));
+            }
+        }
 
         /// <summary>
         /// Loads <see cref="Settings"/> from file
@@ -69,22 +95,19 @@ namespace Archivist
             XmlSerializer xs = new XmlSerializer(typeof(UserSettings));
             try
             {
-                using (var sr = new StreamReader(SettingsPath))
+                using (var sr = new StreamReader(new FileStream(SettingsPath,
+                                                                FileMode.Open,
+                                                                FileAccess.Read,
+                                                                FileShare.ReadWrite)))
                 {
-                    Settings = (UserSettings)xs.Deserialize(sr);
+                    Settings = xs.Deserialize(sr) as UserSettings;
                 }
             }
-            catch (InvalidOperationException e)
+            catch (Exception e)
             {
-                // Some error with settings file, create Default one.
+                // Some error with settings file, create new one from scratch.
                 Settings = new UserSettings();
                 Save();
-            }
-            catch (IOException e)
-            {
-                //TODO: find out why this error occurs, that something is reading file already,
-                // even if it gets good data.
-                Console.WriteLine(e.Message);
             }
         }
 
@@ -104,8 +127,6 @@ namespace Archivist
             }
 
         }
-
-        #endregion
 
     }
 }

@@ -43,6 +43,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -77,11 +78,11 @@
     <Compile Include="Helpers\ResourceHelper.cs" />
     <Compile Include="Models\Backup.cs" />
     <Compile Include="Models\Project.cs" />
-    <Compile Include="Models\Settings.cs" />
     <Compile Include="Models\Shortcut\KeyboardShortcut.cs" />
     <Compile Include="Models\Shortcut\KeyboardShortcutManager.cs" />
     <Compile Include="Models\Shortcut\LowLevelKeyboardListener.cs" />
     <Compile Include="Models\Storage.cs" />
+    <Compile Include="Models\UserSettings.cs" />
     <Compile Include="Pages\InfoPage.xaml.cs">
       <DependentUpon>InfoPage.xaml</DependentUpon>
     </Compile>

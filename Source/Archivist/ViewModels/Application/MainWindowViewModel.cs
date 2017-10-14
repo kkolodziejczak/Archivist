@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -13,16 +14,11 @@ namespace Archivist
     /// </summary>
     public class MainWindowViewModel : BaseViewModel
     {
-        #region Private Fields
-
+        
         /// <summary>
         /// Title of the window
         /// </summary>
         private string _WindowTitle;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Current page
@@ -52,9 +48,10 @@ namespace Archivist
             }
         }
 
-        #endregion
-
-        #region Commands
+        /// <summary>
+        /// Token to stop Backup infinite loop
+        /// </summary>
+        public static CancellationTokenSource wtoken { get; set; }
 
         /// <summary>
         /// Command to switch to ProjectsPage
@@ -75,11 +72,7 @@ namespace Archivist
         /// Command to switch to InfoPage
         /// </summary>
         public ICommand InfoCommand { get; set;  }
-
-        #endregion
-
-        #region Constructor
-
+        
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -97,14 +90,28 @@ namespace Archivist
             ReportCommand = new RelayCommand(async () => await SwitchPage(Pages.Report));
             InfoCommand = new RelayCommand(async () => await SwitchPage(Pages.Info));
 
-            // Start listening for Shortcut
             Storage.Settings.BackupShortcut.OnShortcutActivated += Backup.Create;
+            
+            // Start listening for Shortcut
             KeyboardShortcutManager.Instance.RegisterKeyboardShortcut(Storage.Settings.BackupShortcut);
+
+            // Create Tasks that will run in background
+            wtoken = new CancellationTokenSource();
+            Task.Run(Backup.ProcessTask, wtoken.Token);
         }
 
-        #endregion
+        /// <summary>
+        /// Default Destructor
+        /// </summary>
+        ~MainWindowViewModel()
+        {
+            using (wtoken)
+            {
+                wtoken.Cancel();
+            }
 
-        #region Tasks
+            wtoken = null;
+        }
 
         /// <summary>
         /// Switches page
@@ -118,7 +125,10 @@ namespace Archivist
             await Task.Delay(1);
         }
 
-        #endregion
+        public void UpdateWindowTitle(object sender, WindowNameArg e)
+        {
+            WindowTitle = e.NewWindowName;
+        }
 
     }
 }

@@ -48,11 +48,21 @@ namespace Archivist
             return size;
         }
 
+        /// <summary>
+        /// Returns all top level directories from <see cref="directoryPath"/>
+        /// </summary>
+        /// <param name="directoryPath"></param>
+        /// <returns></returns>
         public static string[] GetAllDirectories(string directoryPath)
         {
             return Directory.GetDirectories(directoryPath, "*", SearchOption.TopDirectoryOnly);
         }
 
+        /// <summary>
+        /// Returns all top level files from <see cref="directoryPath"/>
+        /// </summary>
+        /// <param name="directoryPath"></param>
+        /// <returns></returns>
         public static string[] GetAllFiles(string directoryPath)
         {
             return Directory.GetFiles(directoryPath, "*", SearchOption.TopDirectoryOnly);
