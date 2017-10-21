@@ -24,25 +24,26 @@ The application is not finished yet. As soon as it is finished, a download link 
 - Application should release space so that it can continue its work.
 
 ## "Planned" Functionality
-- Add project
-- Edit project info
-- Delete project
-- Ability to deploy project
-- Set custom shortcut
-- Set default archive folder path
-- Ability to send reports
+- [✓] Add project
+- [✓] Edit project info
+- [✓] Delete project
+- [ ] Ability to deploy project
+- [✓] Set custom shortcut
+- [✓] Set default archive folder path
+- [ ] Ability to send reports
 
 ## TODO:
 - ~~Working shortcut~~
 - ~~Ability to create backup~~
 - Main page
    - ~~Ability to add project~~
-   - Ability to edit project info
+   - ~~Ability to edit project info~~
    - ~~Ability to delete project~~
    - Ability to deploy project
-- Settings page
+- ~~Settings page~~
    - ~~Ability to set custom shortcut~~
-   - Ability to set default archive folder path
+   - ~~Ability to set default archive folder path~~
+   - ~~Ability to set default settings~~
 - ~~Info page~~
    - ~~Display information about application~~
    - ~~Display information about author~~
