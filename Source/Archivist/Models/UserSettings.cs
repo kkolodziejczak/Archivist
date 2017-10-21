@@ -69,9 +69,9 @@ namespace Archivist
             get
             {
                 if (_DefaultPath == String.Empty)
-                    return @"C:\Users\Themo\Git\Archivist\Source";
+                    return Storage.DefaultArchivePath;
 
-                return @"C:\Users\Themo\Git\Archivist\Source";
+                return _DefaultPath;
             }
             set
             {
@@ -103,6 +103,7 @@ namespace Archivist
         /// <summary>
         /// Selected project
         /// </summary>
+        [XmlIgnore]
         public Project SelectedProject
         {
             get

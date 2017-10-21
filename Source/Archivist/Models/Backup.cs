@@ -119,6 +119,7 @@ namespace Archivist
             {
                 if (DriveHelper.ClearDriveSpace() == ClearResult.Fail)
                 {
+                    MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
                     return;
                 }
                 else
@@ -126,17 +127,16 @@ namespace Archivist
                     var AvailableSpaceAfterCleaning = DriveHelper.GetTotalFreeSpace(Path.GetPathRoot(TemporaryDirectoryPath));
                     if (AvailableSpaceAfterCleaning < 10 * Size.Megabyte)
                     {
+                        MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
                         return;
                     }
                 }
             }
 
-
             foreach (var sourceFile in SourceFiles)
             {
                 CopyFileIntoDirectory(sourceFile, project.BasePath, TemporaryDirectoryPath);
             }
-
 
             var AvailableArchiveDiskSpace = DriveHelper.GetTotalFreeSpace(Path.GetPathRoot(ArchivePath));
 
@@ -145,6 +145,7 @@ namespace Archivist
                 if (DriveHelper.ClearDriveSpace() == ClearResult.Fail)
                 {
                     CleanUp(TemporaryDirectoryPath);
+                    MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
                     return;
                 }
                 else
@@ -154,6 +155,7 @@ namespace Archivist
                     if (AvailableSpaceAfterCleaning < 10 * Size.Megabyte)
                     {
                         CleanUp(TemporaryDirectoryPath);
+                        MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
                         return;
                     }
                 }
@@ -264,4 +266,5 @@ namespace Archivist
         } 
 
     }
+
 }

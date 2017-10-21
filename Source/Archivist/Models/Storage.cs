@@ -9,6 +9,9 @@ using System.Xml.Serialization;
 namespace Archivist
 {
 
+    /// <summary>
+    /// Contains new window Title
+    /// </summary>
     public class WindowNameArg : EventArgs
     {
         public string NewWindowName { get; set; }
@@ -22,12 +25,25 @@ namespace Archivist
     public static class Storage
     {
 
+        /// <summary>
+        /// Path to Archivist data folder
+        /// </summary>
         private static string SettingsFolderPath = $@"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\Archivist";
 
+        /// <summary>
+        /// Path where user settings are stored
+        /// </summary>
         private static string SettingsFilePath = $@"{SettingsFolderPath}\Settings.ini";
 
-        private static UserSettings _Settings;
+        /// <summary>
+        /// Path where archives will be created by default
+        /// </summary>
+        public static string DefaultArchivePath = $@"{SettingsFolderPath}\Archives";
 
+        /// <summary>
+        /// User Settings
+        /// </summary>
+        private static UserSettings _Settings;
 
         /// <summary>
         /// Delegate that allows to create event with new WindowTitle
@@ -44,13 +60,8 @@ namespace Archivist
         /// <summary>
         /// Path to directory what will be created for temprorary use
         /// </summary>
-        public static string TemporaryDirectoryPath { get; } = @"C:\\Temp";
+        public static string TemporaryDirectoryPath { get; } = SettingsFolderPath;
 
-        /// <summary>
-        /// Settings file path
-        /// </summary>
-        public static string SettingsPath { get; } = @"C:\Users\Themo\Desktop\Settings.ini";
-        
         /// <summary>
         /// Users settings
         /// </summary>
@@ -70,7 +81,6 @@ namespace Archivist
 
                 _Settings = value;
 
-                Save();
             }
         }
 
@@ -95,7 +105,7 @@ namespace Archivist
             XmlSerializer xs = new XmlSerializer(typeof(UserSettings));
             try
             {
-                using (var sr = new StreamReader(new FileStream(SettingsPath,
+                using (var sr = new StreamReader(new FileStream(SettingsFilePath,
                                                                 FileMode.Open,
                                                                 FileAccess.Read,
                                                                 FileShare.ReadWrite)))
@@ -112,6 +122,14 @@ namespace Archivist
         }
 
         /// <summary>
+        /// Sets default <see cref="UserSettings"/>
+        /// </summary>
+        public static void SetDefaultSettings()
+        {
+            Settings = new UserSettings();
+        }
+
+        /// <summary>
         /// Saves <see cref="Settings"/> into file
         /// </summary>
         public static void Save()
@@ -119,9 +137,13 @@ namespace Archivist
             if (Settings == null)
                 return;
 
-            XmlSerializer xs = new XmlSerializer(typeof(UserSettings));
+            if (!Directory.Exists(Path.GetDirectoryName(SettingsFilePath)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(SettingsFilePath));
+            }
 
-            using (TextWriter tw = new StreamWriter(SettingsPath))
+            XmlSerializer xs = new XmlSerializer(typeof(UserSettings));
+            using (TextWriter tw = new StreamWriter(SettingsFilePath))
             {
                 xs.Serialize(tw, Settings);
             }

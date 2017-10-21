@@ -55,6 +55,11 @@ namespace Archivist
         /// <returns></returns>
         public static string[] GetAllDirectories(string directoryPath)
         {
+            if (!Directory.Exists(directoryPath))
+            {
+                return new string[0];
+            }
+
             return Directory.GetDirectories(directoryPath, "*", SearchOption.TopDirectoryOnly);
         }
 
@@ -111,11 +116,6 @@ namespace Archivist
                 }
 
                 
-            }
-
-            if (result == ClearResult.Fail)
-            {
-                MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
             }
 
             return result;

@@ -26,7 +26,7 @@ namespace Archivist
         /// <summary>
         /// Project's title
         /// </summary>
-        public string Title { get; private set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Information about project

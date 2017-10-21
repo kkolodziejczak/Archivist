@@ -17,16 +17,11 @@ namespace Archivist
     /// </summary>
     public class ProjectsViewModel : BaseViewModel, IDataErrorInfo
     {
-        #region Private Fields
-
+        
         /// <summary>
         /// Path to the project .sln file
         /// </summary>
         private string _SourcePath;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Title of the project to add
@@ -61,14 +56,20 @@ namespace Archivist
         public string ArchivePath { get; set; }
 
         /// <summary>
+        /// Indicator that show if user is editing project information
+        /// </summary>
+        public bool Editing { get; private set; }
+
+        /// <summary>
+        /// Project that is edited
+        /// </summary>
+        public ProjectItemControlViewModel EditedProject { get; private set; }
+
+        /// <summary>
         /// Projects added by user
         /// </summary>
         public ObservableCollection<ProjectItemControlViewModel> Projects { get; set; }
         
-        #endregion
-
-        #region Commands
-
         /// <summary>
         /// Command that adds Project
         /// </summary>
@@ -84,15 +85,21 @@ namespace Archivist
         /// </summary>
         public ICommand SaveArchiveFileDialogCommand { get; set; }
 
-        #endregion
-
-        #region Constructor
+        /// <summary>
+        /// Command that cancels editing
+        /// </summary>
+        public ICommand CancelButtonCommand { get; set; }
 
         /// <summary>
         /// Default Constructor
         /// </summary>
         public ProjectsViewModel()
         {
+            // Create Commands
+            AddProjectCommand = new RelayCommand(AddProject);
+            OpenSourceFileDialogCommand = new RelayCommand(OpenSourceFileDialog);
+            SaveArchiveFileDialogCommand = new RelayCommand(OpenArchiveFileDialog);
+            CancelButtonCommand = new RelayCommand(CancelEditing);
 
             if (Storage.Settings.Projects == null)
                 return;
@@ -114,26 +121,25 @@ namespace Archivist
                 Projects.Add(newProject);
             }
 
-            // Create Commands
-            AddProjectCommand = new RelayCommand(AddProject);
-            OpenSourceFileDialogCommand = new RelayCommand(OpenSourceFileDialog);
-            SaveArchiveFileDialogCommand = new RelayCommand(OpenArchiveFileDialog);
-
         }
 
-        #endregion
-
-        #region Private Methods
-
+        /// <summary>
+        /// Method that fills fields for edit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EditButtonClick(object sender, EventArgs e)
         {
-            //TODO Edit save option!
-            if(sender is ProjectItemControlViewModel project)
+            Editing = true;
+
+            if (sender is ProjectItemControlViewModel project)
             {
+                EditedProject = project;
                 Title = project.Project.Title;
                 SourcePath = project.Project.SourcePath;
                 ArchivePath = project.Project.ArchivePath;
             }
+
         }
 
         /// <summary>
@@ -158,23 +164,6 @@ namespace Archivist
         }
 
         /// <summary>
-        /// Selects project that user will work on
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SelectProjectClick(object sender, EventArgs e)
-        {
-            if (sender is ProjectItemControlViewModel project)
-            {
-                Storage.Settings.SelectedProject = project.Project;
-            }
-        }
-
-        #endregion
-
-        #region Tasks
-
-        /// <summary>
         /// Adds new project to user database
         /// </summary>
         /// <returns></returns>
@@ -193,7 +182,13 @@ namespace Archivist
             else
             {
                 newProjectItem.ArchivePath = ArchivePath;
+            }
 
+            // In case of editing current project
+            if (Editing == true)
+            {
+                SwapEditedProjectInformation(newProjectItem);
+                return;
             }
 
             Storage.Settings.Projects.Add(newProjectItem);
@@ -211,6 +206,47 @@ namespace Archivist
             Projects.Add(project);
 
             ClearInputFields();
+        }
+
+        /// <summary>
+        /// Set new information for <see cref="EditedProject"/> information
+        /// </summary>
+        private void SwapEditedProjectInformation(Project newProjectItem)
+        {
+            var projIndex = Projects.IndexOf(EditedProject);
+            var oldProjIndex = Storage.Settings.Projects.IndexOf(Projects[projIndex].Project);
+
+            Projects[projIndex].Title = Title;
+            Projects[projIndex].Project = newProjectItem;
+
+            Storage.Settings.Projects[oldProjIndex] = newProjectItem;
+            Storage.Save();
+
+            ClearInputFields();
+            Editing = false;
+        }
+
+        /// <summary>
+        /// Cancels editing mode
+        /// </summary>
+        public void CancelEditing()
+        {
+            Editing = false;
+            ClearInputFields();
+            EditedProject = null;
+        }
+
+        /// <summary>
+        /// Selects project that user will work on
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectProjectClick(object sender, EventArgs e)
+        {
+            if (sender is ProjectItemControlViewModel project)
+            {
+                Storage.Settings.SelectedProject = project.Project;
+            }
         }
 
         /// <summary>
@@ -257,10 +293,6 @@ namespace Archivist
                 ArchivePath = dialog.SelectedPath;
         }
 
-        #endregion
-
-        #region IDataErrorInfo
-
         public string Error => string.Empty;
 
         /// <summary>
@@ -287,13 +319,24 @@ namespace Archivist
                             {
                                 return "Project title is required.";
                             }
+                            
                             // Check if title exist
                             int count = Projects.Count(p => p.Title == Title);
                             if (count > 0)
                             {
-                                return "Project with that title already exists.";
+                                // While in editing mode don't display error messages about edited project title
+                                if (Editing == true)
+                                {
+                                    if (Title != EditedProject.Title)
+                                    {
+                                        return "Project with that title already exists.";
+                                    }
+                                }
+                                else
+                                {
+                                    return "Project with that title already exists.";
+                                }
                             }
-
                         }
 
                         break;
@@ -326,6 +369,5 @@ namespace Archivist
             }
         }
 
-        #endregion
     }
 }

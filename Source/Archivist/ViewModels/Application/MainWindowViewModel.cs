@@ -43,8 +43,6 @@ namespace Archivist
                     _WindowTitle = value;
 
                 _WindowTitle = $"Archivist - {value}";
-
-                OnPropertyChanged("WindowTitle");
             }
         }
 
@@ -85,11 +83,12 @@ namespace Archivist
             Page = Pages.Projects;
 
             // Create commands
-            ProjectsCommand = new RelayCommand(async () => await SwitchPage(Pages.Projects));
-            SettingsCommand = new RelayCommand(async () => await SwitchPage(Pages.Settings));
-            ReportCommand = new RelayCommand(async () => await SwitchPage(Pages.Report));
-            InfoCommand = new RelayCommand(async () => await SwitchPage(Pages.Info));
+            ProjectsCommand = new RelayCommand(() => SwitchPage(Pages.Projects));
+            SettingsCommand = new RelayCommand(() => SwitchPage(Pages.Settings));
+            ReportCommand = new RelayCommand(() => SwitchPage(Pages.Report));
+            InfoCommand = new RelayCommand(() => SwitchPage(Pages.Info));
 
+            // Set BackupButton Shortcut event
             Storage.Settings.BackupShortcut.OnShortcutActivated += Backup.Create;
             
             // Start listening for Shortcut
@@ -101,7 +100,7 @@ namespace Archivist
         }
 
         /// <summary>
-        /// Default Destructor
+        /// Destructor
         /// </summary>
         ~MainWindowViewModel()
         {
@@ -118,13 +117,16 @@ namespace Archivist
         /// </summary>
         /// <param name="page"></param>
         /// <returns></returns>
-        public async Task SwitchPage(Pages page)
+        public void SwitchPage(Pages page)
         {
             Page = page;
-           
-            await Task.Delay(1);
         }
 
+        /// <summary>
+        /// Updates Main Window Title
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void UpdateWindowTitle(object sender, WindowNameArg e)
         {
             WindowTitle = e.NewWindowName;

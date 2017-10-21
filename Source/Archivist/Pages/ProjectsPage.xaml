@@ -154,11 +154,13 @@
                         />
             </Grid>
 
+            <StackPanel Orientation="Horizontal"
+                        Margin="0 6 0 0"
+                        HorizontalAlignment="Right">
+                
             <!-- Add Button -->
-            <Button Content="{StaticResource AddButtonLabel}"
-                    TabIndex="6"
+            <Button TabIndex="6"
                     IsDefault="True"
-                    HorizontalAlignment="Right"
                     Command="{Binding AddProjectCommand}"
                     >
                 <!-- Add button style -->
@@ -171,8 +173,7 @@
                         <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
                         <Setter Property="Height" Value="25"/>
                         <Setter Property="Padding" Value="0 2"/>
-                        <Setter Property="Margin" Value="15 4"/>
-
+                        
                         <Setter Property="Width" Value="{Binding ElementName=Content, Path=ActualWidth}"/>
 
                         <!-- Set default state to disabled -->
@@ -195,14 +196,14 @@
                                                            FontFamily="{TemplateBinding FontFamily}"
                                                            FontSize="{TemplateBinding FontSize}"
                                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                           Margin="{TemplateBinding Margin}" 
+                                                           Margin="10 2"
                                                            Padding="{TemplateBinding Padding}" 
                                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                                             </Viewbox>
                                         </Grid>
                                     </Border>
                                     <ControlTemplate.Triggers>
-
+                                        
                                         <!-- Trigger for when mouse enters form button space -->
                                         <EventTrigger RoutedEvent="MouseEnter">
                                             <BeginStoryboard>
@@ -233,7 +234,7 @@
                                                     TargetName="Border" 
                                                     Value="{StaticResource DisabledButtonColorBrush}"/>
                                         </Trigger>
-
+                                        
                                     </ControlTemplate.Triggers>
                                 </ControlTemplate>
                             </Setter.Value>
@@ -241,6 +242,7 @@
 
                         <!-- If there is no errors change to enabled-->
                         <Style.Triggers>
+                            <!-- Binding to Validation -->
                             <MultiDataTrigger>
                                 <MultiDataTrigger.Conditions>
                                     <Condition Binding="{Binding ElementName=TitleTextBox, Path=(Validation.HasError)}" Value="false"/>
@@ -248,12 +250,25 @@
                                 </MultiDataTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="True"/>
                             </MultiDataTrigger>
+                            
+                            <!-- Switch between editing and add context -->
+                            <DataTrigger Binding="{Binding Editing}" Value="False">
+                                <Setter Property="Content" Value="{StaticResource AddButtonLabel}"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Editing}" Value="True">
+                                <Setter Property="Content" Value="{StaticResource SaveButtonLabel}"/>
+                            </DataTrigger>
                         </Style.Triggers>
 
                     </Style>
                 </Button.Style>
             </Button>
-
+            
+                <Button Margin="6 0 0 0"
+                        Visibility="{Binding Editing, Converter={local:BolleanToCollapsedVisibilityValueConverter}, ConverterParameter=1}"
+                        Content="{StaticResource CancelButtonLabel}"
+                        Command="{Binding CancelButtonCommand}"/>
+            </StackPanel>
         </StackPanel>
           
     </Grid>

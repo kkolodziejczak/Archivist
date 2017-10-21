@@ -64,6 +64,9 @@
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\BaseAttachedProperty.cs" />
     <Compile Include="AttachedProperties\ScrollToEndProperty.cs" />
+    <Compile Include="Controls\OpenDialogControl.xaml.cs">
+      <DependentUpon>OpenDialogControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Dialog\MessageBox.cs" />
     <Compile Include="Controls\ProjectItemControl.xaml.cs">
       <DependentUpon>ProjectItemControl.xaml</DependentUpon>
@@ -97,6 +100,7 @@
     </Compile>
     <Compile Include="ValueConverters\ApplicationPageValueConverter.cs" />
     <Compile Include="ValueConverters\BaseValueConverter.cs" />
+    <Compile Include="ValueConverters\BolleanToCollapsedVisibilityValueConverter.cs" />
     <Compile Include="ValueConverters\MessageBoxTypeToVisibilityValueConverter.cs" />
     <Compile Include="ValueConverters\PageToActiveButtonValueConverter.cs" />
     <Compile Include="ValueConverters\ToStringValueConverter.cs" />
@@ -107,7 +111,12 @@
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Base\RelayCommand.cs" />
     <Compile Include="ViewModels\Controls\DialogViewModel.cs" />
+    <Compile Include="ViewModels\Controls\OpenDialogViewModel.cs" />
     <Compile Include="ViewModels\Controls\ProjectItemControlViewModel.cs" />
+    <Page Include="Controls\OpenDialogControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ProjectItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

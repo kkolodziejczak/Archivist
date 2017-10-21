@@ -15,7 +15,20 @@
     <system:String x:Key="SolutionPathLabel">Solution file path:</system:String>
     <system:String x:Key="SolutionArchivePathLabel">Archive path:</system:String>
     <system:String x:Key="AddButtonLabel">Add</system:String>
+    <system:String x:Key="EditButtonLabel">Save</system:String>
     
+    <!-- Settings Page -->
+    <system:String x:Key="SetDefaultArchivePathLabel">Default archive path</system:String>
+    <system:String x:Key="TemporaryPathLabel">Temporary folder path</system:String>
+    <system:String x:Key="SetShortcutLabel">Shortcut</system:String>
+    <system:String x:Key="ClearArchivesLabel">Archives</system:String>
+    <system:String x:Key="ClearArchivesButtonLabel">Delete All</system:String>
+    <system:String x:Key="ClearSuccessMessage">Successfully deleted archives</system:String>
+    <system:String x:Key="ClearFailMessage">No archives to delete</system:String>
+    <system:String x:Key="DefaultButtonLabel">Set Default</system:String>
+    <system:String x:Key="SaveButtonLabel">Save</system:String>
+    <system:String x:Key="CancelButtonLabel">Cancel</system:String>
+
     <!-- Info Page -->
     <system:String x:Key="InfoPageProjectName">Archivist</system:String>
     <system:String x:Key="InfoPageProjectVersion">Version: 0.01</system:String>
@@ -26,7 +39,6 @@
     <system:String x:Key="ReportPageWhatDo">What did you do:</system:String>
     <system:String x:Key="ReportPageWhatHappend">What happened:</system:String>
     <system:String x:Key="ReportPageSendReport">Send Report</system:String>
-
 
 
 </ResourceDictionary>
