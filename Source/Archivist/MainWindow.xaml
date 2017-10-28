@@ -60,21 +60,6 @@
                 <StackPanel Grid.Row="2"
                             VerticalAlignment="Bottom">
 
-                    <!-- Report Button -->
-                    <Border Background="{Binding Page, 
-                            Converter={local:PageToActiveButtonValueConverter}, 
-                            ConverterParameter={x:Static local:Pages.Report}}">
-
-                        <Button Style="{StaticResource IconButtonToTransparent}"
-                                Focusable="False"
-                                Content="{StaticResource FontAwesomeWarrningIcon}" 
-                                FontSize="{StaticResource FontSizeLarge}"
-                                ToolTip="{StaticResource TooltipReport}"
-                                Command="{Binding ReportCommand}"
-                                />
-                        
-                    </Border>
-
                     <!-- Info Button -->
                     <Border Background="{Binding Page, 
                             Converter={local:PageToActiveButtonValueConverter}, 

@@ -104,10 +104,18 @@ namespace Archivist
                                 // Else clear all but lastest copie assuming that they are sorted
                                 for (int i = 0; i < ProjectCopies.Length - 1; i++)
                                 {
-                                    if (File.Exists(ProjectCopies[i]))
+                                    
+                                    if (File.Exists(ProjectCopies[i]) && Path.GetExtension(ProjectCopies[i]) == ".zip")
                                     {
-                                        File.Delete(ProjectCopies[i]);
-                                        result = ClearResult.Success;
+                                        try
+                                        {
+                                            File.Delete(ProjectCopies[i]);
+                                            result = ClearResult.Success;
+                                        }
+                                        catch
+                                        {
+                                            // some error ignore
+                                        }
                                     }
                                 }
                             }

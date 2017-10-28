@@ -20,8 +20,6 @@ public class ApplicationPageValueConverter : BaseValueConverter<ApplicationPageV
                 return new ProjectsPage();
             case Pages.Settings:
                 return new SettingsPage();
-            case Pages.Report:
-                return new ReportPage();
             case Pages.Info:
                 return new InfoPage();
             default:

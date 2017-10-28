@@ -30,7 +30,6 @@
                             >
                         <Grid>
                             <Viewbox>
-                                <!--, Converter={local:ToStringValueConverter}-->
                                 <TextBlock x:Name="Content"
                                            Text="{TemplateBinding Content}" 
                                            MinWidth="1"
@@ -39,34 +38,45 @@
                                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                            Margin="15 4"
                                            Padding="0 2"
+                                           IsEnabled="{TemplateBinding IsEnabled}"
                                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                             </Viewbox>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        
                         <EventTrigger RoutedEvent="MouseEnter">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation To="{StaticResource ActiveDarkPrimaryColor}" 
-                                                    Duration="0:0:0.3" 
+                                                    Duration="0:0:0.3"
                                                     Storyboard.TargetName="Border" 
                                                     Storyboard.TargetProperty="Background.Color"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
+                        
                         <EventTrigger RoutedEvent="MouseLeave">
                             <BeginStoryboard>
                                 <Storyboard>
                                     <ColorAnimation To="{StaticResource DarkPrimaryColor}" 
-                                                    Duration="0:0:0.3" 
+                                                    Duration="0:0:0.001"
                                                     Storyboard.TargetName="Border" 
-                                                    Storyboard.TargetProperty="Background.Color"/>
+                                                    Storyboard.TargetProperty="Background.Color"
+                                                    FillBehavior="Stop"/>
                                 </Storyboard>
                             </BeginStoryboard>
                         </EventTrigger>
+
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Background" TargetName="Border" Value="{StaticResource DarkPrimaryColorBrush}"/>
+                            
+                            <Setter Property="Background" TargetName="Border" Value="{StaticResource DisabledButtonColorBrush}"/>
                         </Trigger>
+
+                        <!--<Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="Border" Value="{StaticResource ActiveDarkPrimaryColorBrush}"/>
+                        </Trigger>-->
+
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

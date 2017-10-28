@@ -62,11 +62,6 @@ namespace Archivist
         public ICommand SettingsCommand { get; set; }
 
         /// <summary>
-        /// Command to switch to ReportPage
-        /// </summary>
-        public ICommand ReportCommand { get; set; }
-
-        /// <summary>
         /// Command to switch to InfoPage
         /// </summary>
         public ICommand InfoCommand { get; set;  }
@@ -85,7 +80,6 @@ namespace Archivist
             // Create commands
             ProjectsCommand = new RelayCommand(() => SwitchPage(Pages.Projects));
             SettingsCommand = new RelayCommand(() => SwitchPage(Pages.Settings));
-            ReportCommand = new RelayCommand(() => SwitchPage(Pages.Report));
             InfoCommand = new RelayCommand(() => SwitchPage(Pages.Info));
 
             // Set BackupButton Shortcut event

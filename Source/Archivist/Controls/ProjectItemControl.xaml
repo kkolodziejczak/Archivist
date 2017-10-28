@@ -25,6 +25,10 @@
                                          Storyboard.TargetProperty="Opacity"/>
                         <DoubleAnimation To="1"
                                          Duration="0:0:0.4"
+                                         Storyboard.TargetName="ArchiveButton"
+                                         Storyboard.TargetProperty="Opacity"/>
+                        <DoubleAnimation To="1"
+                                         Duration="0:0:0.4"
                                          Storyboard.TargetName="DeleteButton"
                                          Storyboard.TargetProperty="Opacity"/>
                     </Storyboard>
@@ -36,6 +40,10 @@
                         <DoubleAnimation To="0"
                                          Duration="0:0:0.4"
                                          Storyboard.TargetName="EditButton"
+                                         Storyboard.TargetProperty="Opacity"/>
+                        <DoubleAnimation To="0"
+                                         Duration="0:0:0.4"
+                                         Storyboard.TargetName="ArchiveButton"
                                          Storyboard.TargetProperty="Opacity"/>
                         <DoubleAnimation To="0"
                                          Duration="0:0:0.4"
@@ -71,8 +79,21 @@
                     Command="{Binding EditButtonCommand}"
                     Style="{StaticResource TransparentIconButton}"
                     Content="{StaticResource FontAwesomePenIcon}"
+                    ToolTip="{StaticResource EditProjectInfoToolTip}"
                     />
-            
+
+            <!-- Archive Button -->
+            <Button x:Name="ArchiveButton"
+                    Opacity="0"
+                    Width="25"
+                    Cursor="Hand"
+                    Focusable="False"
+                    Command="{Binding ArchiveButtonCommand}"
+                    Style="{StaticResource TransparentIconButton}"
+                    Content="{StaticResource FontAwesomeArchiveIcon}"
+                    ToolTip="{StaticResource OpenProjectArchiveFolderToolTip}"
+                    />
+
             <!-- Delete Button-->
             <Button x:Name="DeleteButton"
                     Opacity="0"
@@ -82,6 +103,7 @@
                     Command="{Binding DeleteButtonCommand}"
                     Style="{StaticResource TransparentIconButton}"
                     Content="{StaticResource FontAwesomeTrashIcon}"
+                    ToolTip="{StaticResource DeleteProjectToolTip}"
                     />
 
         </StackPanel>

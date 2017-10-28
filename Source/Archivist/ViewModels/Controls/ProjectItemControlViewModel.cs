@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,16 +13,11 @@ namespace Archivist
     /// </summary>
     public class ProjectItemControlViewModel : BaseViewModel
     {
-        #region Private Fields
-
+        
         /// <summary>
         /// Information about project
         /// </summary>
         private Project _Project;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Project's title
@@ -45,20 +41,12 @@ namespace Archivist
             }
         }
 
-        #endregion
-
-        #region Delegates
-
         /// <summary>
         /// Delegate that is representing event after buttons are clicked
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         public delegate void ButtonHandler(object sender, EventArgs e);
-
-        #endregion
-
-        #region Events
 
         /// <summary>
         /// Event that will be fired when pressed edit button
@@ -75,14 +63,15 @@ namespace Archivist
         /// </summary>
         public event ButtonHandler OnActiveProjectClick;
 
-        #endregion
-
-        #region Commands
-
         /// <summary>
         /// Command that is called when edit button is pressed
         /// </summary>
         public ICommand EditButtonCommand { get; private set; }
+
+        /// <summary>
+        /// Command that is called when delete button is pressed
+        /// </summary>
+        public ICommand ArchiveButtonCommand { get; private set; }
 
         /// <summary>
         /// Command that is called when delete button is pressed
@@ -94,30 +83,23 @@ namespace Archivist
         /// </summary>
         public ICommand ActiveButtonCommand { get; private set; }
 
-        #endregion
-
-        #region Constructors
-
         /// <summary>
         /// Default constructor
         /// </summary>
         public ProjectItemControlViewModel()
         {
             // Creating commands
-            EditButtonCommand = new RelayCommand(async () => await EditButton());
-            DeleteButtonCommand = new RelayCommand(async () => await DeleteButton());
-            ActiveButtonCommand = new RelayCommand(async() => await ActiveButton());
+            EditButtonCommand = new RelayCommand(EditButton);
+            DeleteButtonCommand = new RelayCommand(DeleteButton);
+            ActiveButtonCommand = new RelayCommand(ActiveButton);
+            ArchiveButtonCommand = new RelayCommand(OpenArchiveFolder);
         }
-
-        #endregion
-
-        #region Tasks
 
         /// <summary>
         /// Method called when edit button is pressed
         /// </summary>
         /// <returns></returns>
-        private async Task EditButton()
+        private void EditButton()
         {
             // Get event handler
             ButtonHandler handler = OnEditButtonClick;
@@ -127,16 +109,13 @@ namespace Archivist
             {
                 OnEditButtonClick(this, new EventArgs());
             }
-
-            //Because of async
-            await Task.Delay(1);
         }
 
         /// <summary>
         /// Method called when delete button is pressed
         /// </summary>
         /// <returns></returns>
-        private async Task DeleteButton()
+        private void DeleteButton()
         {
             // Get event handler
             ButtonHandler handler = OnDeleteButtonClick;
@@ -147,15 +126,13 @@ namespace Archivist
                 OnDeleteButtonClick(this, new EventArgs());
             }
 
-            // Because of async
-            await Task.Delay(1);
         }
 
         /// <summary>
         /// Method called when active button is pressed
         /// </summary>
         /// <returns></returns>
-        private async Task ActiveButton()
+        private void ActiveButton()
         {
             // Get event handler
             ButtonHandler handler = OnActiveProjectClick;
@@ -165,12 +142,16 @@ namespace Archivist
             {
                 OnActiveProjectClick(this, new EventArgs());
             }
-
-            // Because of async
-            await Task.Delay(1);
         }
 
-        #endregion
+        /// <summary>
+        /// Opens projects archive folder
+        /// </summary>
+        private void OpenArchiveFolder()
+        {
+            Process.Start(_Project.ArchivePath);
+        }
+
 
     }
 }

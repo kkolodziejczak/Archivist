@@ -14,10 +14,10 @@
 
         <!-- Archive TextBox -->
         <TextBox Grid.Column="0" 
-                 local:ScrollToEndProperty.Value="True"
                  IsReadOnly="True"
                  Style="{StaticResource ValidationStyle}"
                  Text="{Binding Path, Mode=OneWay}"
+                 ToolTip="{Binding Path}"
                  >
             <TextBox.InputBindings>
                 <MouseBinding Command="{Binding DialogCommand}" MouseAction="LeftDoubleClick"/>
@@ -33,6 +33,7 @@
                 Padding="5"
                 Content="{StaticResource FontAwesomeFolderIcon}"
                 Command="{Binding DialogCommand}"
+                ToolTip="{StaticResource OpenFolderDialogToolTip}"
                 Cursor="Hand"
                 />
     </Grid>

@@ -81,7 +81,7 @@ namespace Archivist
         public ICommand OpenSourceFileDialogCommand { get; set; }
 
         /// <summary>
-        /// Command that opens <see cref="SaveFileDialog"/> to store it's path
+        /// Command that opens <see cref="System.Windows.Forms.FolderBrowserDialog"/> to store it's path
         /// </summary>
         public ICommand SaveArchiveFileDialogCommand { get; set; }
 

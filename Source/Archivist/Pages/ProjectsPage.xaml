@@ -91,6 +91,7 @@
                          TabIndex="2"
                          IsReadOnly="True"
                          Style="{StaticResource ValidationStyle}"
+                         ToolTip="{Binding SourcePath}"
                          Text="{Binding SourcePath, ValidatesOnDataErrors=True, 
                                                     NotifyOnValidationError=True, 
                                                     UpdateSourceTrigger=PropertyChanged}"
@@ -110,6 +111,7 @@
                         Content="{StaticResource FontAwesomeFolderIcon}"
                         Command="{Binding OpenSourceFileDialogCommand}"
                         Cursor="Hand"
+                        ToolTip="{StaticResource OpenFileDialogToolTip}"
                         />
             </Grid>
 
@@ -130,10 +132,10 @@
 
                 <!-- Archive TextBox -->
                 <TextBox Grid.Column="0" 
-                         local:ScrollToEndProperty.Value="True"
                          TabIndex="4"
                          IsReadOnly="True"
                          Style="{StaticResource ValidationStyle}"
+                         ToolTip="{Binding ArchivePath}"
                          Text="{Binding ArchivePath}"
                          >
                     <TextBox.InputBindings>
@@ -151,6 +153,7 @@
                         Content="{StaticResource FontAwesomeFolderIcon}"
                         Command="{Binding SaveArchiveFileDialogCommand}"
                         Cursor="Hand"
+                        ToolTip="{StaticResource OpenFolderDialogToolTip}"
                         />
             </Grid>
 
@@ -158,115 +161,118 @@
                         Margin="0 6 0 0"
                         HorizontalAlignment="Right">
                 
-            <!-- Add Button -->
-            <Button TabIndex="6"
-                    IsDefault="True"
-                    Command="{Binding AddProjectCommand}"
-                    >
-                <!-- Add button style -->
-                <Button.Style>
-                    <Style TargetType="{x:Type Button}">
-                        <Setter Property="Background" Value="{StaticResource DarkPrimaryColorBrush}" />
-                        <Setter Property="Foreground" Value="{StaticResource TextIconsColorBrush}" />
-                        <Setter Property="BorderThickness" Value="0" />
-                        <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
-                        <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
-                        <Setter Property="Height" Value="25"/>
-                        <Setter Property="Padding" Value="0 2"/>
+                <!-- Add Button -->
+                <Button TabIndex="6"
+                        Width="75"
+                        IsDefault="True"
+                        Command="{Binding AddProjectCommand}"
+                        >
+                    <!-- Add button style for validation-->
+                    <Button.Style>
+                        <Style TargetType="{x:Type Button}">
+                            <Setter Property="Background" Value="{StaticResource DarkPrimaryColorBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource TextIconsColorBrush}" />
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="FontSize" Value="{StaticResource FontSizeRegular}" />
+                            <Setter Property="FontFamily" Value="{StaticResource LatoRegular}" />
+                            <Setter Property="Height" Value="25"/>
                         
-                        <Setter Property="Width" Value="{Binding ElementName=Content, Path=ActualWidth}"/>
+                            <Setter Property="Width" Value="{Binding ElementName=Content, Path=ActualWidth}"/>
 
-                        <!-- Set default state to disabled -->
-                        <Setter Property="IsEnabled" Value="False"/>
+                            <!-- Set default state to disabled -->
+                            <Setter Property="IsEnabled" Value="False"/>
 
-                        <!-- Set Template to base Button template-->
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ButtonBase}">
-                                    <Border x:Name="Border"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            Background="{TemplateBinding Background}"
-                                            >
-                                        <Grid>
-                                            <Viewbox>
-                                                <TextBlock x:Name="Content"
-                                                           Text="{TemplateBinding Content}" 
-                                                           Focusable="False" 
-                                                           FontFamily="{TemplateBinding FontFamily}"
-                                                           FontSize="{TemplateBinding FontSize}"
-                                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                                           Margin="10 2"
-                                                           Padding="{TemplateBinding Padding}" 
-                                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                            </Viewbox>
-                                        </Grid>
-                                    </Border>
-                                    <ControlTemplate.Triggers>
+                            <!-- Set Template to base Button template-->
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ButtonBase}">
+                                        <Border x:Name="Border"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                Background="{TemplateBinding Background}"
+                                                >
+                                            <Grid>
+                                                <Viewbox>
+                                                    <TextBlock x:Name="Content"
+                                                               Text="{TemplateBinding Content}" 
+                                                               Focusable="False" 
+                                                               FontFamily="{TemplateBinding FontFamily}"
+                                                               FontSize="{TemplateBinding FontSize}"
+                                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                               Margin="15 4"
+                                                               Padding="0 2"
+                                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                                </Viewbox>
+                                            </Grid>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
                                         
-                                        <!-- Trigger for when mouse enters form button space -->
-                                        <EventTrigger RoutedEvent="MouseEnter">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <ColorAnimation To="{StaticResource ActiveDarkPrimaryColor}" 
-                                                                    Duration="0:0:0.3" 
-                                                                    Storyboard.TargetName="Border" 
-                                                                    Storyboard.TargetProperty="Background.Color"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
+                                            <!-- Trigger for when mouse enters form button space -->
+                                            <EventTrigger RoutedEvent="MouseEnter">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation To="{StaticResource ActiveDarkPrimaryColor}" 
+                                                                        Duration="0:0:0.3" 
+                                                                        Storyboard.TargetName="Border" 
+                                                                        Storyboard.TargetProperty="Background.Color"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
 
-                                        <!-- Trigger for when mouse leave form button space -->
-                                        <EventTrigger RoutedEvent="MouseLeave">
-                                            <BeginStoryboard>
-                                                <Storyboard>
-                                                    <ColorAnimation To="{StaticResource DarkPrimaryColor}" 
-                                                                    Duration="0:0:0.3" 
-                                                                    Storyboard.TargetName="Border" 
-                                                                    Storyboard.TargetProperty="Background.Color"/>
-                                                </Storyboard>
-                                            </BeginStoryboard>
-                                        </EventTrigger>
+                                            <!-- Trigger for when mouse leave form button space -->
+                                            <EventTrigger RoutedEvent="MouseLeave">
+                                                <BeginStoryboard>
+                                                    <Storyboard>
+                                                        <ColorAnimation To="{StaticResource DarkPrimaryColor}" 
+                                                                        Duration="0:0:0.3" 
+                                                                        Storyboard.TargetName="Border" 
+                                                                        Storyboard.TargetProperty="Background.Color"/>
+                                                    </Storyboard>
+                                                </BeginStoryboard>
+                                            </EventTrigger>
 
-                                        <!-- Trigger for disabled button -->
-                                        <Trigger Property="IsEnabled" Value="False">
-                                            <Setter Property="Background" 
-                                                    TargetName="Border" 
-                                                    Value="{StaticResource DisabledButtonColorBrush}"/>
-                                        </Trigger>
+                                            <!-- Trigger for disabled button -->
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter Property="Background" 
+                                                        TargetName="Border" 
+                                                        Value="{StaticResource DisabledButtonColorBrush}"/>
+                                            </Trigger>
                                         
-                                    </ControlTemplate.Triggers>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
 
-                        <!-- If there is no errors change to enabled-->
-                        <Style.Triggers>
-                            <!-- Binding to Validation -->
-                            <MultiDataTrigger>
-                                <MultiDataTrigger.Conditions>
-                                    <Condition Binding="{Binding ElementName=TitleTextBox, Path=(Validation.HasError)}" Value="false"/>
-                                    <Condition Binding="{Binding ElementName=SourcePathTextBox, Path=(Validation.HasError)}" Value="false"/>
-                                </MultiDataTrigger.Conditions>
-                                <Setter Property="IsEnabled" Value="True"/>
-                            </MultiDataTrigger>
+                            <!-- If there is no errors change to enabled-->
+                            <Style.Triggers>
+                                <!-- Binding to Validation -->
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding ElementName=TitleTextBox, Path=(Validation.HasError)}" Value="false"/>
+                                        <Condition Binding="{Binding ElementName=SourcePathTextBox, Path=(Validation.HasError)}" Value="false"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
                             
-                            <!-- Switch between editing and add context -->
-                            <DataTrigger Binding="{Binding Editing}" Value="False">
-                                <Setter Property="Content" Value="{StaticResource AddButtonLabel}"/>
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Editing}" Value="True">
-                                <Setter Property="Content" Value="{StaticResource SaveButtonLabel}"/>
-                            </DataTrigger>
-                        </Style.Triggers>
+                                <!-- Switch between editing and add context -->
+                                <DataTrigger Binding="{Binding Editing}" Value="False">
+                                    <Setter Property="Content" Value="{StaticResource AddButtonLabel}"/>
+                                    <Setter Property="ToolTip" Value="{StaticResource AddProjectToolTip}"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Editing}" Value="True">
+                                    <Setter Property="Content" Value="{StaticResource SaveButtonLabel}"/>
+                                    <Setter Property="ToolTip" Value="{StaticResource SaveButtonToolTip}"/>
+                                </DataTrigger>
+                            </Style.Triggers>
 
-                    </Style>
-                </Button.Style>
-            </Button>
+                        </Style>
+                    </Button.Style>
+                </Button>
             
                 <Button Margin="6 0 0 0"
-                        Visibility="{Binding Editing, Converter={local:BolleanToCollapsedVisibilityValueConverter}, ConverterParameter=1}"
+                        Width="75"
                         Content="{StaticResource CancelButtonLabel}"
+                        ToolTip="{StaticResource CancelButtonToolTip}"
                         Command="{Binding CancelButtonCommand}"/>
             </StackPanel>
         </StackPanel>

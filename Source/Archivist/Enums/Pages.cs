@@ -19,11 +19,6 @@ namespace Archivist
         Settings,
 
         /// <summary>
-        /// Report page
-        /// </summary>
-        Report,
-
-        /// <summary>
         /// Info page
         /// </summary>
         Info

@@ -49,15 +49,6 @@ namespace Archivist.Tests
             Assert.IsTrue(window.Page == Pages.Info);
         }
 
-        [TestMethod()]
-        public void SwitchToReportPageTest()
-        {
-            MainWindowViewModel window = new MainWindowViewModel();
-
-            window.ReportCommand.Execute(null);
-
-            Assert.IsTrue(window.Page == Pages.Report);
-        }
 
     }
 }

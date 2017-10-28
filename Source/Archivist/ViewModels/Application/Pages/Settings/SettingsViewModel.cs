@@ -21,6 +21,11 @@ namespace Archivist
         public OpenDialogViewModel DefaultPathDialog { get; private set; }
 
         /// <summary>
+        /// Indicates if something was changed
+        /// </summary>
+        public bool Change { get; set; }
+
+        /// <summary>
         /// Command for recording backup <see cref="KeyboardShortcut"/>
         /// </summary>
         public ICommand RecordBackupCommand { get; private set; }
@@ -58,7 +63,7 @@ namespace Archivist
             // create commands
             RecordBackupCommand = new RelayCommand(RecordBackupShortcut);
             ClearArchivesCommand = new RelayCommand(ClearArchives);
-            SaveSettingsCommand = new RelayCommand(Storage.Save);
+            SaveSettingsCommand = new RelayCommand(SaveSettings);
             CancelChangeCommand = new RelayCommand(GetLastSettings);
             SetDefaultSettingsCommand = new RelayCommand(SetDefault);
             SetDefaultArchivePathCommand = new RelayCommand(OpenArchiveFileDialog);
@@ -79,6 +84,8 @@ namespace Archivist
         {
             DefaultPathDialog.OpenDialog();
             Storage.Settings.DefaultPath = DefaultPathDialog.Path;
+
+            Change = true;
         }
 
         /// <summary>
@@ -101,6 +108,7 @@ namespace Archivist
             // Register new Shortcut
             KeyboardShortcutManager.Instance.RegisterKeyboardShortcut(BackupShortcut);
 
+            Change = true;
         }
 
         /// <summary>
@@ -132,6 +140,19 @@ namespace Archivist
 
             // Refresh variables values to update view
             InitVariables();
+
+            Change = true;
+        }
+
+        /// <summary>
+        /// Save settings
+        /// </summary>
+        private void SaveSettings()
+        {
+            // Saves settings
+            Storage.Save();
+
+            Change = false;
         }
 
         /// <summary>
@@ -143,6 +164,8 @@ namespace Archivist
 
             // Refresh variables values to update them
             InitVariables();
+
+            Change = false;
         }
 
         /// <summary>

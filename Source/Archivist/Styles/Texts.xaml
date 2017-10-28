@@ -2,11 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Archivist"
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
-    
+
     <!-- Menu Tooltips -->
     <system:String x:Key="TooltipProjects">Projects</system:String>
     <system:String x:Key="TooltipSettings">Settings</system:String>
-    <system:String x:Key="TooltipReport">Report</system:String>
     <system:String x:Key="TooltipInfo">Info</system:String>
     
     <!-- Projects Page -->
@@ -16,29 +15,36 @@
     <system:String x:Key="SolutionArchivePathLabel">Archive path:</system:String>
     <system:String x:Key="AddButtonLabel">Add</system:String>
     <system:String x:Key="EditButtonLabel">Save</system:String>
-    
+    <system:String x:Key="EditProjectInfoToolTip">Edit</system:String>
+    <system:String x:Key="OpenProjectArchiveFolderToolTip">Open archive folder</system:String>
+    <system:String x:Key="DeleteProjectToolTip">Delete</system:String>
+    <system:String x:Key="AddProjectToolTip">Add new project</system:String>
+
     <!-- Settings Page -->
-    <system:String x:Key="SetDefaultArchivePathLabel">Default archive path</system:String>
-    <system:String x:Key="TemporaryPathLabel">Temporary folder path</system:String>
-    <system:String x:Key="SetShortcutLabel">Shortcut</system:String>
-    <system:String x:Key="ClearArchivesLabel">Archives</system:String>
+    <system:String x:Key="SetDefaultArchivePathLabel">Default archive path:</system:String>
+    <system:String x:Key="SetShortcutLabel">Shortcut:</system:String>
+    <system:String x:Key="ClearArchivesLabel">Archives:</system:String>
     <system:String x:Key="ClearArchivesButtonLabel">Delete All</system:String>
     <system:String x:Key="ClearSuccessMessage">Successfully deleted archives</system:String>
     <system:String x:Key="ClearFailMessage">No archives to delete</system:String>
     <system:String x:Key="DefaultButtonLabel">Set Default</system:String>
     <system:String x:Key="SaveButtonLabel">Save</system:String>
     <system:String x:Key="CancelButtonLabel">Cancel</system:String>
+    <system:String x:Key="RecordShortcutToolTip">Record new shortcut</system:String>
+    <system:String x:Key="DeleteAllCopiesToolTip">Delete all archives</system:String>
+    <system:String x:Key="SetDefaultButtonToolTip">Set default settings</system:String>
 
     <!-- Info Page -->
     <system:String x:Key="InfoPageProjectName">Archivist</system:String>
-    <system:String x:Key="InfoPageProjectVersion">Version: 0.01</system:String>
+    <system:String x:Key="InfoPageProjectVersion">Version: 1.0.0</system:String>
     <system:String x:Key="InfoPageDescription">Archivist is an application that supplements version control system. User can select Visual Studio project that he wants to work on. After pressing the shortcut (Ctrl + S) Archivist will create backup copy of all project's source files and will save them in selected folder.</system:String>
+    <system:String x:Key="InfoPageAuthorName">Author:</system:String>
+    <system:String x:Key="InfoPageAuthorSite">Site:</system:String>
 
-    <!-- Report Page -->
-    <system:String x:Key="ReportPageEmail">E-mail address (in case of any questions):</system:String>
-    <system:String x:Key="ReportPageWhatDo">What did you do:</system:String>
-    <system:String x:Key="ReportPageWhatHappend">What happened:</system:String>
-    <system:String x:Key="ReportPageSendReport">Send Report</system:String>
-
+    <!-- Other -->
+    <system:String x:Key="SaveButtonToolTip">Save changes</system:String>
+    <system:String x:Key="CancelButtonToolTip">Discard all changes</system:String>
+    <system:String x:Key="OpenFolderDialogToolTip">Choose folder</system:String>
+    <system:String x:Key="OpenFileDialogToolTip">Choose file</system:String>
 
 </ResourceDictionary>

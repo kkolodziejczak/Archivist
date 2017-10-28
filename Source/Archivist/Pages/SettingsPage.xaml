@@ -52,6 +52,7 @@
                                 VerticalAlignment="Center"
                                 Command="{Binding RecordBackupCommand}"
                                 Width="120"
+                                ToolTip="{StaticResource RecordShortcutToolTip}"
                                 Content="{Binding BackupShortcut, Converter={local:ToStringValueConverter}}"
                                 />
                     
@@ -77,6 +78,7 @@
                                 VerticalAlignment="Center"
                                 Width="120"
                                 Command="{Binding ClearArchivesCommand}"
+                                ToolTip="{StaticResource DeleteAllCopiesToolTip}"
                                 Content="{StaticResource ClearArchivesButtonLabel}"
                                 />
 
@@ -99,20 +101,26 @@
                     Width="100"
                     TabIndex="40"
                     Command="{Binding SetDefaultSettingsCommand}"
+                    ToolTip="{StaticResource SetDefaultButtonToolTip}"
                     Margin="10 0 0 0"/>
             
             <!-- Save button-->
             <Button Content="{StaticResource SaveButtonLabel}" 
                     TabIndex="30"
                     Width="75"
+                    IsEnabled="{Binding Change}"
                     Command="{Binding SaveSettingsCommand}"
+                    ToolTip="{StaticResource SaveButtonToolTip}"
                     Margin="10 0 0 0"/>
+
 
             <!-- Cancel button-->
             <Button Content="{StaticResource CancelButtonLabel}"
                     Width="75"
                     TabIndex="31"
+                    IsEnabled="{Binding Change}"
                     Command="{Binding CancelChangeCommand}"
+                    ToolTip="{StaticResource CancelButtonToolTip}"
                     Margin="10 0 0 0"/>
 
         </StackPanel>
