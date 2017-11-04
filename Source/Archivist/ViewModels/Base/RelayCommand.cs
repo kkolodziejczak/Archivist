@@ -18,7 +18,7 @@ namespace Archivist
 
         #endregion
         
-        #region Public Events
+        #region Events
 
         /// <summary>
         /// The evenet thats fired when the <see cref="CanExecute(object)"/> value has changed
@@ -40,7 +40,7 @@ namespace Archivist
 
         #endregion
 
-        #region Command Methods
+        #region Public Methods
         
         /// <summary>
         /// A relay command can always execute

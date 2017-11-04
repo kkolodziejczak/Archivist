@@ -29,6 +29,9 @@ namespace Archivist
     /// </summary>
     public static class MessageBox
     {
+        
+        #region Public Methods
+
         /// <summary>
         /// Show dialog window with message and title
         /// </summary>
@@ -79,7 +82,9 @@ namespace Archivist
                 return MessageBoxResult.Yes;
             else
                 return MessageBoxResult.No;
-        }
+        } 
+
+        #endregion
 
     }
 }

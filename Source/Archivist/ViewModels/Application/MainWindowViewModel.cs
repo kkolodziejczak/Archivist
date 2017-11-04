@@ -14,11 +14,16 @@ namespace Archivist
     /// </summary>
     public class MainWindowViewModel : BaseViewModel
     {
-        
+        #region Private Fields
+
         /// <summary>
         /// Title of the window
         /// </summary>
         private string _WindowTitle;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// Current page
@@ -39,7 +44,7 @@ namespace Archivist
             }
             set
             {
-                if(value.Contains("Archivist -"))
+                if (value.Contains("Archivist -"))
                     _WindowTitle = value;
 
                 _WindowTitle = $"Archivist - {value}";
@@ -50,6 +55,10 @@ namespace Archivist
         /// Token to stop Backup infinite loop
         /// </summary>
         public static CancellationTokenSource wtoken { get; set; }
+
+        #endregion
+       
+        #region Commands
 
         /// <summary>
         /// Command to switch to ProjectsPage
@@ -64,13 +73,18 @@ namespace Archivist
         /// <summary>
         /// Command to switch to InfoPage
         /// </summary>
-        public ICommand InfoCommand { get; set;  }
+        public ICommand InfoCommand { get; set; }
+
+        #endregion
+
+        #region Constructor
         
         /// <summary>
         /// Default constructor
         /// </summary>
         public MainWindowViewModel()
         {
+
             // Load settings 
             Storage.Load();
 
@@ -84,7 +98,7 @@ namespace Archivist
 
             // Set BackupButton Shortcut event
             Storage.Settings.BackupShortcut.OnShortcutActivated += Backup.Create;
-            
+
             // Start listening for Shortcut
             KeyboardShortcutManager.Instance.RegisterKeyboardShortcut(Storage.Settings.BackupShortcut);
 
@@ -92,6 +106,10 @@ namespace Archivist
             wtoken = new CancellationTokenSource();
             Task.Run(Backup.ProcessTask, wtoken.Token);
         }
+
+        #endregion
+       
+        #region Destructor
 
         /// <summary>
         /// Destructor
@@ -106,6 +124,10 @@ namespace Archivist
             wtoken = null;
         }
 
+        #endregion
+
+        #region Public Methods
+        
         /// <summary>
         /// Switches page
         /// </summary>
@@ -126,5 +148,6 @@ namespace Archivist
             WindowTitle = e.NewWindowName;
         }
 
+        #endregion
     }
 }

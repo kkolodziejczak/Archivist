@@ -16,6 +16,8 @@ namespace Archivist
     public class KeyboardShortcutManager
     {
 
+        #region Private Fields
+
         /// <summary>
         /// Listener that allows to perform sertent action on Key Presses.
         /// </summary>
@@ -41,6 +43,10 @@ namespace Archivist
         /// </summary>
         private KeyboardShortcut _RecordedShortcut;
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>
         /// ShortcutSelected by user
         /// </summary>
@@ -64,6 +70,9 @@ namespace Archivist
             }
         }
 
+        #endregion
+        
+        #region Constructor
 
         /// <summary>
         /// Default constructor
@@ -83,6 +92,10 @@ namespace Archivist
 
         }
 
+        #endregion
+
+        #region Destructor
+
         /// <summary>
         /// Default destructor
         /// </summary>
@@ -93,6 +106,10 @@ namespace Archivist
             _KeyboardListener.OnKeyDown -= OnKeyDown;
             _KeyboardListener.UnHookKeyboard();
         }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// OnKeyDown Event Method
@@ -112,7 +129,7 @@ namespace Archivist
             }
 
         }
-        
+
         /// <summary>
         /// Returns if KeyboardShortcuts contains the same shortcut key combination
         /// </summary>
@@ -165,14 +182,14 @@ namespace Archivist
                     break;
 
                 default:
-                    if(value == true)
+                    if (value == true)
                     {
                         _PressedShortcut.Key = key;
                     }
                     else
                     {
 
-                        if(_IsRecording == true)
+                        if (_IsRecording == true)
                         {
                             _RecordedShortcut = new KeyboardShortcut(_PressedShortcut);
                             _IsRecording = false;
@@ -184,6 +201,10 @@ namespace Archivist
                     break;
             }
         }
+
+        #endregion
+        
+        #region Public Methods
 
         /// <summary>
         /// Returns recorded Shortcut
@@ -203,7 +224,7 @@ namespace Archivist
             // Return new Shortcut;
             return _RecordedShortcut;
         }
-        
+
         /// <summary>
         /// Register shortcut to listen to.
         /// </summary>
@@ -229,7 +250,9 @@ namespace Archivist
             {
                 _RegisteredShortcuts.Remove(shortcut);
             }
-        }
+        } 
+
+        #endregion
 
     }
 }

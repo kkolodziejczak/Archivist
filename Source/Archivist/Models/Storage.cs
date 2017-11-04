@@ -24,6 +24,7 @@ namespace Archivist
 
     public static class Storage
     {
+        #region Private Fields
 
         /// <summary>
         /// Path to Archivist data folder
@@ -45,22 +46,14 @@ namespace Archivist
         /// </summary>
         private static UserSettings _Settings;
 
-        /// <summary>
-        /// Delegate that allows to create event with new WindowTitle
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public delegate void WindowsTitleUpdateEventHandler(object sender, WindowNameArg e);
+        #endregion
 
-        /// <summary>
-        /// event that will be fired when selected project changes
-        /// </summary>
-        public static event WindowsTitleUpdateEventHandler OnWindowTitleUpdate;
+        #region Public Properties
 
         /// <summary>
         /// Path to directory what will be created for temprorary use
         /// </summary>
-        public static string TemporaryDirectoryPath { get; } = SettingsFolderPath;
+        public static string TemporaryDirectoryPath { get; } = $@"{SettingsFolderPath}\Temp";
 
         /// <summary>
         /// Users settings
@@ -84,13 +77,33 @@ namespace Archivist
             }
         }
 
+        #endregion
+
+        #region Events
+
+        /// <summary>
+        /// Delegate that allows to create event with new WindowTitle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public delegate void WindowsTitleUpdateEventHandler(object sender, WindowNameArg e);
+
+        /// <summary>
+        /// event that will be fired when selected project changes
+        /// </summary>
+        public static event WindowsTitleUpdateEventHandler OnWindowTitleUpdate;
+
+        #endregion
+        
+        #region Public Methods
+
         /// <summary>
         /// Fires <see cref="OnWindowTitleUpdate"/> event
         /// </summary>
         /// <param name="title"></param>
         public static void UpdateWindowTitle()
         {
-            if(OnWindowTitleUpdate != null)
+            if (OnWindowTitleUpdate != null)
             {
                 OnWindowTitleUpdate(new object(), new WindowNameArg(Settings.SelectedProject.Title));
             }
@@ -150,5 +163,6 @@ namespace Archivist
 
         }
 
+        #endregion
     }
 }

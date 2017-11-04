@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace kkolodziejczak.Archivist.Properties
+namespace Archivist
 {
 
 

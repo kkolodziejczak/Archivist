@@ -36,7 +36,6 @@
 
     <!-- Info Page -->
     <system:String x:Key="InfoPageProjectName">Archivist</system:String>
-    <system:String x:Key="InfoPageProjectVersion">Version: 1.0.0</system:String>
     <system:String x:Key="InfoPageDescription">Archivist is an application that supplements version control system. User can select Visual Studio project that he wants to work on. After pressing the shortcut (Ctrl + S) Archivist will create backup copy of all project's source files and will save them in selected folder.</system:String>
     <system:String x:Key="InfoPageAuthorName">Author:</system:String>
     <system:String x:Key="InfoPageAuthorSite">Site:</system:String>

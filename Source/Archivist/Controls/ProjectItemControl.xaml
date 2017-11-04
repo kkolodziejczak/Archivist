@@ -53,6 +53,7 @@
                 </BeginStoryboard>
             </EventTrigger>
         </Grid.Triggers>
+        
         <!-- Mouse Binding for doubleclick later -->
         <Grid.InputBindings>
             <MouseBinding Command="{Binding ActiveButtonCommand}" MouseAction="LeftDoubleClick" />

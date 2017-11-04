@@ -9,6 +9,7 @@ namespace Archivist
 {
     public class SettingsViewModel : BaseViewModel
     {
+        #region Public Properties
 
         /// <summary>
         /// Shortcut that fires create backup
@@ -24,6 +25,10 @@ namespace Archivist
         /// Indicates if something was changed
         /// </summary>
         public bool Change { get; set; }
+
+        #endregion
+
+        #region Commands
 
         /// <summary>
         /// Command for recording backup <see cref="KeyboardShortcut"/>
@@ -48,12 +53,11 @@ namespace Archivist
         /// <summary>
         /// Command that load default settings
         /// </summary>
-        public ICommand SetDefaultSettingsCommand{ get; private set; }
+        public ICommand SetDefaultSettingsCommand { get; private set; }
 
-        /// <summary>
-        /// Command that sets default archive path
-        /// </summary>
-        public ICommand SetDefaultArchivePathCommand { get; private set; }
+        #endregion
+        
+        #region Constructor
 
         /// <summary>
         /// Default Constructor
@@ -66,27 +70,38 @@ namespace Archivist
             SaveSettingsCommand = new RelayCommand(SaveSettings);
             CancelChangeCommand = new RelayCommand(GetLastSettings);
             SetDefaultSettingsCommand = new RelayCommand(SetDefault);
-            SetDefaultArchivePathCommand = new RelayCommand(OpenArchiveFileDialog);
 
             // Init Dialog to folder type
-            DefaultPathDialog = new OpenDialogViewModel(OpenDialogType.OpenFolderDialog);
-            
+            DefaultPathDialog = new OpenDialogViewModel(OpenDialogType.OpenFolderDialog)
+            {
+                Path = Storage.DefaultArchivePath,
+            };
+
+            DefaultPathDialog.OnPathUpdated += OpenArchiveFileDialog;
+
             // Get BackupShortcut from user's settings
             GetLastSettings();
 
         }
 
+        #endregion
+
+        #region Public Methods
+
         /// <summary>
         /// Opens file dialog that allows user to select directory where he wants to save his archives by default
         /// </summary>
         /// <returns></returns>
-        public void OpenArchiveFileDialog()
+        public void OpenArchiveFileDialog(object sender, EventArgs e)
         {
-            DefaultPathDialog.OpenDialog();
             Storage.Settings.DefaultPath = DefaultPathDialog.Path;
 
             Change = true;
         }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Method that records backup shortcut
@@ -127,7 +142,7 @@ namespace Archivist
                 result = ResourceHelper.GetStaticFieldValue("ClearFailMessage") as string;
             }
 
-            MessageBox.Show(result, "Clear Result",MessageBoxType.Ok);
+            MessageBox.Show(result, "Clear Result", MessageBoxType.Ok);
 
         }
 
@@ -178,5 +193,6 @@ namespace Archivist
             DefaultPathDialog.Path = Storage.Settings.DefaultPath;
         }
 
+        #endregion
     }
 }

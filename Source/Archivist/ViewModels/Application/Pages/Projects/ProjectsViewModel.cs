@@ -17,11 +17,16 @@ namespace Archivist
     /// </summary>
     public class ProjectsViewModel : BaseViewModel, IDataErrorInfo
     {
-        
+        #region Private Fields
+
         /// <summary>
         /// Path to the project .sln file
         /// </summary>
         private string _SourcePath;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// Title of the project to add
@@ -69,7 +74,11 @@ namespace Archivist
         /// Projects added by user
         /// </summary>
         public ObservableCollection<ProjectItemControlViewModel> Projects { get; set; }
-        
+
+        #endregion
+
+        #region Commands
+
         /// <summary>
         /// Command that adds Project
         /// </summary>
@@ -89,6 +98,10 @@ namespace Archivist
         /// Command that cancels editing
         /// </summary>
         public ICommand CancelButtonCommand { get; set; }
+
+        #endregion
+       
+        #region Constructor
 
         /// <summary>
         /// Default Constructor
@@ -122,6 +135,10 @@ namespace Archivist
             }
 
         }
+
+        #endregion
+        
+        #region Private Methods
 
         /// <summary>
         /// Method that fills fields for edit
@@ -162,6 +179,52 @@ namespace Archivist
             }
 
         }
+
+        /// <summary>
+        /// Set new information for <see cref="EditedProject"/> information
+        /// </summary>
+        private void SwapEditedProjectInformation(Project newProjectItem)
+        {
+            var projIndex = Projects.IndexOf(EditedProject);
+            var oldProjIndex = Storage.Settings.Projects.IndexOf(Projects[projIndex].Project);
+
+            Projects[projIndex].Title = Title;
+            Projects[projIndex].Project = newProjectItem;
+
+            Storage.Settings.Projects[oldProjIndex] = newProjectItem;
+            Storage.Save();
+
+            ClearInputFields();
+            Editing = false;
+        }
+
+        /// <summary>
+        /// Selects project that user will work on
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SelectProjectClick(object sender, EventArgs e)
+        {
+            if (sender is ProjectItemControlViewModel project)
+            {
+                Storage.Settings.SelectedProject = project.Project;
+            }
+        }
+
+        /// <summary>
+        /// Clears input fields
+        /// </summary>
+        private void ClearInputFields()
+        {
+            Title = String.Empty;
+            SourcePath = String.Empty;
+            ArchivePath = String.Empty;
+        }
+
+
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Adds new project to user database
@@ -209,24 +272,6 @@ namespace Archivist
         }
 
         /// <summary>
-        /// Set new information for <see cref="EditedProject"/> information
-        /// </summary>
-        private void SwapEditedProjectInformation(Project newProjectItem)
-        {
-            var projIndex = Projects.IndexOf(EditedProject);
-            var oldProjIndex = Storage.Settings.Projects.IndexOf(Projects[projIndex].Project);
-
-            Projects[projIndex].Title = Title;
-            Projects[projIndex].Project = newProjectItem;
-
-            Storage.Settings.Projects[oldProjIndex] = newProjectItem;
-            Storage.Save();
-
-            ClearInputFields();
-            Editing = false;
-        }
-
-        /// <summary>
         /// Cancels editing mode
         /// </summary>
         public void CancelEditing()
@@ -234,29 +279,6 @@ namespace Archivist
             Editing = false;
             ClearInputFields();
             EditedProject = null;
-        }
-
-        /// <summary>
-        /// Selects project that user will work on
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SelectProjectClick(object sender, EventArgs e)
-        {
-            if (sender is ProjectItemControlViewModel project)
-            {
-                Storage.Settings.SelectedProject = project.Project;
-            }
-        }
-
-        /// <summary>
-        /// Clears input fields
-        /// </summary>
-        private void ClearInputFields()
-        {
-            Title = String.Empty;
-            SourcePath = String.Empty;
-            ArchivePath = String.Empty;
         }
 
         /// <summary>
@@ -293,6 +315,10 @@ namespace Archivist
                 ArchivePath = dialog.SelectedPath;
         }
 
+        #endregion
+
+        #region Error Validation
+
         public string Error => string.Empty;
 
         /// <summary>
@@ -319,7 +345,7 @@ namespace Archivist
                             {
                                 return "Project title is required.";
                             }
-                            
+
                             // Check if title exist
                             int count = Projects.Count(p => p.Title == Title);
                             if (count > 0)
@@ -369,5 +395,6 @@ namespace Archivist
             }
         }
 
+        #endregion
     }
 }

@@ -14,6 +14,8 @@ namespace Archivist
     public class KeyboardShortcut
     {
 
+        #region Public Properties
+
         /// <summary>
         /// Shotcut Key
         /// </summary>
@@ -34,10 +36,18 @@ namespace Archivist
         /// </summary>
         public bool Shift { get; set; }
 
+        #endregion
+        
+        #region Events
+
         /// <summary>
         /// Event that is fired when shortcut criteria are meet
         /// </summary>
         public event EventHandler OnShortcutActivated;
+
+        #endregion
+
+        #region Constructor
 
         /// <summary>
         /// Default Constructor
@@ -58,6 +68,10 @@ namespace Archivist
             this.Shift = source.Shift;
             this.OnShortcutActivated = source.OnShortcutActivated;
         }
+
+        #endregion
+        
+        #region Public Methods
 
         /// <summary>
         /// Fires shortcut methods that are connected to <see cref="OnShortcutActivated"/>.
@@ -81,6 +95,10 @@ namespace Archivist
             this.Shift = false;
         }
 
+        #endregion
+
+        #region Override
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -93,8 +111,9 @@ namespace Archivist
                 sb.Append("Shift + ");
 
             return $"{sb.ToString()}{Key.ToString()}";
-        }
+        } 
 
-        
+        #endregion
+
     }
 }

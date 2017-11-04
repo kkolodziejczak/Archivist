@@ -6,8 +6,13 @@ using System.Threading.Tasks;
 
 namespace Archivist
 {
+    /// <summary>
+    /// Class representing project
+    /// </summary>
     public class Project
     {
+
+        #region Public Properties
 
         /// <summary>
         /// Project title provided by user
@@ -22,7 +27,7 @@ namespace Archivist
         /// <summary>
         /// Path where stored is .sln file
         /// </summary>
-        public string SourcePath {get; set;}
+        public string SourcePath { get; set; }
 
         /// <summary>
         /// Project path to config file from .sln file
@@ -49,6 +54,7 @@ namespace Archivist
         /// </summary>
         public string DateLastCopy { get; set; }
 
+        #endregion
 
     }
 }

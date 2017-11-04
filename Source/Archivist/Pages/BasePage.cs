@@ -8,6 +8,27 @@ using System.ComponentModel;
 namespace Archivist
 {
     /// <summary>
+    /// Types of pages that can be created
+    /// </summary>
+    public enum Pages
+    {
+        /// <summary>
+        /// Projects page
+        /// </summary>
+        Projects,
+
+        /// <summary>
+        /// Settings page
+        /// </summary>
+        Settings,
+
+        /// <summary>
+        /// Info page
+        /// </summary>
+        Info
+    }
+
+    /// <summary>
     /// Base page class for all pages
     /// </summary>
     public class BasePage : UserControl
@@ -22,12 +43,12 @@ namespace Archivist
         where VM: BaseViewModel, new()
     {
 
-        #region Private members
+        #region Private Fields
         
         /// <summary>
         /// View Model for this page
         /// </summary>
-        private VM mViewModel;
+        private VM _ViewModel;
 
         #endregion
 
@@ -38,27 +59,30 @@ namespace Archivist
         /// </summary>
         public VM ViewModel
         {
-            get { return mViewModel; }
+            get { return _ViewModel; }
 
             set
             {
                 // If ViewModel did not change return
-                if (mViewModel == value)
+                if (_ViewModel == value)
                     return;
 
                 // set ViewModel
-                mViewModel = value;
+                _ViewModel = value;
 
                 // set DataContext to ViewModel
-                DataContext = mViewModel;
+                DataContext = _ViewModel;
             }
-        } 
+        }
         #endregion
+        
+        #region Constructor
 
         public BasePage() : base()
         {
             // Set View Model
             ViewModel = new VM();
-        }
+        } 
+        #endregion
     }
 }

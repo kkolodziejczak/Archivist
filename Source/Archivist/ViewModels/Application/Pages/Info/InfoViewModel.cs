@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -22,7 +23,16 @@ namespace Archivist
         private readonly string _siteURL = "http://kkolodziejczak.net/";
 
         #endregion
+        
+        #region Public Properties
 
+        /// <summary>
+        /// Current version of the application
+        /// </summary>
+        public string ApplicationVersion { get; set; }
+
+        #endregion
+        
         #region Commands
 
         /// <summary>
@@ -42,6 +52,10 @@ namespace Archivist
             // Create command
             OpenSiteCommand = new RelayCommand(OpenSite);
 
+            // Get application version
+            var version = Assembly.GetEntryAssembly().GetName().Version;
+            ApplicationVersion = $"Version: {version.Major}.{version.MajorRevision}.{version.Minor}.{version.MinorRevision}";
+
         }
 
         #endregion
@@ -57,5 +71,6 @@ namespace Archivist
         }
 
         #endregion
+
     }
 }

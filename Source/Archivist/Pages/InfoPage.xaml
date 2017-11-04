@@ -28,7 +28,7 @@
                    Margin="0 -2 0 0"
                    FontSize="{StaticResource FontSizeSmall}"
                    HorizontalAlignment="Center"
-                   Text="{StaticResource InfoPageProjectVersion}"/>
+                   Text="{Binding ApplicationVersion}"/>
 
         <!-- App Description -->
         <TextBlock Grid.Row="2"
@@ -70,6 +70,8 @@
                        Grid.Row="1"
                        Grid.Column="0"
                        Text="{StaticResource InfoPageAuthorSite}"/>
+            
+            <!-- Site link button -->
             <Button VerticalAlignment="Center"
                     HorizontalAlignment="Left"
                     Margin="0 10 0 0"

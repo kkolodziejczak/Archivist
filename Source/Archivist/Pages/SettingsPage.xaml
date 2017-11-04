@@ -21,6 +21,7 @@
             <ScrollViewer>
                 <StackPanel>
                     
+                    <!-- Default archive path -->
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -35,7 +36,7 @@
                         
                     </Grid>
 
-                    <!-- Shortcut -->
+                    <!-- Record shortcut -->
                     <Grid Margin="0 10 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -61,7 +62,7 @@
 
                     
 
-                    <!-- Shortcut -->
+                    <!-- Clear copies -->
                     <Grid Margin="0 10 0 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="150"/>
@@ -96,7 +97,7 @@
                     Margin="0 10 0 0"
                     HorizontalAlignment="Right">
 
-            <!-- Save button-->
+            <!-- Set default button-->
             <Button Content="{StaticResource DefaultButtonLabel}" 
                     Width="100"
                     TabIndex="40"

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Archivist
 {
+    /// <summary>
+    /// Converts <see cref="KeyboardShortcut"/> to string soo user will know that he is required to press some shortcut
+    /// </summary>
     public class ToStringValueConverter : BaseValueConverter<ToStringValueConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)

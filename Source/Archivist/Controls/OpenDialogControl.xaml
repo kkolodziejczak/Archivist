@@ -12,7 +12,7 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Archive TextBox -->
+        <!-- Path TextBox -->
         <TextBox Grid.Column="0" 
                  IsReadOnly="True"
                  Style="{StaticResource ValidationStyle}"
@@ -25,7 +25,7 @@
             </TextBox.InputBindings>
         </TextBox>
 
-        <!-- SaveFileDialog -->
+        <!-- OpenFileDialog -->
         <Button Grid.Column="1" 
                 TabIndex="5"
                 Width="19"

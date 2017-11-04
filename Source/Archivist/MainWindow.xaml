@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Archivist"
         mc:Ignorable="d" 
-        ResizeMode="NoResize" SizeToContent="WidthAndHeight"
+        ResizeMode="CanMinimize"
+        SizeToContent="WidthAndHeight"
+        Icon="favicon.ico"
         Height="300"
         Title="{Binding WindowTitle}">
     <Grid>

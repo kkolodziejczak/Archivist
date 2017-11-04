@@ -10,8 +10,14 @@ using System.Xml.Serialization;
 namespace Archivist
 {
 
+    /// <summary>
+    /// Class that stores all settings
+    /// </summary>
     public class UserSettings
     {
+
+        #region Private Fields
+        
         /// <summary>
         /// Shortcut that fires create backup
         /// </summary>
@@ -27,6 +33,10 @@ namespace Archivist
         /// </summary>
         private List<Project> _Projects { get; set; }
 
+        #endregion
+
+        #region Public Properties
+        
         /// <summary>
         /// Selected project
         /// </summary>
@@ -68,7 +78,7 @@ namespace Archivist
         {
             get
             {
-                if (_DefaultPath == String.Empty)
+                if (_DefaultPath == String.Empty || _DefaultPath == null)
                     return Storage.DefaultArchivePath;
 
                 return _DefaultPath;
@@ -116,12 +126,13 @@ namespace Archivist
                     return;
 
                 _SelectedProject = value;
-                
+
                 // Update window title
                 Storage.UpdateWindowTitle();
             }
-        }
+        } 
 
+        #endregion
 
     }
 }

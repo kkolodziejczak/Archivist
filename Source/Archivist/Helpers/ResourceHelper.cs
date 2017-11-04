@@ -8,12 +8,30 @@ using System.Windows.Media;
 
 namespace Archivist
 {
+    /// <summary>
+    /// Helper class that allows to perform additional actions on static resources
+    /// </summary>
     public static class ResourceHelper
     {
-
+        /// <summary>
+        /// Returns value from static resource
+        /// </summary>
+        /// <param name="KeyValue"></param>
+        /// <returns></returns>
         public static object GetStaticFieldValue(string KeyValue)
         {
-            return Application.Current.FindResource(KeyValue);
+            object returnValue = null;
+
+            try
+            {
+                returnValue = Application.Current.FindResource(KeyValue);
+            }
+            catch
+            { 
+                // Ignore any errors and return null
+            }
+
+            return returnValue;
         }
     }
 }

@@ -8,6 +8,9 @@ using System.Windows;
 
 namespace Archivist
 {
+    /// <summary>
+    /// Converts <see cref="MessageBoxType"/> into <see cref="Visibility"/>
+    /// </summary>
     public class MessageBoxTypeToVisibilityValueConverter : BaseValueConverter<MessageBoxTypeToVisibilityValueConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)

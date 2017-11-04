@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Archivist
 {
+    /// <summary>
+    /// Converts selected page to color, soo color will stay even if mouse is not there
+    /// </summary>
     public class PageToActiveButtonValueConverter : BaseValueConverter<PageToActiveButtonValueConverter>
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)

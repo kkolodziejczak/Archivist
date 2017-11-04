@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Archivist
 {
+    /// <summary>
+    /// Helper class that allows to perform additional actions on files
+    /// </summary>
     public static class IOHelper
     {
         /// <summary>

@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using System.IO.Compression;
-
+using System.Threading;
 
 namespace Archivist
 {
 
+    /// <summary>
+    /// Class responsible for making copies
+    /// </summary>
     public class Backup
     {
+
+        #region Private Fields
 
         /// <summary>
         /// Queue with all CopyTasks
@@ -23,7 +28,13 @@ namespace Archivist
         /// <summary>
         /// <see cref="DateTime"/> when last copy was made
         /// </summary>
-        private static DateTime LastTask { get; set; } = DateTime.Now.AddSeconds(10);
+        private static DateTime LastTask { get; set; } = DateTime.Now;
+
+
+        private static CancellationTokenSource CurrentTaskToken { get; set; }
+        #endregion
+
+        #region Public Methods
 
         /// <summary>
         /// Creates Backup of current project
@@ -60,13 +71,18 @@ namespace Archivist
 
                     foreach (var project in TaskToProcess)
                     {
-                        BackupFiles(project);
+                        CurrentTaskToken = new CancellationTokenSource();
+                        await Task.Factory.StartNew(() => BackupFiles(project), CurrentTaskToken.Token);
+                        CurrentTaskToken.Dispose();
                     }
                 }
-
                 await Task.Delay(TimeSpan.FromSeconds(1), MainWindowViewModel.wtoken.Token);
             }
         }
+
+        #endregion
+
+        #region Private Methods
 
         /// <summary>
         /// Returns information about projects found in .sln file
@@ -120,7 +136,8 @@ namespace Archivist
                 if (DriveHelper.ClearDriveSpace() == ClearResult.Fail)
                 {
                     MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
-                    return;
+                    CurrentTaskToken.Cancel();
+                    return ;
                 }
                 else
                 {
@@ -128,6 +145,7 @@ namespace Archivist
                     if (AvailableSpaceAfterCleaning < 10 * Size.Megabyte)
                     {
                         MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
+                        CurrentTaskToken.Cancel();
                         return;
                     }
                 }
@@ -146,6 +164,7 @@ namespace Archivist
                 {
                     CleanUp(TemporaryDirectoryPath);
                     MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
+                    CurrentTaskToken.Cancel();
                     return;
                 }
                 else
@@ -156,6 +175,7 @@ namespace Archivist
                     {
                         CleanUp(TemporaryDirectoryPath);
                         MessageBox.Show("Hard Drive is full.\nMake more space!", "No space left!", MessageBoxType.Ok);
+                        CurrentTaskToken.Cancel();
                         return;
                     }
                 }
@@ -225,7 +245,8 @@ namespace Archivist
 
             if (File.Exists(SourceFilePath))
             {
-                // If Directory that file is inside does not exist and file is not in root directory
+                // If Directory that file is inside does not exist 
+                // and file is not in root directory
                 if (!Directory.Exists(TemporaryDirectoryPath) && Path.GetDirectoryName(fileName) != String.Empty)
                 {
                     Directory.CreateDirectory(TemporaryDirectoryPath);
@@ -250,7 +271,7 @@ namespace Archivist
                 Directory.CreateDirectory(NewFilePath);
             }
 
-            ZipFile.CreateFromDirectory(temporaryDirectoryPath, $"{NewFilePath}\\Archivist_{project.TimeLastCopy}.zip");
+            ZipFile.CreateFromDirectory(temporaryDirectoryPath, $"{NewFilePath}\\{project.ProjectName}-{project.TimeLastCopy}.zip");
         }
 
         /// <summary>
@@ -263,7 +284,9 @@ namespace Archivist
             {
                 Directory.Delete(directoryPath, true);
             }
-        } 
+        }
+
+        #endregion
 
     }
 

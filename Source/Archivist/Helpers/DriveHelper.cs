@@ -7,14 +7,22 @@ using System.Threading.Tasks;
 
 namespace Archivist
 {
+    /// <summary>
+    /// Possible clearing results
+    /// </summary>
     public enum ClearResult
     {
         Success,
         Fail
     }
 
+    /// <summary>
+    /// Helper class that allows to perform additional actions on drives
+    /// </summary>
     public static class DriveHelper
     {
+        #region Public Methods
+        
         /// <summary>
         /// Returns TotalFreeSpace for provided Drive name
         /// </summary>
@@ -80,21 +88,21 @@ namespace Archivist
         public static ClearResult ClearDriveSpace()
         {
             var result = ClearResult.Fail;
-            
+
             // -Get into projcet copies 
             foreach (var project in Storage.Settings.Projects)
             {
                 var Projects = GetAllDirectories(project.ArchivePath);
-               
-                foreach(var projectPath in Projects)
+
+                foreach (var projectPath in Projects)
                 {
                     var Days = GetAllDirectories(projectPath);
 
-                    foreach(var day in Days)
+                    foreach (var day in Days)
                     {
                         var ProjectArchiveDirectories = GetAllDirectories(day);
 
-                        foreach(var archiveDirectory in ProjectArchiveDirectories)
+                        foreach (var archiveDirectory in ProjectArchiveDirectories)
                         {
                             var ProjectCopies = GetAllFiles(archiveDirectory);
 
@@ -104,7 +112,7 @@ namespace Archivist
                                 // Else clear all but lastest copie assuming that they are sorted
                                 for (int i = 0; i < ProjectCopies.Length - 1; i++)
                                 {
-                                    
+
                                     if (File.Exists(ProjectCopies[i]) && Path.GetExtension(ProjectCopies[i]) == ".zip")
                                     {
                                         try
@@ -123,11 +131,13 @@ namespace Archivist
                     }
                 }
 
-                
+
             }
 
             return result;
-        }
+        } 
+
+        #endregion
 
     }
 }

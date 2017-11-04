@@ -8,12 +8,14 @@
         ResizeMode="NoResize" 
         Width="250"
         Height="140"
+        Icon="../favicon.ico"
         Title="{Binding Title}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
         <!-- Message -->
         <ScrollViewer>
             <TextBlock Text="{Binding Message}"

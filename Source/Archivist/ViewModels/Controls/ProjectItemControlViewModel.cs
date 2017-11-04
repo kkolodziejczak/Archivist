@@ -13,11 +13,16 @@ namespace Archivist
     /// </summary>
     public class ProjectItemControlViewModel : BaseViewModel
     {
-        
+        #region Private Fields
+
         /// <summary>
         /// Information about project
         /// </summary>
         private Project _Project;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// Project's title
@@ -41,6 +46,10 @@ namespace Archivist
             }
         }
 
+        #endregion
+       
+        #region Events
+
         /// <summary>
         /// Delegate that is representing event after buttons are clicked
         /// </summary>
@@ -63,6 +72,10 @@ namespace Archivist
         /// </summary>
         public event ButtonHandler OnActiveProjectClick;
 
+        #endregion
+
+        #region Commands
+
         /// <summary>
         /// Command that is called when edit button is pressed
         /// </summary>
@@ -83,6 +96,10 @@ namespace Archivist
         /// </summary>
         public ICommand ActiveButtonCommand { get; private set; }
 
+        #endregion
+
+        #region Constructor
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -94,6 +111,10 @@ namespace Archivist
             ActiveButtonCommand = new RelayCommand(ActiveButton);
             ArchiveButtonCommand = new RelayCommand(OpenArchiveFolder);
         }
+
+        #endregion
+        
+        #region Private Methods
 
         /// <summary>
         /// Method called when edit button is pressed
@@ -121,7 +142,7 @@ namespace Archivist
             ButtonHandler handler = OnDeleteButtonClick;
 
             // If there is no method attached don't do anything
-            if(handler != null)
+            if (handler != null)
             {
                 OnDeleteButtonClick(this, new EventArgs());
             }
@@ -152,6 +173,7 @@ namespace Archivist
             Process.Start(_Project.ArchivePath);
         }
 
+        #endregion
 
     }
 }
